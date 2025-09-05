@@ -1,0 +1,17 @@
+%% ----------------------------------------------------------------
+%% Introduction.tex
+%% ---------------------------------------------------------------- 
+\chapter{Introduction} \label{Chapter:Introduction}
+
+%\jnote{Not sure if I should frame the text around symbolic computing vs subsymbolic computing (intersymbolic computing, Symbolic-numeric computating) or around symbolic vs subsymbolic AI (intersymbolic AI, neuro-symbolic AI). Will focus on AI for now}
+
+%\jnote{Inspired on \cite{Platzer_2024}. The terms \SuAI{}, \SiAI{} and \InAI are taken from there.}
+
+Broadly speaking, there exists  two very distinct approaches to \emph{\AILong{}}  (\emph{\AI{}}): One rooted in reasoning and another in learning \mcite{}.  In \citetalias{Platzer_2024}, \citeauthor{Platzer_2024} proposes the terms \emph{\SiAI{}} and \emph{\SuAI{}}, respectively. Here we define them a bit more generally. \SiAI{} (also referred to as good old AI \mcite{}, classical AI \mcite{},  or logic-based AI \mcite{} ) relates to algebraic computing, and emphasizes finding analytical solutions by manipulating logical expressions. This approach, by principle, prioritizes interpretability and preserving meaning. Current relevant examples include \emph{SMT/SAT solvers} \mcite{}, \emph{theorem provers} \mcite{},  as well as many \emph{programming languages} \mcite{}.   \SiAI{} has had a broad impact on planning \mcite{}, gameplay \mcite{} and software/hardware verification \mcite{}, as well as in the field of mathematics \mcite{}.  On the other hand, \SuAI{} relates to numerical computing,  and focuses on approximate solutions by applying statistical and optimization methods. They are often data driven, and do not require an explicit algorithm to operate (beyond the indirect computations performed to approximate the result). The more relevant examples of \SuAI{} are \emph{Machine Learning} (ML) \mcite{} and \emph{Reinforcement Learning} \mcite{}, but older methods such as \emph{Kalman Filters} \mcite{} could arguably also fall under this category.  \SuAI{} has recently grown in quality and proliferated to many applications such as image processing \mcite{}, natural language processing \mcite{}, and gameplay \mcite{}. 
+
+In order to leverage their respective strengths, there is a growing interest in studying and developing methods that merge Symbolic and Subsymbolic AI \mcite{}. This broad category, nicked \emph{\InAI{}} by \citeauthor{Platzer_2024} (also called neuro-symbolic AI \mcite{}), can range from applying logical principles in the architecture of neural networks \mcite{}, to using large language models to generate better heuristics for theorem provers \mcite{}. Even more, \InAI{} has found particular success in cyber-physical systems, where it often plays the role of a controller \mcite{}. 
+
+Despite this, many \InAI{} systems often lack formal rigour. From the \SiAI{} perspective, \yada
+
+
+\TODO
