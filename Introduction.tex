@@ -3,28 +3,76 @@
 %% ---------------------------------------------------------------- 
 \chapter{Problem Statement} \label{Chapter:Problem Statement}
 
+\textbf{The two flavours of Artificial Intelligence.}
 Broadly speaking, there exists  two very distinct approaches to \emph{\AILong{}}  (\emph{\AI{}}): One rooted in reasoning and another in learning \citep{Platzer_2024, booch2021thinking}.  \SiAI{} (also referred to as good old fashioned AI \citep{haugeland1989artificial}, classical AI \citep{garnelo2019reconciling},  or logic-based AI \citep{thomason2003logic}) relates to algebraic computing, and emphasizes finding analytical solutions by manipulating logical expressions. This approach, by principle, prioritizes interpretability and preserving meaning. Current relevant examples include \emph{SMT/SAT solvers} \citep{barrett2018satisfiability, alyahya2022structure}, \emph{theorem provers} \citep{bartek2025vampire, barras1999coq},  as well as many \emph{programming languages} (PL) \citep{korner2022fifty, perkel2019julia, klabnik2023rust}.
-\jnote{Not sure about what to reference for programming languages} \SiAI{} has had a broad impact on planning \citep{geffner2013concise}, gameplay \citep{newell1958chess} and system verification \citep{leroy2016compcert, tihanyi2025new}, as well as on the field of mathematics \cite{Blokpoel2024}.  On the other hand, \SuAI{} (also referred to as pattern engines \citep{julia2020there})
+%\jnote{Not sure about what to reference for programming languages} 
+\SiAI{} has had a broad impact on planning \citep{geffner2013concise}, gameplay \citep{newell1958chess} and system verification \citep{leroy2016compcert, tihanyi2025new}, as well as on the field of mathematics \cite{Blokpoel2024}.  On the other hand, \SuAI{} (also referred to as pattern engines \citep{julia2020there})
 %\jnote{I like the term "universal approximators", based on the universal approximation theorem that states that a neural network can approximate any continuous function to any desired degree of accuracy. I feel it better portrais what subsymbolic AI is, and would like to add it to the list of alternative names. But as far as I know its not been introduced before.}
 relates to numerical computing,  and focuses on approximating solutions by applying statistical and optimization methods. They are often data driven, and do not require an explicit algorithm to operate (beyond the indirect computations performed to approximate the result). The more relevant examples of \SuAI{} are \emph{Deep Learning} \citep{norvig2002modern} and \emph{Reinforcement Learning} \citep{sutton1998reinforcement}, but older methods such as \emph{Kalman Filters} \citep{simon2001kalman} or \emph{Monte Carlo Simulation} \citep{martin2024computing} could arguably also fall under this category.  \SuAI{} has recently grown in quality and proliferated to many applications such as image/language processing \citep{thapa2024application, vaswani2017attention}, and simulation \citep{jumper2021highly}. 
 
-In order to leverage their respective strengths, there is a growing interest in studying and developing methods that merge Symbolic and Subsymbolic AI. This broad category, nicked \emph{\InAI{}}  \citep{Platzer_2024} (also referred to as neuro-symbolic AI \citep{d2009neural}, or hybrid intelligent systems \citep{medsker2012hybrid}), can range from applying logical principles in the architecture of \emph{ \NN{}s} (NN)  \citep{badreddine2022logic}, to using \SuAI{} to generate better heuristics for theorem provers \citep{laurent2022learning}. Even more, \InAI{} has found particular success in cyber-physical systems, where it often plays the role of a controller \citep{Platzer_2024}. 
+\textbf{\InAI{}.} In order to leverage their respective strengths, there is a growing interest in studying and developing methods that merge Symbolic and Subsymbolic AI. This broad category, nicked \emph{\InAI{}}  \citep{Platzer_2024} (also referred to as neuro-symbolic AI \citep{d2009neural}, or hybrid intelligent systems \citep{medsker2012hybrid}), can range from applying logical principles in the architecture of \emph{ \NN{}s} (NN)  \citep{badreddine2022logic}, to using \SuAI{} to generate better heuristics for theorem provers \citep{laurent2022learning}. Even more, \InAI{} has found particular success in cyber-physical systems, where it often plays the role of a controller \citep{Platzer_2024}.
 
- There exists, then, a need for stronger theoretical guarantees for \InAI{} systems. Despite this, many \InAI{} systems often lack formal rigour, which prevents us from taking full advantage of its components. From the \SiAI{} perspective,  many symbolic principles are often haphazardly applied. Even more, many \InAI{} systems lack logical, algebraic or categorical characterizations, with proper syntax and semantics ( see, e.g., \cite{kaposi2024second}). Therefore, the interpretability and theoretical guarantees that symbolic systems benefit from end up being obfuscated. This is also exacerbated when dealing with \emph{\NN{}} (NN), widely considered to be black boxes \citep{buhrmester2021analysis}. On the other hand, the statistical and probabilistic guarantees that are given for certain \SuAI{}  systems (such as robustness \citep{casadio2022neural} and generalization error boundaries \citep{jakubovitz2019generalization} ), as well as the effects that \SiAI{} principles may have on performance, remain understudied for \InAI{}.
-
-Being so, during my PhD I aim to aid in the development of formal theories and guarantees for \InAI{}, applying techniques from both the Symbolic and Subsymbolic AI communities. Our current approach focuses on the study of \emph{\QL{}s} (QL), i.e.~logics that model the real numbers. They function as a bridge between formal logic and machine learning, and may provide a proper logical interpretation for \InAI{} systems.
-
-To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
+\textbf{\DL{}.} One of the main challenges of \InAI{} is the grounding of symbolic knowledge into numerical representations. A promising approach is the study of \emph{\QL{}s} (QL), i.e.~logics that model the real numbers. Some relevant QLs include \emph{Fuzzy Logics} \citep{cintula2011handbook} and the \emph{Logics of The Lawvere Quantile} \citep{bacci2023propositional}. To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
 \begin{equation}
 \begin{split}
     \Phi \ni \phi &:= A \,|\, \phi \land \phi
 \end{split}
 \end{equation}
 where $A$ is interpreted in a domain $D \subseteq \Ereal$. $D$ varies among logics and restricts the interpretation of connectives. For example, the
-G\"{o}del logic \citep{BAAZ200723} has a standard semantics over $[0, 1]$ where the conjunction is interpreted as the minimum function.
+G\"{o}del logic \citep{BAAZ200723} has a standard semantics over $[0, 1]$ where the conjunction is interpreted as the minimum function. \emph{\DL{}s} (DL) form a family of methods that apply key insights from QLs to \InAI{}. DLs have been applied on property-driven training \citep{FLINKOW2025103280}, safe-by-construction systems \citep{badreddine2022logic}, as well as SAT solving \mcita{}. 
 
-Recently, there was a surge of interest in QLs, stimulated by the growing interest in \emph{AI safety} \citep{dalrymple2024guaranteedsafeaiframework, davidad24}. \emph{\DL{}s} (DL) form a family of methods that apply key insights from QLs to this domain for property-driven learning and safe-by-construction \InAI{} \citep{FLINKOW2025103280, badreddine2022logic}. Nevertheless, there is one fundamental problem that DLs face: Many properties of interest for ML involve quantifiers, yet the majority of QLs are propositional \citep{bacci2023propositional, cintula2011handbook, slusarz2023logic}.  Expanding some sound and complete propositional QLs to first-order logic often comes at the expense of either completeness or continuity, properties relevant for Symbolic and Subsymbolic AI, respectively.  For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \cite{prooffuzzy,slusarz2023logic}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \cite{BAAZ200723}. Recently, a promising solution was proposed by \citeauthor{capucci2025quantifiersquantitativereasoning}: Interpreting quantifiers as \textit{$p$-means} \citep{capucci2025quantifiersquantitativereasoning}, a generalization of $p$-norms over a probability space \citep{lpspaces}.  
+\textbf{What makes a good DL.} To function as a bridge between symbolic and subsymbolic AI, a DL would benefit from certain properties. From the \SiAI{} perspective, a DL should be expressive enough to encode properties of interest (e.g. see \mcita{}). Even more, to certify its implementation, a DL should possess a deductive system, as well as some form of soundness and completeness proofs with respect to a semantics \mcita{}. From the \SuAI{} perspective, differentiability of its interpretation is an obvious candidate; continuity or convexity are also widely considered desirable; \mcita{} also suggest characterizing DLs in terms of their \textit{geometric properties}: \emph{scale-invariance}, \emph{weak smoothness} and \emph{shadow-lifting}, among others \mcita{}. However, it has been proven that a DL cannot meet shadow-lifting while being idempotent and associative. Moreover, it is not well understood the effects that DLs have on performance \mcita{}, as well as on the statistical and probabilistic guarantees of certain systems, such as robustness \citep{casadio2022neural} and generalization error boundaries \citep{jakubovitz2019generalization}.
 
-By leveraging these results, we are currently developing a complete and continuous first-order DL with full theoretical rigour, to avoid the common shortcomings  of \InAI{} stated above. Furthermore, we seek to formalize our results in the Rocq proof assistant, with the aid of the \mathcomp{} library \citep{mathcomp}. In this progression review I present the state of the art of \yada, expand on our current approach, present some preliminary results,  and discuss my next steps.
+%\jnote{Mention shadow lifting doesnt allow assoc or idemp}
 
-\jnote{Not sure what to put in the state of the art. The easiest thing to do would be to focus just on quantitative logics. But perhaps thats too limiting? I must also remember I must submit by the end of october...}
+\textbf{The quantifier problem.} Nevertheless, there is one fundamental problem that DLs face: Many properties of interest for machine learning involve quantifiers, yet the majority of QLs are propositional \mcita{}. A canonical specification of this kind is  \textit{robustness} \mcita{},  i.e. small perturbations to the inputs of a neural network should result in small changes to its output, formally:
+\begin{definition}[$\epsilon$-$\delta$-Robustness] % no space here
+\label{Robustness}%
+    Let $\epsilon, \delta \in \real^+$, $||\cdot||$ be a norm, and $f : \real^n \rightarrow \real^m$ be a measurable function.
+    One says \textit{$f$ is $\epsilon$-$\delta$-robust} around $\bar x \in \real ^ n$ if 
+    \begin{equation}
+    \label{eq:robustness}
+        \forall x\in \real^n , ||x - \bar x|| \leq \epsilon \Rightarrow || 
+			f(x) - f(\bar x)|| \leq \delta  
+    \end{equation}
+\end{definition}
+
+Expanding some sound and complete propositional QLs to first-order logic often comes at the expense of either completeness or continuity.  
+For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \mcita{}.
+However, connectives of this logic are not continuous and therefore not suitable for gradient-descent algorithms. Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?  
+
+\textbf{A novel approach.} Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?   Recently, a promising approach for first-order QLs was proposed by \mcita{}: interpreting quantifiers as \textit{$p$-means} \mcita{}, a generalization of $p$-norms over a probability space \mcita{}. \mcita{} also "softnesses" the logic by adding a modality that balances shadow-lifting and idempotence. We build on \mcita{} ideas to develop a novel well-behaved DL. Unlike \mcita{}, who uses a deep-inference inspired framework \mcita{}, our approach follows the subtructural logic tradition \mcita{}, which we leverage to give algebraic semantics for our DL, while studying its relation to other substructural logics. To provide assurance of the correctness of our results, we aim to mechanise our proofs in Rocq, making use of its Mathematical Components library (\mathcomp{}) \cite{mathcomp}. With this formalization, also seek to further shorten the gap between the Symbolic and Subsymbolic traditions. 
+
+\section{Research Requirements}
+The preceding introduction highlights two groups of properties desirable for DLs: \emph{Symbolic} and \emph{Subsymbolic} properties. 
+
+\textbf{Symbolic properties.} For our logic to be expressive, it should possess negation, conjunction and disjunction operators. Negation should be \emph{involutive}; conjunction and disjunction should be \emph{commutative}, \emph{associative} and \emph{idempotent}; and all operators should \emph{distribute} in the usual manner \mcita{}. If a logic meets all previous properties we say it is \emph{compositional}. We also aim for our DL to be \emph{sound} and \emph{complete}. Intuitively, a logic is sound if any sentence that is provable in its deductive system is also true on its semantics \mcita{}. Conversely, a logic is complete if any sentence that is true on its semantics is also provable in its deductive system \mcita{}. While soundness provides theoretical guarantees of correctness, completeness is needed to guarantee that the syntax and the semantics of the logic match.
+
+\textbf{Subsymbolic properties.} The interpretation of our logic should be \emph{differentiable}, and meet the following geometric properties proposed by \mcita{}: \emph{scale-invariance}, \emph{weak smoothness} and \emph{shadow-lifting} \mcita{}. All previous properties are useful for optimization. %Aditionally, we would like our DL to improve the \emph{performance} and \emph{generalizability} of the systems that implement it.  
+
+\section{Research Questions}
+
+Our high-level goal is to develop and study a DL that meets the symbolic and subsymbolic properties. To this aim, we divide our research into \yada{} research questions:
+
+\begin{enumerate}
+    \item \textbf{Sound propositional DL.} Can we develop a sound compositional propositional DL, while maintaining subsymbolic properties? 
+    
+    Our current DL works as an extension of bunched logic \mcita{}, which is itself an extension linear logic \mcita{}.
+    Like \mcita{}, our DL also makes use of a modality to balance shadow-lifting and idempotence. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation, with $p \geq 1$ as defining equation \mcita{}. We are currently researching how to develop algebraic semantics \mcita{}.
+    
+    \item \textbf{Complete propositional DL.} Can we prove this propositional DL complete?
+    
+    A first approximation to completeness is to prove that a collection of axioms that are true in the semantics, are provable (e.g. prelinearity \mcita{}). While this does not guarantee completeness, it is an informative necessary condition. Then, we hope to leverage our DLs relation to substructural logics to prove completeness by applying known techniques from fuzzy logic \mcita{}. It remains unclear if this is possible. 
+    \item \textbf{Sound predicate DL.} Can our DL be extended into a sound first-order logic, while maintaining subsymbolic properties?
+
+    Extending into first-order requires modifying our numerical interpretation, and therefore our semantics. For our current approach to maintain soundness, additional conditions must be imposed on substitution. On the other hand, it remains unclear if subsymbolic properties are maintained. 
+    
+    \item \textbf{Complete predicate DL.} Can we prove our predicate DL complete?
+    
+    Similar approach to the propositional case. 
+    
+    \item \textbf{Practicality.} Does our propositional/predicate DL offer some insight on property-driven training?
+
+    We would like to study the effects of our DL on the performance and generalisability of its implementations \mcita{}. This requires both theoretical and experimental evidence. 
+    
+\end{enumerate}
