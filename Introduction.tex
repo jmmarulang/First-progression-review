@@ -1,7 +1,7 @@
 %% ----------------------------------------------------------------
 %% Introduction.tex
 %% ---------------------------------------------------------------- 
-\chapter{Problem Statement} \label{Chapter:Problem Statement}
+\section{Problem Statement} \label{section:Problem Statement}
 
 \textbf{The two flavours of Artificial Intelligence.}
 Broadly speaking, there exists  two very distinct approaches to \emph{\AILong{}}  (\emph{\AI{}}): One rooted in reasoning and another in learning \citep{Platzer_2024, booch2021thinking}.  \SiAI{} (also referred to as good old fashioned AI \citep{haugeland1989artificial}, classical AI \citep{garnelo2019reconciling},  or logic-based AI \citep{thomason2003logic}) relates to algebraic computing, and emphasizes finding analytical solutions by manipulating logical expressions. This approach, by principle, prioritizes interpretability and preserving meaning. Current relevant examples include \emph{SMT/SAT solvers} \citep{barrett2018satisfiability, alyahya2022structure}, \emph{theorem provers} \citep{bartek2025vampire, barras1999coq},  as well as many \emph{programming languages} (PL) \citep{korner2022fifty, perkel2019julia, klabnik2023rust}.
@@ -12,7 +12,7 @@ relates to numerical computing,  and focuses on approximating solutions by apply
 
 \textbf{\InAI{}.} In order to leverage their respective strengths, there is a growing interest in studying and developing methods that merge Symbolic and Subsymbolic AI. This broad category, nicked \emph{\InAI{}}  \citep{Platzer_2024} (also referred to as neuro-symbolic AI \citep{d2009neural}, or hybrid intelligent systems \citep{medsker2012hybrid}), can range from applying logical principles in the architecture of \emph{ \NN{}s} (NN)  \citep{badreddine2022logic}, to using \SuAI{} to generate better heuristics for theorem provers \citep{laurent2022learning}. Even more, \InAI{} has found particular success in cyber-physical systems, where it often plays the role of a controller \citep{Platzer_2024}.
 
-\textbf{\DL{}.} One of the main challenges of \InAI{} is the grounding of symbolic knowledge into numerical representations. A promising approach is the study of \emph{\QL{}s} (QL), i.e.~logics that model the real numbers. Some relevant QLs include \emph{Fuzzy Logics} \citep{cintula2011handbook} and the \emph{Logics of The Lawvere Quantile} \citep{bacci2023propositional}. To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
+\textbf{\DL{}.} One of the main challenges of \InAI{} is the grounding of symbolic knowledge into numerical representations. A promising approach is the study of \emph{\QL{}s} (QL), i.e.~logics that model the real numbers. They have been studied for decades, and date back to the ideas of Kleene, G\"{o}del, and Łukasiewicz at the start of the 20th century \citep{cintula2011handbook, prooffuzzy}. Some relevant QLs include \emph{Fuzzy Logics} \citep{cintula2011handbook} and the \emph{Logics of The Lawvere Quantile} \citep{bacci2023propositional}. To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
 \begin{equation}
 \begin{split}
     \Phi \ni \phi &:= A \,|\, \phi \land \phi
@@ -38,32 +38,31 @@ G\"{o}del logic \citep{BAAZ200723} has a standard semantics over $[0, 1]$ where 
 \end{definition}
 
 Expanding some sound and complete propositional QLs to first-order logic often comes at the expense of either completeness or continuity.  
-For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \mcita{}.
-However, connectives of this logic are not continuous and therefore not suitable for gradient-descent algorithms. Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?  
+%For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \mcita{}.
+However, connectives of this logic are not continuous and therefore not suitable for gradient-descent algorithms.
 
-\textbf{A novel approach.} Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?   Recently, a promising approach for first-order QLs was proposed by \mcita{}: interpreting quantifiers as \textit{$p$-means} \mcita{}, a generalization of $p$-norms over a probability space \mcita{}. \mcita{} also "softnesses" the logic by adding a modality that balances shadow-lifting and idempotence. We build on \mcita{} ideas to develop a novel well-behaved DL. Unlike \mcita{}, who uses a deep-inference inspired framework \mcita{}, our approach follows the subtructural logic tradition \mcita{}, which we leverage to give algebraic semantics for our DL, while studying its relation to other substructural logics. To provide assurance of the correctness of our results, we aim to mechanise our proofs in Rocq, making use of its Mathematical Components library (\mathcomp{}) \cite{mathcomp}. With this formalization, also seek to further shorten the gap between the Symbolic and Subsymbolic traditions. 
+\textbf{A novel approach.} Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?   Recently, a promising approach for first-order QLs was proposed by \mcita{}: interpreting quantifiers as \textit{$p$-means} \mcita{}, a generalization of $p$-norms over a probability space \mcita{}. \mcita{} also "softnesses" the logic by adding a modality that balances shadow-lifting and idempotence. We build on \mcita{} ideas to develop a novel well-behaved DL. Unlike \mcita{}, who uses a deep-inference inspired framework \mcita{}, our approach follows the subtructural logic tradition \mcita{}, taking elements from both bunched logic \mcita{} (an extension of linear logic \mcita{}) and fuzzy logic \mcita{}. We leverage this relation to give algebraic semantics for our DL \mcita{}, while studying its relation to other substructural logics. To provide assurance of the correctness of our results, we aim to mechanise our proofs in Rocq, making use of its Mathematical Components library (\mathcomp{}) \cite{mathcomp}. With this formalization, we also seek to further shorten the gap between the Symbolic (theorem provers) and Subsymbolic (real analysis) traditions. 
 
-\section{Research Requirements}
+\subsection{Research Requirements}
 The preceding introduction highlights two groups of properties desirable for DLs: \emph{Symbolic} and \emph{Subsymbolic} properties. 
 
-\textbf{Symbolic properties.} For our logic to be expressive, it should possess negation, conjunction and disjunction operators. Negation should be \emph{involutive}; conjunction and disjunction should be \emph{commutative}, \emph{associative} and \emph{idempotent}; and all operators should \emph{distribute} in the usual manner \mcita{}. If a logic meets all previous properties we say it is \emph{compositional}. We also aim for our DL to be \emph{sound} and \emph{complete}. Intuitively, a logic is sound if any sentence that is provable in its deductive system is also true on its semantics \mcita{}. Conversely, a logic is complete if any sentence that is true on its semantics is also provable in its deductive system \mcita{}. While soundness provides theoretical guarantees of correctness, completeness is needed to guarantee that the syntax and the semantics of the logic match.
+\textbf{Symbolic properties.} For our logic to be expressive, it should possess negation, conjunction and disjunction operators. Negation should be \emph{involutive}; conjunction and disjunction should be \emph{commutative}, \emph{associative} and \emph{idempotent}; and all operators should \emph{distribute} in the usual manner \mcita{}. If a logic meets all previous properties we say it is \emph{compositional}. Similarly, we would like our universal quantifiers to be \emph{aggregation operators}, as defined on \mcita{}, and existencials to be their duals \mcita{}. If a logic meets these properties, we say it is \emph{aggregative}.  We also aim for our DL to be \emph{sound} and \emph{complete}. Intuitively, a logic is sound if any sentence that is provable in its deductive system is also true on its semantics \mcita{}. Conversely, a logic is complete if any sentence that is true on its semantics is also provable in its deductive system \mcita{}. While soundness provides theoretical guarantees of correctness, completeness is needed to guarantee that the syntax and the semantics of the logic match.
 
 \textbf{Subsymbolic properties.} The interpretation of our logic should be \emph{differentiable}, and meet the following geometric properties proposed by \mcita{}: \emph{scale-invariance}, \emph{weak smoothness} and \emph{shadow-lifting} \mcita{}. All previous properties are useful for optimization. %Aditionally, we would like our DL to improve the \emph{performance} and \emph{generalizability} of the systems that implement it.  
 
-\section{Research Questions}
+\subsection{Research Questions}
 
-Our high-level goal is to develop and study a DL that meets the symbolic and subsymbolic properties. To this aim, we divide our research into \yada{} research questions:
+Our high-level goal is to develop and study a DL that meets the symbolic and subsymbolic properties. To this aim, we divide our research into five research questions:
 
 \begin{enumerate}
     \item \textbf{Sound propositional DL.} Can we develop a sound compositional propositional DL, while maintaining subsymbolic properties? 
     
-    Our current DL works as an extension of bunched logic \mcita{}, which is itself an extension linear logic \mcita{}.
-    Like \mcita{}, our DL also makes use of a modality to balance shadow-lifting and idempotence. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation, with $p \geq 1$ as defining equation \mcita{}. We are currently researching how to develop algebraic semantics \mcita{}.
+    Our current DL could be summarized as a "soft" bunched logic \mcita{} with hypersequents from fuzzy logic \mcita{}. Like \mcita{}, our DL makes use of a modality to balance shadow-lifting and compositionality. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation. We are currently researching how to develop algebraic semantics.
     
     \item \textbf{Complete propositional DL.} Can we prove this propositional DL complete?
     
     A first approximation to completeness is to prove that a collection of axioms that are true in the semantics, are provable (e.g. prelinearity \mcita{}). While this does not guarantee completeness, it is an informative necessary condition. Then, we hope to leverage our DLs relation to substructural logics to prove completeness by applying known techniques from fuzzy logic \mcita{}. It remains unclear if this is possible. 
-    \item \textbf{Sound predicate DL.} Can our DL be extended into a sound first-order logic, while maintaining subsymbolic properties?
+    \item \textbf{Sound predicate DL.} Can our DL be extended into a sound aggregative logic, while maintaining subsymbolic properties?
 
     Extending into first-order requires modifying our numerical interpretation, and therefore our semantics. For our current approach to maintain soundness, additional conditions must be imposed on substitution. On the other hand, it remains unclear if subsymbolic properties are maintained. 
     

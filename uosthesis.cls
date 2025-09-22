@@ -19,7 +19,7 @@
 %% Adjust the book class to match the requirements
 %% Set spacing, line and paragraph options
 %% Set LaTeX builder options (work break penalties etc.)
-\def\baseclass{book}
+\def\baseclass{article}
 \RequirePackage{xcolor}
 \colorlet{linkBlue}{blue}
 \colorlet{custGray}{gray}

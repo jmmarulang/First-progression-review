@@ -1,46 +1,18 @@
 %% ----------------------------------------------------------------
 %% LiteratureReview.tex
 %% ---------------------------------------------------------------- 
-\chapter{Literature Review} \label{Chapter:LiteratureReview}
+\section{Literature Review} \label{section:LiteratureReview}
 
-\yada
- 
-\jnote{I add the subsection to give an idea of how the text could be structured. They can be removed later on}
+In this section we start by reviewing some approaches to QLs, as well as their quantification. Since our investigation cares about their application as DLs, we focus only on their numerical interpretation (as opposed of a, e.g. possibilistic interpretation \mcita{}). Table \mcita{} shows a summary of their numerical interpretations and properties. We then review how DLs have been applied to \InAI{} systems and their impact. Lastly, we review how interactive theorem provers have been leveraged for AI verification.
 
-\jnote{Is there any work that deals with the proof-theoretic study of some kind of \InAI{} ?}
-\section{Mathematical Foundations of Quantitative Logics}
-\subsection{Fuzzy logics}
-\yada. QLs have been studied for decades, and date back to the ideas of Kleene, G\"{o}del, and Łukasiewicz at the start of the 20th century \citep{cintula2011handbook, prooffuzzy}. Among them, the oldest and most understood are \emph{Fuzzy Logics} \citep{cintula2011handbook, prooffuzzy}. These are logics where conjunction is given by a \emph{Triangular Norm} \cite{cintula2011handbook, prooffuzzy} 
-\jnote{And other norms?}
-and relate to the family of \emph{Substructural Logics} \citep{galatos2007residuated}. Some relevant fuzzy logics include \yada. Fuzzy logics have been extended into first-order with the infimum and supremum as models for the universal and existencial quantifiers \mcita{}. However, these extensions are not trivial and come with their own quirks \yada.
-Fuzzy logics appear in \AI{} as \yada
-\jnote{Where to find information on first-order extensions of fuzzy logics?}
+\textbf{Fuzzy logics and substructural logics.} Fuzzy logics were introduced via the idea that truth is a matter of degree, and were some of the first logics to leave the Boolean interpretation \mcita{}. The full exposition of their significance is beyond the scope of this review (for more information, see \mcita{}). Generally, they model the interval $[0,1]$ and their implication is defined as the residuum of conjunction, which in part is defined as a \emph{triangular norm} (t-norm) \mcita{}. Fuzzy logics with left-continuous t-norms belong to the family of substructural logics, i.e. logics with deductive systems that lack some structural rules from classical Gentzen calculi \mcita{}. Some relevant fuzzy logics of this kind include ŁukasiewiczIt, Product and G\"{o}del \mcita{}. It is well known that residuated lattices give complete algebraic semantics for propositional substructural logics \mcita{}. However, it is not trivial how to extended these logics into first-order without loosing completeness. Under the standard interpretation of quantifiers as infimum and supremum \mcita{}, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ \mcita{}. While other approaches for fuzzy quantifiers have been studied (such as t-quantifier and other aggregation operators \mcita{}) it remains unclear how they affect the deductive systems.
 
-\subsection{Logics of the Lawvere Quantile}
+\textbf{Logics of the lawvere quantile.}
 
-Logics from the \emph{Lawvere Quantile} \mcita{} have been proposed to reconcile logic and quantitative reasoning \yada. Recently Capucci proposed \yada 
+\textbf{Logics from the \InAI{} community.}
 
-Logics of the lawvere quantile appear in \AI{} as \yada
+\textbf{Applications in \InAI{}.}
 
-\subsection{Differentiable Logics}
-\jnote{There will be some overlap here. In this subsection I want to focus on logics proposed by the machine learning community}
-These are logics designed for \InAI{} \yada
-From the \SiAI{} perspective, some desirable properties of DLs include \yada
-From the \SuAI{} perspective, some desirable properties of DLs include \yada
-\section{Applications of QLs in \InAI{}}
-Beyond providing possible semantics for \InAI{}, and therefore theoretical guarantees for backends \yada, QLs have also been applied more directly \yada
-
-\subsection{As property driven training/loss functions}
-\yada there is also an interest in providing programming language support for DLs \yada Vehicle and Caisar \yada
-\subsection{As Logic Tensor Networks/Fuzzy circuits}
-
-
-
-%There are several approaches to the proof-theoretic study of systems. 
-
-%QLs have proven to be a promising approach for giving semantics to \InAI{} \mcita{}. 
-
-
-
+\textbf{Applications in \InAI{}.}
 
 \TODO
