@@ -55,7 +55,7 @@
 %% \usepackage[T1]{fontspec}
 \usepackage[defaultsans]{droidsans}
 \usepackage{mathpazo}
-%%\usepackage[T1]{fontenc} %This may not be necessary for english only text
+\usepackage[T1]{fontenc} %This may not be necessary for english only text
 
 \usepackage{setspace}
 \onehalfspacing
@@ -77,19 +77,19 @@
 \widowpenalty=9999                % Almost no widows at bottom of page.
 \clubpenalty=9999                 % Almost no orphans at top of page.
 \interfootnotelinepenalty=9999    % Almost never break footnotes.
-\usepackage{fancyhdr}
-\fancyhead[LE]{\textrm\thepage}
-\fancyhead[LO]{\fancyplain{}{\textsl{\rightmark}}}
-\fancyhead[RE]{\fancyplain{}{\textsl{\leftmark}}}
-\fancyhead[RO]{\textrm\thepage}
-\chead{}\lfoot{}\rfoot{}\cfoot{}
-\pagestyle{fancy}
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyhead[OR]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-}
-\renewcommand{\chaptermark}[1]{\btypeout{\thechapter.\space #1}\markboth{\chaptername\ \thechapter.\hspace{1em}#1}{}}
+%\usepackage{fancyhdr}
+%\fancyhead[LE]{\textrm\thepage}
+%\fancyhead[LO]{\fancyplain{}{\textsl{\rightmark}}}
+%\fancyhead[RE]{\fancyplain{}{\textsl{\leftmark}}}
+%\fancyhead[RO]{\textrm\thepage}
+%\chead{}\lfoot{}\rfoot{}\cfoot{}
+%\pagestyle{fancy}
+%\fancypagestyle{plain}{
+%  \fancyhf{}
+%  \fancyhead[OR]{\thepage}
+%  \renewcommand{\headrulewidth}{0pt}
+%}
+%\renewcommand{\chaptermark}[1]{\btypeout{\thechapter.\space #1}\markboth{\chaptername\ \thechapter.\hspace{1em}#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\hspace{1em}#1}}
 \renewcommand{\subsectionmark}[1]{}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
@@ -106,8 +106,8 @@
 %% Set the styling for non text elements of the document
 \usepackage{amsmath,amsfonts,amssymb,amscd,amsthm,xspace}
 \theoremstyle{plain}
-\newtheorem{example}{Example}[chapter]
-\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{example}{Example}[section]
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}

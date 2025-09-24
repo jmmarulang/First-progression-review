@@ -1,7 +1,107 @@
 %% ----------------------------------------------------------------
 %% CurrentApproach.tex
 %% ---------------------------------------------------------------- 
-\section{Current Approach} \label{section:CurrentApproach}
+\section{Preliminaries and Current Approach} \label{section:CurrentApproach}
 
-\jnote{What to include?}
-\TODO
+\subsection{Preliminaries and Notation}
+
+\subsubsection{Logic of the Reals}
+%\subsubsection{\citeauthor{capucci2024quantifiers}'s logic}
+We introduce preliminaries from the extended arithmetic of the reals. They are a modified version of \cite{capucci2024quantifiers}. We diverge from \emph{ibid.} in notation. Our base setting are the positive extended reals $[0,\infty]$. %, considered as sup-lattice with the usual order $\leq$.
+%The topology on $\real^+$ is extended to $[0,\infty]$ by adding to the opens all the intervals $(a, \infty]$.
+%As a measure space, $[0,\infty]$ is considered equipped with completion of its Borel $\sigma$-field (i.e. the Lebesgue $\sigma$-field); and then further equipped with the obvious extension of the Lebesgue measure given by setting $\lambda((a,\infty]) = \infty$ for $a < \infty$ and $\lambda(\{\infty\})=0$.
+
+\begin{definition}[$p$-Sum]
+\label{$p$-Sum}
+    %On $[0,\infty]$, 
+    \emph{$p$-sum} and \emph{harmonic $p$-sum} are, respectively, the following operations:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \psum{p} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $a$ 		& $\infty$\\
+			$b \in (0,\infty)$ & $b$ & $(a^{p}+b^{p})^{1/p}$		& $\infty$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \phsum{p} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $0$\\
+			$b \in (0,\infty)$ & $0$ 		& $(a^{-p}+b^{-p})^{-1/p}$	   & $b$\\
+			$0$ 		   & $0$ 	& $a$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+    Where $p \in [0,\infty].$
+\end{definition}
+
+\begin{lemma}[Additive Collapse]
+    The following are the limits of $\psum{p}$ and $\phsum{p}$ for $p \longrightarrow \infty$:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \psum{\infty} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $a$ 		& $\infty$\\
+			$b \in (0,\infty)$ & $b$ & $\max{}(a,b)$		& $\infty$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \phsum{\infty} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $0$\\
+			$b \in (0,\infty)$ & $0$ 		& $\min{}(a,b)$	   & $b$\\
+			$\infty$ 		   & $0$ 	& $a$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{lemma}
+
+\begin{definition}[Multiplication]
+\label{Multiplication}
+    On $[0,\infty]$, \emph{conjunctive multiplication} and \textbf{disjunctive multiplication} are, respectively, the following operations:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \conmul{} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $0$ 		& $0$\\
+			$b \in (0,\infty)$ & $0$ & $ab$		& $\infty$\\
+			$\infty$ 		   & $0$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \dismul{} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $\infty$\\
+			$b \in (0,\infty)$ & $0$ 		& $ab$	   & $\infty$\\
+			$\infty$ 		   & $\infty$ 	& $\infty$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{definition}
+
+Notice $\conmul{}$ and $\dismul{}$ differ only when $a$ is $0$ and $b$ is $\infty$, or \textit{vice versa}. Often we write $ab$ instead of $a \conmul{} b$.
+
+\begin{definition}[Division]
+\label{Division}
+    On $[0,\infty]$, \emph{division} is:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \ediv{} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $\infty$ & $0$ 		& $0$\\
+			$b \in (0,\infty)$ & $\infty$ & $b/a$		& $0$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{definition}
+
+\begin{definition}[Duality Operator]
+\label{dual}
+    Let $a \in [0,\infty]$. Then the \emph{dual} of $a$ is
+    \[  a^{-1} =
+    \begin{cases}
+    1/a  & a \in (0,\infty)  \\
+    \infty & a = 0 \\
+    0 & a = \infty \\
+   \end{cases}
+    \]
+\end{definition}
