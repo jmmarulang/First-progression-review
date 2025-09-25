@@ -105,7 +105,8 @@
 %% -------------------- Figure/Table/Eq/Listing Stying --------------------
 %% Set the styling for non text elements of the document
 \usepackage{amsmath,amsfonts,amssymb,amscd,amsthm,xspace}
-\theoremstyle{plain}
+%\theoremstyle{plain}
+\theoremstyle{definition}
 \newtheorem{example}{Example}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}

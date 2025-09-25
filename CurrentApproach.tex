@@ -1,11 +1,13 @@
 %% ----------------------------------------------------------------
 %% CurrentApproach.tex
 %% ---------------------------------------------------------------- 
-\section{Preliminaries and Current Approach} \label{section:CurrentApproach}
+\section{Background and Preliminary Results} \label{section:CurrentApproach}
+
+In this section we introduce some relevant background theory and summarize some preliminary results. We introduce a propositional version of \OL{} by its syntax, semantics, and sequent calculus. We then mention our progress in formalization.
 
 \subsection{Preliminaries and Notation}
-
-\subsubsection{Logic of the Reals}
+\label{Preliminaries}
+%\subsubsection{Logic of the Reals}
 %\subsubsection{\citeauthor{capucci2024quantifiers}'s logic}
 We introduce preliminaries from the extended arithmetic of the reals. They are a modified version of \cite{capucci2024quantifiers}. We diverge from \emph{ibid.} in notation. Our base setting are the positive extended reals $[0,\infty]$. %, considered as sup-lattice with the usual order $\leq$.
 %The topology on $\real^+$ is extended to $[0,\infty]$ by adding to the opens all the intervals $(a, \infty]$.
@@ -32,7 +34,7 @@ We introduce preliminaries from the extended arithmetic of the reals. They are a
 			$0$ 		   & $0$ 	& $a$ & $\infty$
 		\end{tabular}
 	\end{equation*}
-    Where $p \in [0,\infty].$
+    Where $p \in (0,\infty].$
 \end{definition}
 
 \begin{lemma}[Additive Collapse]
@@ -58,7 +60,7 @@ We introduce preliminaries from the extended arithmetic of the reals. They are a
 
 \begin{definition}[Multiplication]
 \label{Multiplication}
-    On $[0,\infty]$, \emph{conjunctive multiplication} and \textbf{disjunctive multiplication} are, respectively, the following operations:
+    On $[0,\infty]$, \emph{conjunctive multiplication} and \emph{disjunctive multiplication} are, respectively, the following operations:
     \begin{equation*}
 		\begin{tabular}{c|ccc}
 			$a \conmul{} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
@@ -97,7 +99,7 @@ Notice $\conmul{}$ and $\dismul{}$ differ only when $a$ is $0$ and $b$ is $\inft
 \begin{definition}[Duality Operator]
 \label{dual}
     Let $a \in [0,\infty]$. Then the \emph{dual} of $a$ is
-    \[  a^{-1} =
+    \[  \edual{a} =
     \begin{cases}
     1/a  & a \in (0,\infty)  \\
     \infty & a = 0 \\
@@ -105,3 +107,203 @@ Notice $\conmul{}$ and $\dismul{}$ differ only when $a$ is $0$ and $b$ is $\inft
    \end{cases}
     \]
 \end{definition}
+
+Notice $a^{-1} = a \ediv{} 1$,  $a \ediv{} b = a^{-1} \dismul{} b$ and 
+$a \dismul{} b = (a^{-1} \conmul{} b^{-1})^{-1}$. We sometimes slightly abuse the notation to write $a/b$ instead of $b \ediv a$ and $1/a$ instead of $\edual{a}$.
+
+\begin{comment}
+\subsection{Measure Spaces and $p$-means}\label{p-mean}
+
+%\begin{definition}[Measurable Spaces and Functions]
+%    Let $S, T$ be sets and $\sigmal{S}, \sigmal{T}$ be 
+%    $\sigma$-algebras. The pairs $(S, \sigmal{S})$ and $(T, \sigmal{T})$
+%     are \emph{measurable spaces}.\\ The function $f : S \rightarrow T$ is
+%      \emph{measurable} over $S$ with values in $T$ if and only if for every 
+%      $E \in \sigmal{T}$ the preimage of $E$ under $f$ is in $\sigmal{S}$, 
+%      that is, for all $E \in 
+%      \sigmal{T}$
+%    \begin{equation}
+%       f^{-1}(E) = \{x \in S_{1} \, | \,f(x) \in E \} \in \sigmal{S}.
+%    \end{equation}
+%\end{definition}
+
+\begin{definition}[Measure Space]
+    Let $S$ be a set and $\sigmal{S}$ be a $\sigma$-algebra over $S$. 
+    A \emph{measure} on $(S,\sigmal{S})$ is a function 
+    $\mu : \sigmal{S} \rightarrow [0,\infty]$ such that (1) $\mu (\varnothing) 
+    = 0$ and (2) if $\{ A_i : i \in I \}$ is a countable collection of pairwise 
+    disjoint sets in $\sigmal{S}$ then
+    \begin{equation}
+        \mu \left( \bigcup_{i \in I} A_i \right) = \sum_{i \in I} \mu (A_i).
+    \end{equation}
+    The triple $(S, \sigmal{S}, \mu)$ is called a \emph{measure space}, and a 
+    \emph{probability space} when $\mu(S)=1$, in which case $\mu$ is often 
+    denoted as $\mathbb{P}$.
+\end{definition}
+
+%\begin{definition}[Random Variable]
+%    Let $S,T$ be measurable spaces. A \emph{random variable} over $S$ 
+%    with values in $T$ is a measurable function 
+%    $X : S \rightarrow T$.
+%\end{definition}
+
+We give the following definitions for positive functions only, since this is 
+the integrals we use below.
+
+\begin{definition}[Simple Functions and Lebesgue Integral]
+    Let $(S, \sigmal{S})$ be a measurable space, $I$ be a finite index set, 
+    $a_i \in \mathbb{R}$ for each $i \in I$ and $\{ A_i : i \in I\}$ a 
+    collection of sets in $\sigmal{S}$. A \emph{simple function} on $S$ is one
+     that can be written as a finite linear combination of indicator functions 
+     of measurable subsets of $S$, i.e. one of the form 
+     $f = \sum_{i \in I}a_{i}\emph{1}_{A_i}$.
+    If $\emph{S} = (S, \sigmal{S}, \mu)$ is a measure space then:
+    \begin{enumerate}
+        \item If $f = \sum_{i \in I}a_{i}\emph{1}_{A_i}$ is a nonnegative 
+        simple function, the \emph{Lebesgue integral} of $f$ is
+        \begin{equation}
+            \int_{\emph{S}} f = \int_{S} f(s) \, \mu(\de s) = 
+            \sum_{i \in I} a_i \conmul \mu(A_i).
+        \end{equation}
+        \item If $f : S \rightarrow [0, \infty]$ is a measurable function, the \emph{Lebesgue integral} of $f$ is
+        \begin{equation}
+            \int_{\emph{S}} f = \int_{S} f(s) \, \mu(\de s) = 
+            \sup\left\{ \int_{S} g : g \text{ is simple and } g \leq f \right\}.
+        \end{equation}
+    \end{enumerate}
+\end{definition}
+
+The following definitions relate specifically to the new quantifier semantics. 
+They are what are classically known as generalized weighted means 
+\cite{mitrinovic1970analytic}, though the geometric mean, much like multiplication 
+above, bifurcates into a conjunctive and a disjunctive version.
+\\\\
+Throughout the following, fix a probability space 
+$\emph{S} = (S, \sigmal{S}, \mathbb{P})$.
+
+
+\begin{definition}[$p$-Means]
+\label{pmean}
+    Let $f : S \rightarrow \PEreal$ be a measurable function. For $p \in (0, \infty)$, the \emph{(generalized weighted) $p$-mean} of $f$ is
+    \begin{equation}
+        %\LMS{f}{p}{S} := \left(\int_{S} f(s)^p\, \mathbb{P}(\de s)(s)\right)^{1/p}
+        \LMS{f}{p}{\emph{S}} := \left(\int_{\emph{S}} f^{\,p}\right)^{1/p} = 
+        \left(\int_{S} f(s)^{\,p}\, \mathbb{P}(\de s)\right)^{1/p}
+    \end{equation}
+    where we extended the functions $(-)^p$ as follows
+    \begin{equation}
+        \infty^{p} =
+        \begin{cases}
+            1  & p = 0  \\
+            \infty & p > 0
+        \end{cases}
+        \hspace*{10ex}
+        0^{p} = 0.
+    \end{equation}
+    Dually, the \emph{(generalized weighted) harmonic $p$-mean} of $f$ is
+    \begin{equation}
+        \LMS{f}{-p}{\emph{S}} := 
+        \left(\LMS{f^{-1}}{p}{\emph{S}}\right)^{-1} = 
+        \left(\int_{\emph{S}} f^{\,-p}\right)^{-1/p} =
+        \left(\int_{S} f(s)^{\,-p}\, \mathbb{P}(\de s)\right)^{-1/p}.
+    \end{equation}
+\end{definition}
+
+When $\emph{S}$ can be inferred from the context (for example, when $f$ is a random 
+variable), we write $\LM{f}{p}$.
+
+The definition of $p$-means can be extended to $p=0$ and $p=\infty$ by taking limits \cite{capucci}. First we have
+
+\begin{lemma}
+\label{limitinfty}
+    As $p \longrightarrow +\infty$,
+    \begin{equation}
+        \LM{f}{+p} \longrightarrow \esup{f} =: \LM{f}{+\infty},
+        \qquad
+        \LM{f}{-p} \longrightarrow \einf{f} =: \LM{f}{-\infty}.
+    \end{equation}
+\end{lemma}
+
+These quantities are so defined:
+
+\begin{definition}[Essential Extrema]
+    Let $(S, \sigmal{S}, \mu)$ be a measure space and $f : S \rightarrow \PEreal$ a measurable function.
+    \begin{enumerate}
+        \item Let $U = \left\{ a \in \PEreal : \mu(\{ x \in X : a < f(x)\}) = 0\right\}$ and $\inf(U)$ be the infimum of U. The \emph{essential supremum} of $f$
+        is
+        \begin{equation}
+            \esup{f} = \inf U
+        \end{equation}
+        recalling that $\inf \varnothing = \infty$.
+        \item The \emph{essential infimum} of $f$ is
+        \begin{equation}
+            \einf{f} = - \,\esup{- f}
+        \end{equation}
+    \end{enumerate}
+\end{definition}
+
+On the other end of the spectrum, we have:
+
+\begin{lemma}
+\label{limitzero}
+    As $p \longrightarrow 0$, both $\LM{f}{+p}$ and $\LM{f}{-p}$ converge to a limit, thus defining \emph{disjunctive} and \emph{conjunctive geometric means}:
+    \begin{equation}
+        \LM{f}{+p} \longrightarrow: \LM{f}{+0},
+        \qquad
+        \LM{f}{-p} \longrightarrow: \LM{f}{-0}.
+    \end{equation}
+\end{lemma}
+
+For bounded functions, these quantities coincide with the classical (weighted) geometric mean:
+
+\begin{definition}[Geometric Mean]
+    Let $f : S \rightarrow [0,\infty)$ be a measurable function and $(S,\sigmal{S}, \mathbb{P})$ a measure space. The \emph{geometric mean} of $f$ is
+    \begin{equation}
+        GM[f] = \exp \left(\int_{S} \ln f(s)\, \mathbb{P}(\de s)\right)
+    \end{equation}
+\end{definition}
+
+For unbounded functions, conjunctive and disjunctive geometric means may differ in the same way as $\conmul{}$ and $\dismul{}$, namely in the way they handle $0$ and $\infty$. See \cite{capucci2024quantifiers} for clarifications.
+\end{comment}
+
+\subsection{Syntax}
+
+\citeauthor{slusarz2023logic} propose a common syntax for all DLs \citep{slusarz2023logic}. Here we adapt a subset of it.  For simplicity we use the same symbols of \cref{Preliminaries} for our formulas. 
+
+\cref{fig:syntax} defines the syntax of \OL{}. Types are given by Boolean or  Extended Positive Real Numbers ($(0,\infty]$). Formulas are freely generated from a set of atomic propositions over logical connectives that resemble those of linear logic \citep{Wadler1993, agliano2025algebraic},  excluding that the additive connectives are parametrised by a positive extended real $p$.\\
+
+\begin{figure}[H]
+\begin{subfigure}[t]{0.4\textwidth}
+	\begin{grammar}
+		<type> ::=  
+        \BoolType | \ERealType 
+
+        
+	\end{grammar}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{1\textwidth}
+	\begin{grammar}
+		<exprEPReal> $p$ ::=  
+        $p \in (0, \infty]$ 
+	\end{grammar}
+\end{subfigure}
+\begin{subfigure}[t]{1\textwidth}
+	\begin{grammar}
+		<exprBool> $\ni \phi_{0},\phi_{1}$ ::=  
+        $\one$ | $\top$ | $\bot$ | $\phi_{0} \ediv{} \phi_{1}$ | $\phi_{0} \conmul{} \phi_{1}$ | $\phi_{0} \psum{\elEReal} \phi_{1}$ | $\phi_{0} \phsum{\elEReal} \phi_{1}$ 
+	\end{grammar}
+\end{subfigure}
+\hfill
+\setlength{\belowcaptionskip}{-20pt} 
+	\caption{Types and expressions of \OL{}.\\
+	}
+	\label{fig:syntax}
+\end{figure}
+
+\subsection{Semantics}
+
+
+\subsection{Sequent Calculus}
+\subsection{Formalization}
+

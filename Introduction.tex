@@ -21,13 +21,13 @@ relates to numerical computing,  and focuses on approximating solutions by apply
 where $\phi$ is interpreted through a mapping $\tempty{\cdot} : \Phi \rightarrow D$ such that $ \tempty{\phi} \in D \subseteq \Ereal$. $D$ varies among logics and restricts the interpretation of connectives. For example, the
 G\"{o}del logic \citep{BAAZ200723} has a standard semantics over $[0, 1]$ where the conjunction is interpreted as the minimum function. \emph{\DL{}s} (DL) form a family of methods that apply key insights from QLs to \InAI{}. DLs have been applied on property-driven training \citep{FLINKOW2025103280}, safe-by-construction systems \citep{badreddine2022logic}, and SAT solving \citep{kyrillidis2021continuous, gaglione2022maxsat}. 
 
-\textbf{What makes a good DL.} To function as a bridge between symbolic and subsymbolic AI, a DL would benefit from certain properties. From the \SiAI{} perspective, a DL should be expressive enough to encode properties of interest (e.g. see \citep{vehicle}). Even more, to certify its implementation, a DL should possess a deductive system, as well as some form of soundness and completeness proofs with respect to a semantics \citep{floyd1993assigning, goguen1977initial}. From the \SuAI{} perspective, differentiability of its interpretation is an obvious candidate; continuity or convexity are also widely considered desirable; \citeauthor{varnai2020robustness} also suggest characterizing DLs in terms of their \textit{geometric properties} \citep{varnai2020robustness}. Out of these, the most notable is \emph{Shadow-lifting}:
+\textbf{What makes a good DL.} To function as a bridge between symbolic and subsymbolic AI, a DL would benefit from certain properties. From the \SiAI{} perspective, a DL should be expressive enough to encode properties of interest (e.g. see \citep{vehicle}). Even more, to certify its implementation, a DL should possess a deductive system, as well as some form of soundness and completeness proofs with respect to a semantics \citep{floyd1993assigning, goguen1977initial}. From the \SuAI{} perspective, differentiability of its interpretation is an obvious candidate; continuity or convexity are also widely considered desirable; \citeauthor{varnai2020robustness} suggest characterizing DLs in terms of their \textit{geometric properties} \citep{varnai2020robustness}. Out of these, the most notable is \emph{Shadow-lifting}:
 
 \begin{definition}[Shadow-lifting]
     \label[Definition]{Shadow-lifting}
-    A logical operator $A : \Phi ^ n \rightarrow \Phi$ satisfies the shadow-lifting if, for any $\tempty{\phi} \neq 0$ and $i \in [1,n]$,
+    A logical operator $A : \Phi ^ n \rightarrow \Phi$ satisfies shadow-lifting if, for any $\tempty{\phi} \neq 0$ and $i \in [1,n]$,
     \begin{equation*}
-	\left. \dfrac{\partial \tempty{A(\phi_1, ..., \phi_n)}}{\partial \tempty{\phi_i}_L}\right\rvert_{\phi_j = \phi \text{ where } i \neq j} >0
+	\left. \dfrac{\partial \tempty{A(\phi_1, ..., \phi_n)}}{\partial \tempty{\phi_i}}\right\rvert_{\phi_j = \phi \text{ where } i \neq j} >0
 	\end{equation*}
 	where $ \partial $ denotes partial differentiation.
 \end{definition}
@@ -53,7 +53,7 @@ However, it has been shown that a an operator cannot meet shadow-lifting while b
 Expanding some sound and complete propositional QLs to first-order logic often comes at the expense of either completeness or continuity \citep{cintula2011handbook, slusarz2023logic}.  
 %For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \mcita{}.However, connectives of this logic are not continuous and therefore not suitable for gradient-descent algorithms.
 
-\textbf{A novel approach.} Given the provided information, can we develop a first-order DL without loosing any of the desirable properties?   Recently, a promising approach for first-order QLs was proposed by \citeauthor{capucci2024quantifiers}: interpreting quantifiers as \textit{generalized means}, while introducing a "softness" modality that balances shadow-lifting and idempotence \citep{capucci2024quantifiers}. We build on these ideas to develop a novel well-behaved DL. Unlike \citeauthor{capucci2024quantifiers}, who uses a deep-inference inspired framework \citep{guglielmi2007system, guglielmi2015deep}, our approach follows the subtructural logic tradition \citep{galatos2007residuated}, taking elements from both bunched logic \citep{o1999logic} (an extension of linear logic \citep{Wadler1993, agliano2025algebraic}) and fuzzy logics \citep{cintula2011handbook, prooffuzzy}. We leverage this to give algebraic semantics for our DL, while studying its relation to other substructural logics and \citeauthor{capucci2024quantifiers}'s logic. 
+\textbf{A novel approach.} Given the provided information, can we develop a first-order DL while maintaining desirable properties?   Recently, a promising approach for first-order QLs was proposed by \citeauthor{capucci2024quantifiers}: interpreting quantifiers as \textit{generalized means}, while introducing a "softness" modality that balances shadow-lifting and idempotence \citep{capucci2024quantifiers}. We build on these ideas to develop a novel well-behaved DL, that we nick \emph{\OurLogic} (\OL). Unlike \citeauthor{capucci2024quantifiers}, who uses a deep-inference inspired framework \citep{guglielmi2007system, guglielmi2015deep}, our approach follows the subtructural logic tradition \citep{galatos2007residuated}, taking elements from both bunched logic \citep{o1999logic} (an extension of linear logic \citep{Wadler1993, agliano2025algebraic}) and fuzzy logics \citep{cintula2011handbook, prooffuzzy}. We leverage this to give algebraic semantics for our DL, while studying its relation to other substructural logics and \citeauthor{capucci2024quantifiers}'s logic. 
 To provide assurance of the correctness of our results, we aim to mechanise our proofs in Rocq, making use of its Mathematical Components library (\mathcomp{}) \cite{mathcomp}. We seek this formalization to be a stepping stone for the development of programming language support for verification of \InAI{} \citep{vehicle}. 
 
 \subsection{Research Requirements}
@@ -72,28 +72,28 @@ Our high-level goal is to develop and study a DL that meets the symbolic and sub
 \begin{enumerate}
     \item \textbf{Sound propositional DL.} Can we develop a sound, compositional, and propositional DL, while maintaining subsymbolic properties? 
     
-    Our current DL could be summarized as a "soft" bunched logic \citep{o1999logic} with hypersequents from fuzzy logic \citep{prooffuzzy}. Like \citeauthor{capucci2024quantifiers}, our DL makes use of a modality to balance shadow-lifting and compositionality. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation. We are currently researching how to develop algebraic semantics.
-    
-    \item \textbf{Complete propositional DL.} Can we prove this propositional DL complete?
-    
-    A first approximation to completeness is to prove that a collection of axioms that are true in the semantics, are provable (e.g. prelinearity \citep{prooffuzzy}). While this does not guarantee completeness, it is an informative necessary condition. Then, we hope to leverage our DLs relation to substructural logics to prove completeness by applying known techniques from fuzzy logic \citep{cintula2011handbook, galatos2007residuated}. It remains unclear if this is possible. 
+    Our current version of \OL{} could be summarized as a "soft" bunched logic \citep{o1999logic} with hypersequents from fuzzy logic \citep{prooffuzzy}. Like \citeauthor{capucci2024quantifiers}, our DL makes use of a modality to balance shadow-lifting and compositionality. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation. We are currently researching how to develop algebraic semantics.
 
     \jnote{Include formalization intent somewhere in here? How to state it as a research question?}
+
+    \item \textbf{Relation to other logics.} How does \OL{} relate to other logics? 
     
-    \item \textbf{Relation to other logics.} How does our logic relate to other logics? 
+    Being an extension of linear logic \citep{Wadler1993, agliano2025algebraic}, \OL{} (or at least a subset of it) belongs to the family of substructural logics \citep{galatos2007residuated}, with its monoidal operator resembling that of product logic \citep{cintula2011handbook, prooffuzzy}. It remains unclear where in the substructural family it would be positioned. As for \citeauthor{capucci2024quantifiers}'s logic, they very much resemble each other, and possess the same numerical interpretation. However, each logic possesses a different definition of validity, and therefore of soundness and completeness \citep{galatos2007residuated, capucci2024quantifiers}. We expect this to affect the algebraic semantics as well, beyond just changing its defining equation \citep{galatos2007residuated, agliano2025algebraic}. 
     
-    Being an extension of linear logic \citep{Wadler1993, agliano2025algebraic}, our logic (or at least a subset of our logic) belongs to the family of substructural logics \citep{galatos2007residuated}, with its monoidal operator resembling that of product logic \citep{cintula2011handbook, prooffuzzy}. It remains unclear where in the substructural family it would be positioned. As for \citeauthor{capucci2024quantifiers}'s logic, they very much resemble each other, and possess the same numerical interpretation. However, each logic possesses a different definition of validity, and therefore of soundness and completeness \citep{galatos2007residuated, capucci2024quantifiers}. We expect this to affect the algebraic semantics as well, beyond just changing its defining equation \citep{galatos2007residuated, agliano2025algebraic}. 
+    \item \textbf{Complete propositional DL.} Can we prove propositional \OL{} complete?
     
-    \item \textbf{Sound predicate DL.} Can our DL be extended into a sound aggregative logic, while maintaining subsymbolic properties?
+    A first approximation to completeness is to prove that a collection of axioms that are true in the semantics, are provable (e.g. prelinearity \citep{prooffuzzy}). While this does not guarantee completeness, it is an informative necessary condition. Then, we hope to leverage \OL{}'s relation to substructural logics to prove completeness by applying known techniques from fuzzy logic \citep{cintula2011handbook, galatos2007residuated}. It remains unclear if this is possible. 
+    
+    \item \textbf{Sound predicate DL.} Can \OL{} be extended into a sound aggregative logic, while maintaining subsymbolic properties?
 
     Extending into first-order requires modifying our numerical interpretation, and therefore our semantics. For our current approach to maintain soundness, additional conditions must be imposed on substitution. On the other hand, it remains unclear if subsymbolic properties are maintained. 
     
-    \item \textbf{Complete predicate DL.} Can we prove our predicate DL complete?
+    \item \textbf{Complete predicate DL.} Can we prove our predicate \OL{} complete?
     
     Similar approach to the propositional case. 
     
-    \item \textbf{Practicality.} Does our propositional/predicate DL offer some insight on property-driven training?
+    \item \textbf{Practicality.} Does propositional/predicate \OL{} offer some insight on property-driven training?
 
-    We would like to study the effects of our DL on the performance and generalisability \citep{jakubovitz2019generalization} of its implementations. This requires both theoretical and experimental evidence. 
+    We would like to study the effects \OL{} on the performance and generalisability \citep{jakubovitz2019generalization} of its implementations. This requires both theoretical and experimental evidence. 
     
 \end{enumerate}
