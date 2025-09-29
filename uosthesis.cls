@@ -207,97 +207,98 @@
   \hypersetup{pdfauthor={\authornames}}
   \hypersetup{pdfkeywords={\keywordnames}}
 }
-\renewcommand\maketitle{
-  \btypeout{Title Page}
-  \thispagestyle{empty}
-  \begin{titlepage}
-    \let\footnotesize\small
-    \let\footnoterule\relax
-    \let \footnote \thanks
-    \setcounter{footnote}{0}
-    \null\vfil
-    \vskip 60\p@
-    \begin{center}
-      \setlength{\parskip}{0pt}
-      {\scshape\LARGE\textbf{\univname}\par}
+%%\renewcommand\maketitle{
+%%  \btypeout{Title Page}
+%%  \thispagestyle{empty}
+%%  \begin{titlepage}
+  %%  \let\footnotesize\small
+    %%\let\footnoterule\relax
+    %%\let \footnote \thanks
+    %%\setcounter{footnote}{0}
+    %%\null\vfil
+    %%\vskip 60\p@
+    %%\begin{center}
+     %% \setlength{\parskip}{0pt}
+    %%  {\scshape\LARGE\textbf{\univname}\par}
       %% TODO: Change all the descriptions to italic like the Thesis one
-      \bigskip
-      {\large \facname \par}
-      {\large \deptname \par}
-      \vfill
-      {\huge \bf \@title \par
-}
-      \ifthenelse{\equal{\doicode}{}}
-      {}
-      {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}
-      \ifthenelse{\equal{\volno}{}}
-      {}
-      {\smallskip Volume \volno{} of \volof}
-      \vfill
-      {\LARGE \textit{by} \par}
-      \smallskip
-      {\LARGE \textbf\authornames
-        \ifthenelse{\equal{\quals}{}}
-        {}
-        {\par\Large
-        \quals}
-      \par}
-        \ifthenelse{\equal{\orcid}{}}
-        {}
-        {\smallskip
-        ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
+    %%  \bigskip
+    %%  {\large \facname \par}
+     %% {\large \deptname \par}
+    %%  \vfill
+    %%  {\huge \bf \@title \par
+%%}
+  %%    \ifthenelse{\equal{\doicode}{}}
+ %%     {}
+ %%     {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}
+ %%     \ifthenelse{\equal{\volno}{}}
+ %%     {}
+ %%     {\smallskip Volume \volno{} of \volof}
+  %%    \vfill
+   %%   {\LARGE \textit{by} \par}
+ %%     \smallskip
+    %%  {\LARGE \textbf\authornames
+ %%       \ifthenelse{\equal{\quals}{}}
+  %%      {}
+%%        {\par\Large
+ %%       \quals}
+  %%    \par}
+%%        \ifthenelse{\equal{\orcid}{}}
+ %%       {}
+ %%       {\smallskip
+   %%     ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
+%%
+  %%    \vfill
+ %%     {\large \textit{First progression review for the degree of} \par}
+ %%     {\large \textit{Doctor of Philosophy} \par}
+ %%     \bigskip
+ %%     \bigskip
+  %%    \bigskip
+  %%    {\Large \@date \par}
+  %%    \bigskip
+  %%  \end{center}
+ %%   \par
+ %%   \@thanks
+ %%   \vfil\null
+%%  \end{titlepage}
+ %% \setcounter{footnote}{0}%
+%%  \global\let\thanks\relax
+%%  \global\let\maketitle\relax
+ %% \global\let\@thanks\@empty
+%%  \global\let\@author\@empty
+%%  \global\let\@date\@empty
+%%  \global\let\title\relax
+%%  \global\let\author\relax
+ %% \global\let\date\relax
+ %% \global\let\and\relax
+%%  \cleardoublepage
+%%}
 
-      \vfill
-      {\large \textit{First progression review for the degree of} \par}
-      {\large \textit{Doctor of Philosophy} \par}
-      \bigskip
-      \bigskip
-      \bigskip
-      {\Large \@date \par}
-      \bigskip
-    \end{center}
-    \par
-    \@thanks
-    \vfil\null
-  \end{titlepage}
-  \setcounter{footnote}{0}%
-  \global\let\thanks\relax
-  \global\let\maketitle\relax
-  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\title\relax
-  \global\let\author\relax
-  \global\let\date\relax
-  \global\let\and\relax
-  \cleardoublepage
-}
-\newenvironment{abstract}
-{
-  \btypeout{Abstract Page}
-  \thispagestyle{empty}
-  \null\vfil
-  \begin{center}
-    \setlength{\parskip}{0pt}
-    {\textsc\normalsize \univname \par}
-    \bigskip
-    {\underline{Abstract} \par}
-    \bigskip
-    {\textsc\normalsize \facname \par}
-    {\textsc\normalsize \deptname \par}
-    \bigskip
-    {\normalsize \underline{Doctor of Philosophy}\par}
-    \bigskip
-    {\normalsize\bf \@title \par}
-    \medskip
-    {\normalsize by \authornames \par}
-    \bigskip
-  \end{center}
-}
-{
-  \vfil\vfil\vfil\null
-  \cleardoublepage
-}
+%%\newenvironment{abstract}
+%%{
+ %% \btypeout{Abstract Page}
+  %%\thispagestyle{empty}
+  %%\null\vfil
+  %%\begin{center}
+   %% \setlength{\parskip}{0pt}
+    %%{\textsc\normalsize \univname \par}
+    %%\bigskip
+    %%{\underline{Abstract} \par}
+    %%\bigskip
+    %%{\textsc\normalsize \facname \par}
+    %%{\textsc\normalsize \deptname \par}
+    %%\bigskip
+    %%{\normalsize \underline{Doctor of Philosophy}\par}
+    %%\bigskip
+    %%{\normalsize\bf \@title \par}
+    %%\medskip
+    %%{\normalsize by \authornames \par}
+    %%\bigskip
+  %%\end{center}
+%%}
+%%{
+  %%\vfil\vfil\vfil\null
+ %% \cleardoublepage
+%%}
 \usepackage[nottoc]{tocbibind}         % Put the Lists, Glossary, Biblog and Idx in the contents
 \addtocounter{secnumdepth}{1}
 \setcounter{tocdepth}{6}
@@ -495,18 +496,18 @@ Data: Author (Year) Title. URI [dataset]}
 \vfil\null
 \cleardoublepage
 }
-\renewcommand\bibname{References}
-\let\oldappendix\appendix % Put full appendix name in ToC
-\renewcommand{\appendix}{%
-  \oldappendix
-  \let\oldacl@pp=\addcontentsline
-  \def\addcontentsline##1##2##3{\oldacl@pp{##1}{##2}{\appendixname\space ##3}}
-}
-\let\oldbackmatter\backmatter
-\def\backmatter{%
-  \oldbackmatter
-  \let\addcontentsline=\oldacl@pp
-  }
+%%\renewcommand\bibname{References}
+%%\let\oldappendix\appendix % Put full appendix name in ToC
+%%\renewcommand{\appendix}{%
+ %% \oldappendix
+  %%\let\oldacl@pp=\addcontentsline
+  %\def\addcontentsline##1##2##3{\oldacl@pp{##1}{##2}{\appendixname\space ##3}}
+%}
+%\let\oldbackmatter\backmatter
+%\def\backmatter{%
+ % \oldbackmatter
+  %\let\addcontentsline=\oldacl@pp
+  %}
 \endinput
 %%
 %% End of file `uosthesis.cls'.

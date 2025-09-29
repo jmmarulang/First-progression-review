@@ -215,12 +215,14 @@
 \newcommand{\LM}[2]{\int^{#2} #1}
 \newcommand{\esup}[1]{\mathrm{ess}\, \sup\,(#1)}
 \newcommand{\einf}[1]{\mathrm{ess}\, \inf\,(#1)}
-\newcommand{\sigmal}[1]{\Sigma_{#1}}
+%\newcommand{\sigmal}[1]{\Sigma_{#1}}
 \newcommand{\prob}[1]{\mathbb{P}(#1)}
 
 %logic
-\newcommand{\one}{\textbf{1}}
+\newcommand{\unit}{\textbf{1}}
 \newcommand{\tempty}[1]{\llbracket #1 \rrbracket}
+\newcommand{\m}[1]{\llbracket #1 \rrbracket}
+\newcommand{\ldual}[1]{ #1 ^{\bot}}
 
 % High-level language
 \newcommand{\FunType}[2]{\ensuremath{#1 \text{ $ \rightarrow $ } #2}}
@@ -329,3 +331,82 @@
 \newcommand{\conjClass}{\grammarItem{conj}}
 \newcommand{\inputVarClass}{\grammarItem{inputVar}}
 \newcommand{\outputVarClass}{\grammarItem{outputVar}}
+
+%rules
+%%%% Rule label %%%%%
+\newcommand*{\rulelabel}[1]{{\normalfont \textbf{(#1)}}}
+
+\newcommand*{\LJArithL}{\rulelabel{Arith-L}}
+\newcommand*{\LJArithR}{\rulelabel{Arith-R}}
+\newcommand*{\LJAxiom}{\rulelabel{Axiom}}
+\newcommand*{\LJCut}{\rulelabel{Cut}}
+\newcommand*{\LJCtrL}{\rulelabel{C-L}}
+\newcommand*{\LJCtrLT}{\rulelabel{CL-T}}
+\newcommand*{\LJCtrR}{\rulelabel{C-R}}
+\newcommand*{\LJWeakL}{\rulelabel{W-L}}
+\newcommand*{\LJWeakLT}{\rulelabel{WL}}
+\newcommand*{\LJWeakRT}{\rulelabel{WR}}
+\newcommand*{\LJWeakR}{\rulelabel{W-R}}
+\newcommand*{\LJExchLT}{\rulelabel{XL-T}}
+\newcommand*{\LJCoFixRule}{\rulelabel{CO-FIX}}
+\newcommand*{\LJConjL}{\rulelabel{$\conj$-L}}
+%\newcommand*{\LJConjLG}{\rulelabel{$\conj$-L-G}}
+\newcommand*{\LJConjR}{\rulelabel{$\conj$-R}}
+\newcommand*{\LJDisjL}{\rulelabel{$\disj$-L}}
+%\newcommand*{\LJDisjLG}{\rulelabel{$\disj$-L-G}}
+\newcommand*{\LJDisjR}{\rulelabel{$\disj$-R}}
+\newcommand*{\LJAllL}{\rulelabel{$\forall$-L}}
+%\newcommand*{\LJAllLG}{\rulelabel{$\forall$-L-G}}
+\newcommand*{\LJAllR}{\rulelabel{$\forall$-R}}
+\newcommand*{\LJExL}{\rulelabel{$\exists$-L}}
+%\newcommand*{\LJExLG}{\rulelabel{$\exists$-L-G}}
+\newcommand*{\LJExR}{\rulelabel{$\exists$-R}}
+\newcommand*{\LJImplL}{\rulelabel{$\to$-L}}
+%\newcommand*{\LJImplLG}{\rulelabel{$\to$-L-G}}
+\newcommand*{\LJImplR}{\rulelabel{$\to$-R}}
+\newcommand*{\LJNegR}{\rulelabel{$\neg$-R}}
+\newcommand*{\LJNegL}{\rulelabel{$\neg$-L}}
+
+\newcommand*{\Ass}{\rulelabel{ASSUMP}}
+\newcommand*{\Equi}{\rulelabel{EQUIV}}
+\newcommand*{\IW}{\rulelabel{IW}}
+\newcommand*{\IC}{\rulelabel{IC}}
+\newcommand*{\EW}{\rulelabel{EW}}
+\newcommand*{\EC}{\rulelabel{EC}}
+\newcommand*{\EE}{\rulelabel{EE}}
+\newcommand*{\SP}{\rulelabel{SPLIT}}
+\newcommand*{\MX}{\rulelabel{MIX}}
+\newcommand*{\pL}{\rulelabel{$p$-L}}
+\newcommand*{\pR}{\rulelabel{$p$-R}}
+\newcommand*{\oneL}{\rulelabel{$1$-L}}
+\newcommand*{\oneR}{\rulelabel{$1$-R}}
+\newcommand*{\zeroL}{\rulelabel{$0$-L}}
+\newcommand*{\zeroR}{\rulelabel{$0$-R}}
+\newcommand*{\botL}{\rulelabel{$\bot$-L}}
+\newcommand*{\topR}{\rulelabel{$\top$-R}}
+\newcommand*{\topL}{\rulelabel{$\top$-L}}
+\newcommand*{\monL}{\rulelabel{$\conmul $-L}}
+\newcommand*{\monR}{\rulelabel{$\conmul $-R}}
+\newcommand*{\impL}{\rulelabel{$\ediv$-L}}
+\newcommand*{\impR}{\rulelabel{$\ediv$-R}}
+\newcommand*{\sandL}{\rulelabel{$\&^p$-L}}
+\newcommand*{\sandLl}{\rulelabel{$\&^p$-L1}}
+\newcommand*{\sandLr}{\rulelabel{$\&^p$-L2}}
+\newcommand*{\orL}{\rulelabel{$\psum{p}$-L}}
+\newcommand*{\andR}{\rulelabel{$\phsum{p}$-R}}
+\newcommand*{\andRi}{\rulelabel{$\phsum{\infty}$-R}}
+\newcommand*{\sorRl}{\rulelabel{$\psum{p}$-R1}}
+\newcommand*{\sorRr}{\rulelabel{$\psum{p}$-R2}}
+\newcommand*{\cut}{\rulelabel{CUT}}
+\newcommand*{\comA}{\rulelabel{A-COM}}
+\newcommand*{\comM}{\rulelabel{M-COM}}
+
+%Hypersequents 
+\newcommand{\eHyp}{\mathbb{1}}
+%\newcommand*{\Hyp}{\mathcal{H}}
+\newcommand*{\AssumsEnv}{\Gamma}
+\newcommand*{\hsequentPDL}[2]{\Hyp \ | \ #1  \vdash #2}
+\newcommand*{\ssequentPDL}[1]{\Hyp \ | \ #1 }
+\newcommand*{\tsequentPDL}[1]{\Hyp }
+\newcommand*{\csequentPDL}[4]{\Hyp \ | \ #1  \vdash #2 \ | \ #3  \Longrightarrow #4 }
+\newcommand*{\sequentPDL}[2]{ #1  \vdash #2}

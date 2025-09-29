@@ -2,17 +2,15 @@
 %% UOS.bib
 %% ---------------------------------------------------------------- 
 
-@inbook{Platzer_2024,
-   title={Intersymbolic AI: Interlinking Symbolic AI and Subsymbolic AI},
-   ISBN={9783031753879},
-   ISSN={1611-3349},
-   url={http://dx.doi.org/10.1007/978-3-031-75387-9_11},
-   DOI={10.1007/978-3-031-75387-9_11},
-   booktitle={Leveraging Applications of Formal Methods, Verification and Validation. Software Engineering Methodologies},
-   publisher={Springer Nature Switzerland},
-   author={Platzer, André},
-   year={2024},
-   month=oct, pages={162–180} }
+@inproceedings{platzer2024intersymbolic,
+  title={Intersymbolic AI: interlinking symbolic AI and subsymbolic AI},
+  author={Platzer, Andr{\'e}},
+  booktitle={International Symposium on Leveraging Applications of Formal Methods},
+  pages={162--180},
+  year={2024},
+  organization={Springer}
+}
+
 
 @book{haugeland1989artificial,
   title={Artificial intelligence: The very idea},
@@ -614,17 +612,13 @@ abstract = {Quantification is an important topic in fuzzy theory and its applica
   year={2012}
 }
 
-@inproceedings{NEURIPS2022_b6089408,
- author = {Dang, Meihua and Liu, Anji and Van den Broeck, Guy},
- booktitle = {Advances in Neural Information Processing Systems},
- editor = {S. Koyejo and S. Mohamed and A. Agarwal and D. Belgrave and K. Cho and A. Oh},
- pages = {28374--28385},
- publisher = {Curran Associates, Inc.},
- title = {Sparse Probabilistic Circuits via Pruning and Growing},
- url = {https://proceedings.neurips.cc/paper_files/paper/2022/file/b6089408f4893289296ad0499783b3a6-Paper-Conference.pdf},
- volume = {35},
- year = {2022}
+@article{lee2009advances,
+  title={Advances in neural information processing systems 22},
+  author={Lee, Daniel D and Pham, P and Largman, Y and Ng, A},
+  journal={Tech Rep},
+  year={2009}
 }
+
 
 @misc{braun2025tractablerepresentationlearningprobabilistic,
       title={Tractable Representation Learning with Probabilistic Circuits}, 
@@ -656,74 +650,52 @@ abstract = {Quantification is an important topic in fuzzy theory and its applica
       url={https://arxiv.org/abs/2206.03044}, 
 }
 
-@InProceedings{10.1007/978-3-031-27481-7_24,
-author="Brucker, Achim D.
-and Stell, Amy",
-editor="Chechik, Marsha
-and Katoen, Joost-Pieter
-and Leucker, Martin",
-title="Verifying Feedforward Neural Networks for Classification in Isabelle/HOL",
-booktitle="Formal Methods",
-year="2023",
-publisher="Springer International Publishing",
-address="Cham",
-pages="427--444",
-abstract="Neural networks are being used successfully to solve classification problems, e.g., for detecting objects in images. It is well known that neural networks are susceptible if small changes applied to their input result in misclassification. Situations in which such a slight input change, often hardly noticeable by a human expert, results in a misclassification are called adversarial examples. If such inputs are used for adversarial attacks, they can be life-threatening if, for example, they occur in image classification systems used in autonomous cars or medical diagnosis.",
-isbn="978-3-031-27481-7"
+@inproceedings{brucker2023verifying,
+  title={Verifying feedforward neural networks for classification in Isabelle/HOL},
+  author={Brucker, Achim D and Stell, Amy},
+  booktitle={International Symposium on Formal Methods},
+  pages={427--444},
+  year={2023},
+  organization={Springer}
 }
 
-@inproceedings{10.1145/3551357.3551372,
-author = {Desmartin, Remi and Passmore, Grant and Komendantskaya, Ekaterina and Daggit, Matthew},
-title = {CheckINN: Wide Range Neural Network Verification in Imandra},
-year = {2022},
-isbn = {9781450397032},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3551357.3551372},
-doi = {10.1145/3551357.3551372},
-abstract = {Neural networks are increasingly relied upon as components of complex safety-critical systems such as autonomous vehicles. There is high demand for tools and methods that embed neural network verification in a larger verification cycle. However, neural network verification is difficult due to a wide range of verification properties of interest, each typically only amenable to verification in specialised solvers. In this paper, we show how Imandra, a functional programming language and a theorem prover originally designed for verification, validation and simulation of financial infrastructure can offer a holistic infrastructure for neural network verification. We develop a novel library CheckINN that formalises neural networks in Imandra, and covers different important facets of neural network verification.},
-booktitle = {Proceedings of the 24th International Symposium on Principles and Practice of Declarative Programming},
-articleno = {3},
-numpages = {14},
-keywords = {Verification, Robustness, Neural Networks, Boyer-Moore Provers},
-location = {Tbilisi, Georgia},
-series = {PPDP '22}
+@inproceedings{desmartin2022checkinn,
+  title={Checkinn: Wide range neural network verification in imandra},
+  author={Desmartin, Remi and Passmore, Grant and Komendantskaya, Ekaterina and Daggit, Matthew},
+  booktitle={Proceedings of the 24th International Symposium on Principles and Practice of Declarative Programming},
+  pages={1--14},
+  year={2022}
 }
 
-@InProceedings{10.1007/978-3-031-33170-1_4,
-author="Aleksandrov, Andrei
-and V{\"o}llinger, Kim",
-editor="Rozier, Kristin Yvonne
-and Chaudhuri, Swarat",
-title="Formalizing Piecewise Affine Activation Functions of Neural Networks in Coq",
-booktitle="NASA Formal Methods",
-year="2023",
-publisher="Springer Nature Switzerland",
-address="Cham",
-pages="62--78",
-abstract="Verification of neural networks relies on activation functions being piecewise affine (pwa)---enabling an encoding of the verification problem for theorem provers. In this paper, we present the first formalization of pwa activation functions for an interactive theorem prover tailored to verifying neural networks within Coq using the library Coquelicot for real analysis. As a proof-of-concept, we construct the popular pwa activation function ReLU. We integrate our formalization into a Coq model of neural networks, and devise a verified transformation from a neural network {\$}{\$}{\backslash}mathcal {\{}N{\}}{\$}{\$}Nto a pwa function representing {\$}{\$}{\backslash}mathcal {\{}N{\}}{\$}{\$}Nby composing pwa functions that we construct for each layer. This representation enables encodings for proof automation, e.g. Coq 's tactic lra -- a decision procedure for linear real arithmetic. Further, our formalization paves the way for integrating Coq in frameworks of neural network verification as a fallback prover when automated proving fails.",
-isbn="978-3-031-33170-1"
+@inproceedings{aleksandrov2023formalizing,
+  title={Formalizing piecewise affine activation functions of neural networks in Coq},
+  author={Aleksandrov, Andrei and V{\"o}llinger, Kim},
+  booktitle={NASA Formal Methods Symposium},
+  pages={62--78},
+  year={2023},
+  organization={Springer}
 }
 
-@article{Bagnall_Stewart_2019, title={Certifying the True Error: Machine Learning in Coq with Verified Generalization Guarantees}, volume={33}, url={https://ojs.aaai.org/index.php/AAAI/article/view/4115}, DOI={10.1609/aaai.v33i01.33012662}, abstractNote={&lt;p&gt;We present MLCERT, a novel system for doing practical mechanized proof of the generalization of learning procedures, bounding expected error in terms of training or test error. MLCERT is mechanized in that we prove generalization bounds inside the theorem prover Coq; thus the bounds are machine checked by Coq’s proof checker. MLCERT is practical in that we extract learning procedures defined in Coq to executable code; thus procedures with proved generalization bounds can be trained and deployed in real systems. MLCERT is well documented and open source; thus we expect it to be usable even by those without Coq expertise. To validate MLCERT, which is compatible with external tools such as TensorFlow, we use it to prove generalization bounds on neural networks trained using TensorFlow on the extended MNIST data set.&lt;/p&gt;}, number={01}, journal={Proceedings of the AAAI Conference on Artificial Intelligence}, author={Bagnall, Alexander and Stewart, Gordon}, year={2019}, month={Jul.}, pages={2662-2669} }
 
-@inproceedings{10.1145/3088525.3088673,
-author = {Murphy, Charlie and Gray, Patrick and Stewart, Gordon},
-title = {Verified perceptron convergence theorem},
-year = {2017},
-isbn = {9781450350716},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3088525.3088673},
-doi = {10.1145/3088525.3088673},
-abstract = {Frank Rosenblatt invented the perceptron algorithm in 1957 as part of an early attempt to build ``brain models'', artificial neural networks. In this paper, we apply tools from symbolic logic such as dependent type theory as implemented in Coq to build, and prove convergence of, one-layer perceptrons (specifically, we show that our Coq implementation converges to a binary classifier when trained on linearly separable datasets).  Our perceptron and proof are extensible, which we demonstrate by adapting our convergence proof to the averaged perceptron, a common variant of the basic perceptron algorithm. We perform experiments to evaluate the performance of our Coq perceptron vs. an arbitrary-precision C++ implementation and against a hybrid implementation in which separators learned in C++ are certified in Coq. We find that by carefully optimizing the extraction of our Coq perceptron, we can meet -- and occasionally exceed -- the performance of the arbitrary-precision C++ implementation. Our hybrid Coq certifier demonstrates an architecture for building high-assurance machine-learning systems that reuse existing codebases.},
-booktitle = {Proceedings of the 1st ACM SIGPLAN International Workshop on Machine Learning and Programming Languages},
-pages = {43–50},
-numpages = {8},
-keywords = {convergence, interactive theorem proving, linear classification, perceptron},
-location = {Barcelona, Spain},
-series = {MAPL 2017}
+@inproceedings{bagnall2019certifying,
+  title={Certifying the true error: Machine learning in Coq with verified generalization guarantees},
+  author={Bagnall, Alexander and Stewart, Gordon},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={33},
+  number={01},
+  pages={2662--2669},
+  year={2019}
 }
+
+
+@inproceedings{murphy2017verified,
+  title={Verified perceptron convergence theorem},
+  author={Murphy, Charlie and Gray, Patrick and Stewart, Gordon},
+  booktitle={Proceedings of the 1st ACM SIGPLAN International Workshop on Machine Learning and Programming Languages},
+  pages={43--50},
+  year={2017}
+}
+
 
 @article{DeMaria2021,
   title = {On the use of formal methods to model and verify neuronal archetypes},

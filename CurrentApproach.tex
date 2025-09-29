@@ -3,7 +3,7 @@
 %% ---------------------------------------------------------------- 
 \section{Background and Preliminary Results} \label{section:CurrentApproach}
 
-In this section we introduce some relevant background theory and summarize some preliminary results. We introduce a propositional version of \OL{} by its syntax, semantics, and sequent calculus. We then mention our progress in formalization.
+In this section we introduce relevant background theory and summarize some preliminary results. We introduce a propositional version of \OL{} by its syntax, semantics, and sequent calculus. We finish we a proof of soundness with respect to the numerical interpretation of the logic.%We then mention our progress on extending it into first order and  on formalization.
 
 \subsection{Preliminaries and Notation}
 \label{Preliminaries}
@@ -38,6 +38,7 @@ We introduce preliminaries from the extended arithmetic of the reals. They are a
 \end{definition}
 
 \begin{lemma}[Additive Collapse]
+    \label[lemma]{AdditiveCollapse}
     The following are the limits of $\psum{p}$ and $\phsum{p}$ for $p \longrightarrow \infty$:
     \begin{equation*}
 		\begin{tabular}{c|ccc}
@@ -108,8 +109,38 @@ Notice $\conmul{}$ and $\dismul{}$ differ only when $a$ is $0$ and $b$ is $\inft
     \]
 \end{definition}
 
-Notice $a^{-1} = a \ediv{} 1$,  $a \ediv{} b = a^{-1} \dismul{} b$ and 
-$a \dismul{} b = (a^{-1} \conmul{} b^{-1})^{-1}$. We sometimes slightly abuse the notation to write $a/b$ instead of $b \ediv a$ and $1/a$ instead of $\edual{a}$.
+ Notice $a^{-1} = a \ediv{} 1 = a^{-1} \dismul{} b$, $a \dismul{} b = (a^{-1} \conmul{} b^{-1})^{-1}$, and $a \psum{p} b = (a^{-1} \phsum{p} b^{-1})^{-1}$. We sometimes slightly abuse the notation to write $a/b$ instead of $b \ediv a$ and $1/a$ instead of $\edual{a}$. 
+
+Therefore,
+
+\begin{lemma}
+    \label[lemma]{IsLattice}
+    $([0,\infty], \phsum{\infty}, \psum{\infty}, \conmul{}, \ediv, 1, 0, \infty)$ is a bounded commutative \emph{residuated lattice}:
+    \begin{enumerate}
+        \item $\phsum{\infty}$, $\psum{\infty}$ are commutative, associative and mutually absorptive, with units $\infty$ and $0$ respectively.
+        \item $\conmul{}$ is associative and commutative, with unit element $1$.
+        \item $a \conmul{} b \leq c$ iff $a \leq b \ediv{} c$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Some Properties]    \,
+    \label[lemma]{SomePropertiesOfP}
+    \begin{enumerate}
+        \item \textbf{Additive Distributivity.} $(a \phsum{p} (b \psum{p} c)) \leq  ((a \phsum{p} b) \psum{p} (a \phsum{p} c))$.
+        \item \textbf{Monotonicity.} If $a \leq b$ then $a \psum{p} c \leq b \psum{p} c$ and $a \phsum{p} c \leq b \phsum{p} c$ 
+        \item \textbf{Semi-additivity.} $a \phsum{p} b \leq a \leq a \psum{p} b$,
+        \item \textbf{Colax-distributivity.} $(a \phsum{p}  (b \psum{p} c) \leq (a \phsum{p}  b) \psum{p} (a \phsum{p}  c)$ .
+        \item \textbf{Sub-distributivity.} $(a \dismul{}  b) \phsum{p} (c \dismul{}  d) \leq (a \dismul{}  c) \psum{p} (b \dismul{}  d)  $ .
+        \\\\
+        For $p \leq q$,
+        \item \textbf{Conjunctive p-Monotonicity.} $a \phsum{p} b \leq  a \phsum{q} b$.
+        \item \textbf{Disjunctive p-Monotonicity.} $a \psum{p} b \leq  a \psum{q} b$.
+        \item \textbf{Disjunctive Duoidality.} $(a \psum{q} b) \psum{p} (c \psum{q}  d) \leq (a \psum{p}  c) \psum{q} (b \psum{p}  d)  $,
+        \item \textbf{Conjunctive Duoidality.} $(a \phsum{p}  b) \phsum{q} (c \phsum{p}  d) \leq (a \phsum{q}  c) \phsum{p} (b \phsum{q}  d)  $ .
+    \end{enumerate}
+\end{lemma}
+
+%\jnote{Should I include proofs?}
 
 \begin{comment}
 \subsection{Measure Spaces and $p$-means}\label{p-mean}
@@ -266,11 +297,9 @@ For bounded functions, these quantities coincide with the classical (weighted) g
 For unbounded functions, conjunctive and disjunctive geometric means may differ in the same way as $\conmul{}$ and $\dismul{}$, namely in the way they handle $0$ and $\infty$. See \cite{capucci2024quantifiers} for clarifications.
 \end{comment}
 
-\subsection{Syntax}
+\subsection{Syntax and Semantics}
 
-\citeauthor{slusarz2023logic} propose a common syntax for all DLs \citep{slusarz2023logic}. Here we adapt a subset of it.  For simplicity we use the same symbols of \cref{Preliminaries} for our formulas. 
-
-\cref{fig:syntax} defines the syntax of \OL{}. Types are given by Boolean or  Extended Positive Real Numbers ($(0,\infty]$). Formulas are freely generated from a set of atomic propositions over logical connectives that resemble those of linear logic \citep{Wadler1993, agliano2025algebraic},  excluding that the additive connectives are parametrised by a positive extended real $p$.\\
+\textbf{Syntax.}  \citeauthor{slusarz2023logic} propose a common syntax for all DLs \citep{slusarz2023logic}. Here we adapt a subset of it.  For simplicity we use the same symbols of \cref{Preliminaries} for our formulae. \cref{fig:syntax} defines the syntax of \OL{}. Types are given by Boolean or  Extended Positive Real Numbers ($(0,\infty]$). Formulae are freely generated from atomic propositions over logical connectives:\\
 
 \begin{figure}[H]
 \begin{subfigure}[t]{0.4\textwidth}
@@ -291,7 +320,7 @@ For unbounded functions, conjunctive and disjunctive geometric means may differ 
 \begin{subfigure}[t]{1\textwidth}
 	\begin{grammar}
 		<exprBool> $\ni \phi_{0},\phi_{1}$ ::=  
-        $\one$ | $\top$ | $\bot$ | $\phi_{0} \ediv{} \phi_{1}$ | $\phi_{0} \conmul{} \phi_{1}$ | $\phi_{0} \psum{\elEReal} \phi_{1}$ | $\phi_{0} \phsum{\elEReal} \phi_{1}$ 
+        $\unit$ | $\top$ | $\bot$ | $\phi_{0} \ediv{} \phi_{1}$ | $\phi_{0} \conmul{} \phi_{1}$ | $\phi_{0} \psum{\elEReal} \phi_{1}$ | $\phi_{0} \phsum{\elEReal} \phi_{1}$ 
 	\end{grammar}
 \end{subfigure}
 \hfill
@@ -300,10 +329,299 @@ For unbounded functions, conjunctive and disjunctive geometric means may differ 
 	}
 	\label{fig:syntax}
 \end{figure}
+We can also encode 
 
-\subsection{Semantics}
+$$\ldual{\phi} := \phi \ediv{} \unit \quad \phi_1 \dismul{} \phi_2 := \ldual{(\ldual{\phi_1} \conmul{} \ldual{\phi_2})}$$
 
+\OL{}'s language resembles that of linear logic \citep{Wadler1993, agliano2025algebraic}, excluding that the additive connectives are parametrised by a positive extended real $p$. The intuition behind $p$ is that it regulates the degree of softness: the smaller $p$ is, the softer the claim.
+The \emph{Multiplicative} operators are: The monoidal operator \emph{Tensor} ($\conmul{}$), the residual operator of tensor \emph{Linear Implication} ($\ediv$), the dual of tensor \emph{Par} ($\dismul{}$), and the unit of both tensor and par \emph{Unit} ($\unit$). The \emph{Soft Additive} operators are: The smallest element \emph{Bottom} ($\bot$), the biggest element \emph{Top} ($\top$), the generalized conjunction \emph{Soft Conjunction} ($\phsum{p}$), and the generalized disjunction \emph{Soft Disjunction} ($\psum{p}$). When $p = \infty$, the soft additives turn into the regular additives \citep{galatos2007residuated}.
 
 \subsection{Sequent Calculus}
-\subsection{Formalization}
+
+\textbf{Bunches.}
+Bunches of formulae are defined following closely BI \cite{o1999logic}. Bunches are built using two operations, $(,)$ and $(;^p)$:
+$$\Gamma, \Gamma_1, \Gamma_2 ::= \phi \ | \ 
+\emptyset_{\times} \ | \ \emptyset_{+} \ 
+|  \ \Gamma_1, \Gamma_2 \ | \ \Gamma_1;^p \Gamma_2 $$
+Both are associative, commutative and unital w.r.t. their empty 
+bunches, moreover, the former distributes over the latter.  These properties are summarised in Figure~\ref{fig:eqbunches}.  We write $\Gamma_{1}(-)$ for one-hole bunches. Plugging $\Gamma_{1}(\Gamma_{2})$ replaces the hole in $\Gamma_{1}$ with $\Gamma_{2}$.
+
+ \begin{figure}[H]
+	%\footnotesize
+	\begin{spreadlines}{7pt}
+		\begin{empheq}{gather*}
+			(\Gamma_1, \Gamma_2), \Gamma_3  \Leftrightarrow \Gamma_1, 
+			( \Gamma_2, \Gamma_3) \quad 
+			\emptyset_{\times}, \Gamma  \Leftrightarrow \Gamma \quad
+			\Gamma_1, \Gamma_2   \Leftrightarrow \Gamma_2, \Gamma_2
+			\\
+			(\Gamma_1;^p \Gamma_2) ;^p\Gamma_3  \Leftrightarrow \Gamma_1;^p 
+			( \Gamma_2;^p \Gamma_3) \quad
+           \emptyset_{+};^p \Gamma   \Leftrightarrow \Gamma \quad
+           \Gamma_1;^p \Gamma_2   \Leftrightarrow \Gamma_2;^p \Gamma_1
+			\\
+			\Gamma_1, (\Gamma_2;^p \Gamma_3)  \Leftrightarrow  
+			( \Gamma_1, \Gamma_2);^p (\Gamma_1,\Gamma_3)
+			\\
+			\AxiomC{$\Gamma_1 \Leftrightarrow \Gamma_2$}
+			\RightLabel{\LJAxiom{}}
+			\UnaryInfC{$\Gamma(\Gamma_1)  \Leftrightarrow  \Gamma(\Gamma_2)$}
+			\bottomAlignProof
+			\DisplayProof
+		\end{empheq}
+	\end{spreadlines}
+	\vspace*{-1em}
+	\caption{\footnotesize{Equivalence of Bunches.}}
+	\label{fig:eqbunches}
+\end{figure}
+
+The idea of having the two operators is inspired by the fact that ($,$) 
+corresponds to multiplicative connectives, and admits only one structural rule 
+-- the exchange. On the other hand, ($;^{p}$) corresponds to the soft additive connectives, and in 
+addition admits weakening and contraction (when $p = \infty$). The structural rules are given in Figure~\ref{fig:seq-rules}. 
+
+\textbf{Hypersequents.}
+Proofs will be given in terms of \emph{Hypsequents}, 
+following the fuzzy logic tradition \citep{prooffuzzy}: 
+
+$$\Hyp_1, \Hyp_2 ::= \sequentPDL{\AssumsEnv_1}{ \AssumsEnv_2} \ | \
+(\Hyp_1 | \Hyp_2)
+$$
+
+Where $\AssumsEnv_1$ and $\AssumsEnv_2$ are bunches, $\sequentPDL{\AssumsEnv_1}{ \AssumsEnv_2}$ is a \emph{Sequent} and write $ \eHyp{} := \sequentPDL{\emptyset{}_{\times}}{\emptyset{}_{\times}}$. Hypersequents (as opposed to just sequents) will be required to prove prelinearity and distributivity, known to be valid formulae in \OL{} (\cref{SomeValidFormulae}), and therefore necessary for completeness. 
+
+\textbf{Inference.} Proofs are defined inductively through the rules in \cref{fig:seq-rules}. The rules of \OL{} resemble those of Fuzzy Hypersequent Calculi \citep{prooffuzzy} and BI \citep{o1999logic}.  A few rules do not resemble either of these logics, and are needed in order to operate with soft bunches.  Following the order of Figure~\ref{fig:seq-rules}, the only initial hypersequent is $\eHyp{}$. The \emph{basic structural rules} resemble those of BI, with one notable caveat-- although weakening is always allowed, contraction of ($;^{p}$) is only permitted when $p = \infty$. In words, soft additives only turn intro true additives when softness is lost. 
+
+The \emph{structural rules for Hypersequents} follow the ideas already present in the hypersequent fuzzy sequent calculi \citep{prooffuzzy}. The main motivation for introducing hypersequents is to ensure that the "prelinearity property" (as stated in \cref{SomeValidFormulae}) -- i.e. the property that reflect the total order of the real line --  is provable. Without the hypersequents, the property is only provable in the presence of weakening and contraction. Like fuzzy logics, we do not have the latter in full generality. Hypersequents facilitate the introduction of the \emph{communication} rules $\comM$ and $\comA$, that in turn facilitate the proof of pre-linearity for multiplicatives and additives, respectively. Note that $\comA$ does not exchange the consequents, to preserve soundness. 
+
+The next two blocks of rules, for additive and multiplicative connectives, follows very closely the BI tradition \citep{o1999logic, 10.1145/3497775.3503690}, with the only deviation of using soft versions of additive conjunction and disjunction, $\phsum{p}$ and $\psum{p}$, respectively. It deserves to be mentioned that allowing bunches in the consequent is necessary in order to obtain a sound rule for $\orL$. Additionally, the condition $[\Gamma] \leq p$ in the rule for  $\orL$ is to be read as: the bunch $\Gamma$ does not contain soft modalities greater than $p$.
+
+Lastly, $\pR$ and $\pL$ allow the manipulation of softness. These two rules, together with the restrictions on $\orL$ and $\IC$, mean that claims can only grow softer as we move down the proof.  
+
+\input{Calculus}
+
+\subsection{Semantics and Soundness}
+\label{section:soundness}
+We build up to the notion of validy of hypersequents, respect to which we will prove soundness of \OL{}. We start with \OL{}'s semantics and defining equation, following the substructural logic tradition \citep{galatos2007residuated},
+
+\begin{definition}[Formula Validity]
+    The formula $\phi$ is \emph{valid} iff $1 \leq \m{\phi}$, where $\m{\phi}$ is defined inductively as follows:
+    \begin{equation}
+\label{semantics}
+    \begin{split}
+    &\m{\unit} := 1 \quad \m{\top} := \infty \quad \m{\bot} := 0\\
+    &\m{\ldual{\phi}} := \edual{\m{\phi_{1}}}\\
+    &\m{\phi_{1} \ediv \phi_{2}} := \m{\phi_{1}} \ediv \m{\phi_{2}}\\
+    &\m{\phi_{1} \conmul \phi_{2}} := \m{\phi_{1}} \conmul \m{\phi_{2}}\\
+    &\m{\phi_{1} \dismul \phi_{2}} := \m{\phi_{1}} \dismul \m{\phi_{2}}\\
+    &\m{\phi_{1} \psum{p} \phi_{2}} := \m{\phi_{1}} \psum{p} \m{\phi_{2}}\\
+    &\m{\phi_{1} \phsum{p} \phi_{2}} := \m{\phi_{1}} \phsum{p} \m{\phi_{2}}\\
+    \end{split}
+\end{equation}
+\end{definition}
+
+And introduce some notable valid formulae,
+
+\begin{lemma}[Some Valid Formulas]
+\label[Lemma]{SomeValidFormulae}
+    The following are valid formulae in \OL{}:
+    \begin{enumerate}
+        \item \textbf{Additive Prelinearity.} $(\phi_1 \ediv \phi_2 ) \psum{p}  (\phi_2 \ediv \phi_1)$,
+        \item \textbf{Multiplicative Prelinearity.} $(\phi_1 \ediv \phi_2 ) \conmul{}  (\phi_2 \ediv \phi_1)$,
+    \end{enumerate}
+\end{lemma}
+
+Next we define validity of sequents,
+
+\begin{definition}[Sequent Validity]
+\label[definition]{sequentValidity}
+ The sequent $\sequentPDL{\AssumsEnv}{ \AssumsEnv'}$ is \emph{valid} iff 
+$1 \leq \m{\AssumsEnv}_a \ediv{} \m{\AssumsEnv'}_c$, where  $\m{\AssumsEnv}_a $ and $\m{\AssumsEnv'}_c$ are defined inductively as follows:
+
+\begin{enumerate}
+\item For antecedents:
+\begin{equation}
+    \begin{split}
+    \m{\emptyset{}_{\times}}_a = 1 &\quad \m{\emptyset{}_{+}}_a = \infty\\
+     \textrm{If \ } \Gamma \equiv \Gamma_1, \Gamma_2 & \textrm{\ then \ } 
+     \m{\AssumsEnv}_a = \m{\Gamma_1}_a \conmul \m{\Gamma_2}_a \\
+          \textrm{If \ } \Gamma \equiv \Gamma_1;^p \Gamma_2 & 
+          \textrm{\ then \ } \m{\AssumsEnv}_a = \m{\Gamma_1}_a \phsum{p} \m{\Gamma_2}_a \\
+    \end{split}
+\end{equation}
+\item For consequent:
+%\knote{TO-DO below: replace $\Delta$ with $\AssumsEnv$}
+\begin{equation}
+    \begin{split}
+    \m{\emptyset{}_{\times}}_c = 1 &\quad \m{\emptyset{}_{+}}_c = 0\\
+     \textrm{If \ } \AssumsEnv \equiv \AssumsEnv_1, \AssumsEnv_2 & 
+     \textrm{\ then \ }  \m{\AssumsEnv}_c =  \m{\AssumsEnv_1}_c 
+     \dismul \m{\AssumsEnv_2}_c  \\
+     \textrm{If \ } \AssumsEnv \equiv \AssumsEnv_1;^p \AssumsEnv_2 & \textrm{\ then \ }  
+     \m{\AssumsEnv}_c =  \m{\AssumsEnv_1}_c \psum{p} \m{\AssumsEnv_2}_c \\
+    \end{split}
+\end{equation}
+\end{enumerate}
+%\knote{The above definition is given parametrically on $p$, But the below theorem suggests how it can be chosen in practice, per proof}
+The base case for both $\m{\AssumsEnv}_a$ and $\m{\AssumsEnv}_c$ is given by $\AssumsEnv$ being formulae, with interpretation as defined in \cref{semantics}.
+
+\end{definition}
+
+Note $\phi_1 \ediv{} \phi_2$ is valid iff $\sequentPDL{\phi_1}{ \phi_2}$. 
+
+\begin{comment}
+\begin{lemma}[Monotony of Bunch Semantics]
+\label{Monotony of Bunch Semantics}
+\,
+\begin{enumerate}
+    \item If $\m{\AssumsEnv_1}_a \leq \m{\AssumsEnv_2}_a$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1)}_a \leq \m{\AssumsEnv(\AssumsEnv_2)}_a$.
+    
+    \item If $\m{\AssumsEnv_1}_c \leq \m{\AssumsEnv_2}_c$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1)}_c \leq \m{\AssumsEnv(\AssumsEnv_2)}_c$.
+    
+    \item If $\m{\AssumsEnv_1}_a \leq \m{\AssumsEnv_2}_c$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1)}_a \leq \m{\AssumsEnv(\AssumsEnv_2)}_c$.
+\end{enumerate}
+\end{lemma}
+
+\begin{corollary}[Monotonicity of PDL Validity]
+    If $\sequentPDL{\AssumsEnv'_1}{\AssumsEnv'_2}$ is valid, then 
+    $\sequentPDL{\AssumsEnv(\AssumsEnv'_1)}{\AssumsEnv(\AssumsEnv'_2)}$ is 
+    valid.
+\end{corollary}
+\end{comment}
+
+\begin{lemma}[Some Properties of Bunches]
+\label[lemma]{SomePropertiesOfBunches}
+\,
+    \begin{enumerate}
+       % \item \textbf{Reflexivity.} If $\AssumsEnv_1 \not \equiv \emptyset_{+}$ then 
+    %${\sequentPDL{\AssumsEnv_1}{\AssumsEnv_1}}$ is valid.
+        \item \textbf{Monotonicity.}
+    \begin{enumerate}
+    \item If $\m{\AssumsEnv_1}_a \leq \m{\AssumsEnv_2}_a$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1)}_a \leq \m{\AssumsEnv(\AssumsEnv_2)}_a$.
+    
+    \item If $\m{\AssumsEnv_1}_c \leq \m{\AssumsEnv_2}_c$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1)}_c \leq \m{\AssumsEnv(\AssumsEnv_2)}_c$.
+    
+    %\item If $\sequentPDL{\AssumsEnv_1}{\AssumsEnv_2}$ is valid, then $\sequentPDL{\AssumsEnv(\AssumsEnv_1)}{\AssumsEnv(\AssumsEnv_2)}$ is valid.
+\end{enumerate}
+    \item \textbf{Lax-linearity.}
+    \begin{enumerate}
+     %\item If $1 \leq \m{\AssumsEnv_1}_a$, then $\m{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2 )}_a \leq \m{\AssumsEnv_1, \AssumsEnv(\AssumsEnv_2)}_a$.
+    
+    %\item If $1 \leq \m{\AssumsEnv_1}_c$, then $\m{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2 )}_c \leq \m{\AssumsEnv_1, \AssumsEnv(\AssumsEnv_2)}_c$.
+    \item $\m{\AssumsEnv(\AssumsEnv_1;^{p}\AssumsEnv_2 )}_a \geq \m{\AssumsEnv(\AssumsEnv_1);^{p} \AssumsEnv(\AssumsEnv_2)}_a$
+    \item $\m{\AssumsEnv(\AssumsEnv_1;^{p}\AssumsEnv_2 )}_c \leq \m{\AssumsEnv(\AssumsEnv_1);^{p} \AssumsEnv(\AssumsEnv_2)}_c$
+    %\item ${\sequentPDL{\AssumsEnv(\AssumsEnv_1;^{p}\AssumsEnv_2)} {\AssumsEnv(\AssumsEnv_1);^{p}\AssumsEnv(\AssumsEnv_2)}}$ is valid.
+    %\item If $\AssumsEnv_1 \not \equiv \emptyset_{+}$ and $\AssumsEnv_2 \not \equiv \emptyset_{+}$ then ${\sequentPDL{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2)} {\AssumsEnv_1,\AssumsEnv(\AssumsEnv_2)}}$ is valid.
+    %\item  ${\sequentPDL{\AssumsEnv(\AssumsEnv_1;^{p}\AssumsEnv_2)}
+    %{\AssumsEnv(\AssumsEnv_1);^{p}\AssumsEnv(\AssumsEnv_2)}}$ is valid.
+    \end{enumerate}
+    \end{enumerate}
+\end{lemma}
+
+%\jnote{Should I include proofs?}
+
+
+\begin{comment}
+\begin{lemma}[Monotoncity of Bunches]
+    \label[lemma]{MonotonicityOfBunches}
+    If $\sequentPDL{\AssumsEnv'_1}{\AssumsEnv'_2}$ is valid, then 
+    $\sequentPDL{\AssumsEnv(\AssumsEnv'_1)}{\AssumsEnv(\AssumsEnv'_2)}$ is 
+    valid.
+\end{lemma}
+\begin{proposition}[Bunch Semantics are Lax Linear]
+\label{Bunch Semantics are Lax Linear}
+\,
+\begin{lemma}
+    \item If $1 \leq \m{\AssumsEnv_1}_a$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2 )}_a \leq 
+    \m{\AssumsEnv_1, \AssumsEnv(\AssumsEnv_2)}_a$.
+    
+    \item If $1 \leq \m{\AssumsEnv_1}_c$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2 )}_c \leq 
+    \m{\AssumsEnv_1, \AssumsEnv(\AssumsEnv_2)}_c$.
+    
+    \item If $\m{\AssumsEnv_1}_a \leq \m{\AssumsEnv_1}_c$ and 
+    $\m{\AssumsEnv_2}_a \leq \m{\AssumsEnv_2}_c$, then 
+    $\m{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2 )}_a \leq 
+    \m{\AssumsEnv_1, \AssumsEnv(\AssumsEnv_2)}_c$.
+\end{lemma}
+\end{proposition}
+\begin{lemma}[Lax Linearity of Bunches]
+\label[lemma]{BunchesAreLaxLinear}
+    If $\AssumsEnv_1 \not \equiv \emptyset_{+}$ 
+    and $\AssumsEnv_2 \not \equiv \emptyset_{+}$ then 
+    ${\sequentPDL{\AssumsEnv(\AssumsEnv_1,\AssumsEnv_2)}
+    {\AssumsEnv_1,\AssumsEnv(\AssumsEnv_2)}}$ is valid.
+\end{lemma}
+\end{comment}
+
+
+
+Lastly, we define validity of hypersequents, 
+
+\begin{definition}[Hypersequent Validity]
+    We say a hypersequent $\Hyp$ is \emph{valid} iff $1 \leq \m{\Hyp{}}$, where $\m{\Hyp{}}$ is defined inductively as follows: if $\Hyp \equiv \Hyp{}_1 | \Hyp{}_2$ then $\m{\Hyp} = \m{\Hyp{}_1} \psum{\infty} \m{\Hyp{}_2}$, and the base case is given by $\Hyp$ being a formulae.
+\end{definition}
+
+Therefore, ($|$) can be seen an additive conjunction. We can now state soundness,
+
+\begin{theorem}[Soundness of \OL{}]
+    If a hypersequent is provable in \OL{}, then it is valid.
+\end{theorem}
+
+\begin{proof}
+    The proof proceeds by induction on the length of the proof and case analysis on rule shape.
+    
+    \textbf{Equivalence of Bunches.}
+    We must first prove that if $\Gamma_1 \Leftrightarrow \Gamma_2$ then $\m{\Gamma_1}_a = \m{\Gamma_2}_a$ and $\m{\Gamma_1}_c = \m{\Gamma_2}_c$. This follows directly from  \cref{IsLattice}. $\LJAxiom{}$ follows by induction over the shape of $\Gamma$. 
+
+    \textbf{Initial hypersequents.} It is immediate that
+    $\m{\eHyp{}} = \m{\sequentPDL{\emptyset{\times}}{\emptyset{\times}}} = 1 \ediv{} 1 = 1$.
+     
+    \textbf{Basic structural rules.} $\Equi$ and $\Ass$ are trivial. $\IW$ follows from conjunctive and disjunctive monotonicity (\cref{SomePropertiesOfP}) and monotonicity of bunches (\cref{SomePropertiesOfBunches}). $\IC$ follows from additive collapse (\cref{AdditiveCollapse}) and monotonicity of bunches.
+
+    \textbf{Structural rules for Hypersequents.} $\EE$, $\EW$ and $\EC$ follow from properties of the $\max$ function. We prove $\comM$ by contradition. Let us then have the following hypothesis: $a \conmul{} A \leq c \dismul{} C$, $b \conmul{} B \leq d \dismul{} D$, $c \conmul{} d < a \conmul{} b$, and $C \conmul{} D < A \conmul{} B$. Therefore, 
+    $a \conmul{} A \conmul{} b \conmul{} B \leq c \dismul{} C \dismul{} d \dismul{} D$ and $a \conmul{} A \conmul{} b \conmul{} B > c \dismul{} C \dismul{} d \dismul{} D$,
+    which is a contradiction. For $\comA{}$, we have that $1 \leq (a\phsum{p}b \ediv{} e)$ and $1 \leq (c \phsum{p}d \ediv{} f)$. Hence,
+    $$1 \leq ((a\phsum{p}b) \ediv{} e) \phsum{\infty} ((c \phsum{p}d) \ediv{} f)$$
+    $$1 \leq ((\edual{a} \dismul{} e) \psum{p} (\edual{b} \dismul{} e)) \phsum{\infty} ((\edual{c} \dismul{} f) \psum{p} (\edual{d} \dismul{} f))$$
+    Notice that by sub-distributivity,
+    $$
+    (\edual{b}\dismul{}e) \phsum{\infty} (\edual{c}\dismul{}f) \leq (\edual{b}\dismul{}f) \psum{\infty} (\edual{c}\dismul{}e)
+    $$
+    Then by monotonicity and semi-additivity,
+    \begin{equation}
+        \begin{split}
+            & ((\edual{a} \dismul{} e) \psum{p} (\edual{b} \dismul{} e)) \phsum{\infty} ((\edual{c} \dismul{} f) \psum{p} (\edual{d} \dismul{} f)) \leq \\
+            & ((\edual{a} \dismul{} e) \psum{p} (\edual{b} \dismul{} e)) \psum{\infty} ((\edual{c} \dismul{} f) \psum{p} (\edual{d} \dismul{} f))
+        \end{split}
+    \end{equation}
+We conclude,
+$$
+1 \leq ((a\phsum{p}c) \ediv{} e) \psum{\infty} ((b \phsum{p}d) \ediv{} f)
+$$
+    \textbf{Multiplicatives.} $\oneR$, $\oneR$, $\impR$, $\monL$ and $\monR$ are immediate. For $\impL$ we have the hypothesis $a \leq b$ and $f(c) \leq d$, where $f = \m{\Gamma(-)}$. Then, by monotonicity of bunches (\cref{SomePropertiesOfBunches})
+    \begin{equation}
+        \begin{split}
+            & b \ediv{} a \leq 1\\
+            & (b \ediv{} a) \conmul{} c \leq c\\
+            & f(b \ediv{} (a \conmul{} c)) \leq f(c)\\
+            & f(a \conmul{} (b \ediv{} c)) \leq d\\
+        \end{split}
+    \end{equation}
+    
+    \textbf{Additives.} $\topL$, and $\sandL$ are immediate. $\topR$ and $\botL$ follow from induction over the shape of $\Gamma$. $\andR$ and $\orL$ follow from semi-additivity (\cref{SomePropertiesOfP}) and lax-linearity of bunches (\cref{SomePropertiesOfBunches}). $\sorRl$ and $\sorRr$ follow from semi-additivity (\cref{SomePropertiesOfP}) and bunches being monotonic increasing (\cref{SomePropertiesOfBunches}).
+
+    \textbf{Quantitative structural rules.} Lastly, $\pL$ and $\pR$ follow from p-monotonicity (\cref{SomePropertiesOfP}). 
+
+\end{proof}
+
+%\subsection{First-Order Extension Progress}
+
+%\subsection{Formalization Progress}
 

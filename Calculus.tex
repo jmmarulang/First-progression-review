@@ -1,0 +1,219 @@
+\begin{figure}[H]
+	\footnotesize{
+		\begin{spreadlines}{7pt}
+			\begin{empheq}{gather*}
+			\def\ScoreOverhang{1pt}
+			\def\defaultHypSeparation{\hskip .15in}
+			\def\labelSpacing{2pt}
+			\def\ScoreOverhang{1pt}
+			\def\labelSpacing{2pt}
+			\textrm{\bf Initial hypersequents:}
+			\\
+			\eHyp
+			\\
+			\textrm{\bf Basic structural rules:}
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv'}{\phi} \quad 
+				\AssumsEnv \Leftrightarrow \AssumsEnv'$}
+			%\AxiomC{$\AssumsEnv \Leftrightarrow \AssumsEnv'$}
+    		\RightLabel{\Equi}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv}{\phi}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\eHyp$}
+    		\RightLabel{\Ass}
+			\UnaryInfC{$\sequentPDL{\phi}{\phi}$}
+			\bottomAlignProof
+			\DisplayProof
+        	\\
+			\AxiomC{$\sequentPDL{\Gamma(\Gamma_1)}{\AssumsEnv'}$}
+    		\RightLabel{\IW-L}
+			\UnaryInfC{$\sequentPDL{\Gamma(\Gamma_1;^p \Gamma_2)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\Gamma(\Gamma_1;^{\infty} \Gamma_1)}{\AssumsEnv'}$}
+    		\RightLabel{\IC-L}
+			\UnaryInfC{$\sequentPDL{\Gamma(\Gamma_1)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\AxiomC{$\sequentPDL{\Gamma}{\AssumsEnv'(\AssumsEnv_1)}$}
+    		\RightLabel{\IW-R}
+			\UnaryInfC{$\sequentPDL{\Gamma}{\AssumsEnv'(\AssumsEnv_1;^{p} \AssumsEnv_2)}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\Gamma}{\AssumsEnv'(\AssumsEnv_1;^{\infty} \AssumsEnv_1)}$}
+    		\RightLabel{\IC-R}
+			\UnaryInfC{$\sequentPDL{\Gamma}{\AssumsEnv'(\AssumsEnv_1)}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\textrm{\bf Structural rules for Hypersequents:}
+			\\
+			\AxiomC{$\mathcal{G} \ | \mathcal{H}$}
+			\RightLabel{\EE}
+			\UnaryInfC{$\ssequentPDL{\mathcal{G}}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\tsequentPDL{}$}
+			\RightLabel{\EW}
+			\UnaryInfC{$\ssequentPDL{\mathcal{G}}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\ssequentPDL{ \mathcal{G} \ | \ \mathcal{G}  }$}
+			\RightLabel{\EC}
+			\UnaryInfC{$\ssequentPDL{\mathcal{G}}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			%\textrm{\bf Hypersequent specific structural rules:}
+			%\\
+			\AxiomC{$\sequentPDL{\AssumsEnv_1,\AssumsEnv'_1 }
+				{ \AssumsEnv'_3,\AssumsEnv_3}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv_2,\AssumsEnv'_2}
+				{\AssumsEnv'_4,\AssumsEnv_4}$}
+    		\RightLabel{\comM}
+			\BinaryInfC{$\csequentPDL{\AssumsEnv_1,\AssumsEnv_2}
+				{ \AssumsEnv_3,\AssumsEnv_4}{\AssumsEnv'_1,\AssumsEnv'_2}
+				{ \AssumsEnv'_3,\AssumsEnv'_4}$}
+			\bottomAlignProof
+			\DisplayProof
+			%\\
+			%\AxiomC{$\sequentPDL{\AssumsEnv_1;^{p}\AssumsEnv'_1 }{\AssumsEnv'_3;^{p}\AssumsEnv_3}$}
+			%\AxiomC{$\sequentPDL{\AssumsEnv_2;^{p}\AssumsEnv'_2}{\AssumsEnv'_4;^{p}\AssumsEnv_4}$}
+    		%\RightLabel{\comA}
+			%\BinaryInfC{$\csequentPDL{\AssumsEnv_1;^{p}\AssumsEnv_2}
+			%{ \AssumsEnv_3;^{p}\AssumsEnv_4}{\AssumsEnv'_1;^{p}\AssumsEnv'_2}{ \AssumsEnv'_3;^{p}\AssumsEnv'_4}$}
+			%\bottomAlignProof
+			%\DisplayProof        
+			\\
+				\AxiomC{$\sequentPDL{\AssumsEnv_1;^{p}\AssumsEnv'_1 }{\AssumsEnv_3}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv_2;^{p}\AssumsEnv'_2}{\AssumsEnv_4}$}
+    		\RightLabel{\comA}
+			\BinaryInfC{$\csequentPDL{\AssumsEnv_1;^{p}\AssumsEnv_2}
+			{ \AssumsEnv_3}{\AssumsEnv'_1;^{p}\AssumsEnv'_2}{ \AssumsEnv_4}$}
+			\bottomAlignProof
+			\DisplayProof        
+			\\
+			\textrm{\bf Multiplicatives:}
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv(\emptyset{}_{\times})}{\AssumsEnv'}$}
+    		\RightLabel{\oneL}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv(1)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\eHyp$}
+    		\RightLabel{\oneR}
+			\UnaryInfC{$\sequentPDL{\emptyset{}_{\times}}{1}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv_1}{\phi}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv(\psi)}{\AssumsEnv'_1}$}
+    		\RightLabel{\impL}
+			\BinaryInfC{$\sequentPDL
+			{\AssumsEnv(\AssumsEnv_1 , \phi \ediv \psi )}
+			{\AssumsEnv'_1}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\AssumsEnv, \phi}{\psi, \AssumsEnv'}$}
+    		\RightLabel{\impR}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv}{\phi \ediv \psi , \AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv(\phi, \psi)}{\AssumsEnv'}$}
+    		\RightLabel{\monL}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv(\phi \conmul \psi)}{ \AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\AssumsEnv_1}{\phi, \AssumsEnv_3}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv_2}{\psi, \AssumsEnv_4}$}
+    		\RightLabel{\monR}
+			\BinaryInfC{$\sequentPDL{\AssumsEnv_1,\AssumsEnv_2}
+			{\phi \conmul \psi , \AssumsEnv_3, \AssumsEnv_4}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\textrm{\bf Additives:}
+			\\
+			\AxiomC{$\eHyp$}
+    		\RightLabel{\topR}
+			\UnaryInfC{$\sequentPDL{\emptyset_{+}}{\AssumsEnv(\top)}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\AssumsEnv(\emptyset_{+})}{\AssumsEnv'}$}
+    		\RightLabel{\topL}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv(\top)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\eHyp$}
+    		\RightLabel{\botL}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv(\bot)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+        	\\
+			\AxiomC{$\sequentPDL{\AssumsEnv(\phi;^p \psi)}{\AssumsEnv'}$}
+    		\RightLabel{\sandL}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv (\phi \phsum{p} \psi)}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\AssumsEnv_1}{\AssumsEnv(\phi)}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv_2}{\AssumsEnv(\psi)}$}
+    		\RightLabel{\andR, if $[\Gamma] \leq p$}
+			\BinaryInfC{$\sequentPDL{\AssumsEnv_1;^p \AssumsEnv_2}{\AssumsEnv(\phi \phsum{p} \psi) }$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv(\phi)}{\AssumsEnv_1}$}
+			\AxiomC{$\sequentPDL{\AssumsEnv(\psi)}{\AssumsEnv_2}$}
+    		\RightLabel{\orL, if $[\Gamma] \leq p$}
+			\BinaryInfC{$\sequentPDL{\AssumsEnv(\phi \psum{p} \psi)}{ \AssumsEnv_1;^p \AssumsEnv_2}$}
+			\bottomAlignProof
+			\DisplayProof
+			\\
+\AxiomC{$\sequentPDL{\AssumsEnv}{\AssumsEnv'(\phi)}$}
+    \RightLabel{\sorRl}
+\UnaryInfC{$\sequentPDL{\AssumsEnv}{\AssumsEnv'(\phi \psum{p} \psi)}$}
+		\bottomAlignProof
+		\DisplayProof
+\quad
+\AxiomC{$\sequentPDL{\AssumsEnv}{\AssumsEnv'(\psi)}$}
+    \RightLabel{\sorRr}
+\UnaryInfC{$\sequentPDL{\AssumsEnv}{\AssumsEnv'(\phi \psum{p} \psi)}$}
+		\bottomAlignProof
+		\DisplayProof
+		\\
+		\textrm{\bf Quantitative structural rules:}
+			\\
+			\AxiomC{$\sequentPDL{\AssumsEnv_1 ;^q \AssumsEnv_1 }{\AssumsEnv}$}
+			\RightLabel{\pL, $p\leq q$}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv_1 ;^p \AssumsEnv_2 }{\AssumsEnv}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\AssumsEnv }{\AssumsEnv_1 ;^q \AssumsEnv_2}$}
+			\RightLabel{\pR, $p\leq q$}
+			\UnaryInfC{$\sequentPDL{\AssumsEnv }{\AssumsEnv_1 ;^p \AssumsEnv_2}$}
+			\bottomAlignProof
+			\DisplayProof
+			\end{empheq}
+	\end{spreadlines}}
+	\vspace*{-1em}
+	
+	\caption{\emph{\footnotesize{Propositional sequent calculus for \OL{} 
+	}}}
+	\label{fig:seq-rules}
+	\vspace*{-1.5em}
+\end{figure}

@@ -20,15 +20,20 @@
 %%References
 \usepackage[nameinlink]{cleveref}
 \crefname{Definition}{Definition}{Definitions}
-
+\crefname{Lemma}{Lemma}{Lemmas}
 %%Math
 \usepackage{stmaryrd}
-%\usepackage{amsmath}
+\usepackage{amsmath}
 \usepackage{syntax}
+\usepackage{empheq}
+\usepackage{proof}
+\usepackage{bussproofs}
+\usepackage{paralist} 
 
 %graphics
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{pdfpages}
  
 %%Alias 
 \defcitealias{Platzer_2024}{Intersymbolic AI}
@@ -61,10 +66,10 @@
 %\copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
 %\raggedright                  %% Set the style to Left justification, remove for fill justification
                               %% Must be done after copyrightDeclaration
-\frontmatter
+%\frontmatter
 \maketitle
 \begin{abstract}
-\TODO
+The interpretation of logical expressions into loss functions has given rise to so-called differentiable logics. They function as a bridge between symbolic and subsymbolic reasoning, offering a novel approach for hybrid AI systems. Maintaining good proof-theoretic and optimization properties comes at the price of a more intricate semantics for first-order quantifiers. We explore how to balance these properties. On top of this, to ease their integration into machine-learning backends, we explore how to formalize semantics for first-order differentiable logics using the Mathematical Components library in the Rocq proof assistant. We seek to give rigorous semantics for quantifiers, verify their properties with respect to other logical connectives, as well as prove the soundness and completeness of the resulting logics.
 \end{abstract}
 
 %\tableofcontents
@@ -89,7 +94,7 @@
 %%Lightweight Definitions and Abbreviations see package:nomencl for alternative
 %% Include if relevant to discipline
 %\listofsymbols{ll}{$w$ & The weight vector\\$\S$ & If relevant to discipline}
-\mainmatter
+%\mainmatter
 %% ------------------ MAIN MATTER (CONTENT) --------------------
 
 \include{Introduction}
@@ -100,7 +105,7 @@
 
 \include{NextSteps}
 
-\include{Conclusions}
+%\include{Conclusions}
 
 %\begin{lstlisting}[caption=Listing of what an example listing would be like]
 %This is a test listing
@@ -118,5 +123,17 @@
 %\chapter{Bibliography}
 %To use bibliography as well as the references section use the \texttt{multibbl} package.
 %\chapter{Index [if relevant]}
+
+\begin{comment}
+\section{Appendix}
+
+\begin{figure}[H]
+\label{Gantt}
+\centering
+  \includegraphics[width=1.15\columnwidth]{Figures/Gantt.pdf}
+  \caption{Gantt of our plan until the second progression review.}
+\end{figure}
+\end{comment}
+
 \end{document}
 %% ----------------------------------------------------------------
