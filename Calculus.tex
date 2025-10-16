@@ -1,4 +1,4 @@
-\begin{figure}[H]
+\begin{figure}[h]
 	\footnotesize{
 		\begin{spreadlines}{7pt}
 			\begin{empheq}{gather*}
@@ -73,9 +73,9 @@
 			\\
 			%\textrm{\bf Hypersequent specific structural rules:}
 			%\\
-			\AxiomC{$\sequentPDL{\AssumsEnv_1,\AssumsEnv'_1 }
+			\AxiomC{$\hsequentPDL{\AssumsEnv_1,\AssumsEnv'_1 }
 				{ \AssumsEnv'_3,\AssumsEnv_3}$}
-			\AxiomC{$\sequentPDL{\AssumsEnv_2,\AssumsEnv'_2}
+			\AxiomC{$\hsequentPDL{\AssumsEnv_2,\AssumsEnv'_2}
 				{\AssumsEnv'_4,\AssumsEnv_4}$}
     		\RightLabel{\comM}
 			\BinaryInfC{$\csequentPDL{\AssumsEnv_1,\AssumsEnv_2}
@@ -92,14 +92,32 @@
 			%\bottomAlignProof
 			%\DisplayProof        
 			\\
-				\AxiomC{$\sequentPDL{\AssumsEnv_1;^{p}\AssumsEnv'_1 }{\AssumsEnv_3}$}
-			\AxiomC{$\sequentPDL{\AssumsEnv_2;^{p}\AssumsEnv'_2}{\AssumsEnv_4}$}
+				\AxiomC{$\hsequentPDL{\AssumsEnv_1;^{p}\AssumsEnv'_1 }{\AssumsEnv_3}$}
+			\AxiomC{$\hsequentPDL{\AssumsEnv_2;^{p}\AssumsEnv'_2}{\AssumsEnv_4}$}
     		\RightLabel{\comA}
 			\BinaryInfC{$\csequentPDL{\AssumsEnv_1;^{p}\AssumsEnv_2}
 			{ \AssumsEnv_3}{\AssumsEnv'_1;^{p}\AssumsEnv'_2}{ \AssumsEnv_4}$}
 			\bottomAlignProof
 			\DisplayProof        
-			\\
+			\end{empheq}
+	\end{spreadlines}}
+	\vspace*{-1em}
+	
+	\caption{\emph{\footnotesize{Propositional sequent calculus for \OL{} - Structural Rules 
+	}}}
+	\label{fig:seq-rules1}
+	\vspace*{-1.5em}
+\end{figure}
+
+\begin{figure}[h]
+	\footnotesize{
+		\begin{spreadlines}{7pt}
+			\begin{empheq}{gather*}
+			\def\ScoreOverhang{1pt}
+			\def\defaultHypSeparation{\hskip .15in}
+			\def\labelSpacing{2pt}
+			\def\ScoreOverhang{1pt}
+			\def\labelSpacing{2pt}
 			\textrm{\bf Multiplicatives:}
 			\\
 			\AxiomC{$\sequentPDL{\AssumsEnv(\emptyset{}_{\times})}{\AssumsEnv'}$}
@@ -212,8 +230,8 @@
 	\end{spreadlines}}
 	\vspace*{-1em}
 	
-	\caption{\emph{\footnotesize{Propositional sequent calculus for \OL{} 
+	\caption{\emph{\footnotesize{Propositional sequent calculus for \OL{} - Nonstructural rules
 	}}}
-	\label{fig:seq-rules}
+	\label{fig:seq-rules2}
 	\vspace*{-1.5em}
 \end{figure}

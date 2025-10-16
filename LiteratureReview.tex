@@ -1,22 +1,408 @@
 %% ----------------------------------------------------------------
 %% LiteratureReview.tex
 %% ---------------------------------------------------------------- 
-\section{Literature Review} \label{section:LiteratureReview}
+\section{Background and Literature Review} \label{section:LiteratureReview}
+\label{Background}
 
-In this section we start by reviewing some approaches to QLs, as well as their quantification. Since our investigation tends their application as DLs, we focus only on their numerical interpretation (as opposed of, e.g. a possibilistic interpretation \citep{LIU19981}). %Table \mcita{} shows a summary of the numerical interpretations and properties of some relevant QLs. 
-We then review how DLs have been studiend for and applied to \InAI{} systems. Lastly, we review how interactive theorem provers have been leveraged for AI verification.
+\subsection{Learning Properties}
 
-\textbf{Fuzzy logics and substructural logics.} Fuzzy logics were introduced via the idea that truth is a matter of degree, and were some of the first logics to leave the Boolean interpretation \citep{galatos2007residuated}. The full exposition of their significance is beyond the scope of this review (for more information, see \cite{cintula2011handbook, prooffuzzy}). Broadly, they model the interval $[0,1]$ and their implication is defined as the residuum of conjunction, which in part is defined as a \emph{triangular norm} (t-norm) \citep{cintula2011handbook,prooffuzzy}. Fuzzy logics with left-continuous t-norms belong to the family of substructural logics, i.e. logics with Gentzen-style calculi that lack some structural rules from classical logic \citep{galatos2007residuated}. Linear logic is another example of a substructural logic \citep{Wadler1993, agliano2025algebraic, galatos2007residuated}. Some relevant fuzzy logics of this kind include Łukasiewicz, Product and G\"{o}del \citep{cintula2011handbook,prooffuzzy}. It is well known that residuated lattices, i.e. a lattices with a monoidal operator that meet the residuation law \citep{galatos2007residuated}, give complete algebraic semantics for propositional substructural logics \citep{galatos2007residuated}. However, it is not trivial how to extend these logics into first-order without loosing completeness. Under the standard interpretation of quantifiers as infimum and supremum \citep{rescher1969many, cintula2011handbook}, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics, that is sound and complete w.r.t. models with values in $[0,1]$ \citep{cintula2011handbook}. Other approaches for fuzzy quantifiers have been studied, such as t-quantifier \citep{LIU19981}, generalized means \citep{badreddine2022logic, slusarz2023logic} and other aggregation operators \citep{LIU19981}. Yet it remains unclear to us how they affect the deductive systems and semantics. Recently, \citeauthor{slusarz2023logic} proposed interpreting quantifiers as expected values, and developed a sound first-order sequent calculus for several fuzzy logics \citep{slusarz2023logic}.
+In this section, we introduce relevant properties from the ML perspective, that we call \textit{Learning Properties}. Loss functions are generally desired to be continuous and monotonic. 
 
-%\jnote{Not sure where to find more information on the proof theoretic study of different quantifier semantics for fuzzy logics.}
+In what follows, let $I \subseteq \real, f : I \rightarrow I$ and $g : I^{n} \rightarrow I$ be measurable functions.
 
-\textbf{Logics of the lawvere quantile.} As their name suggests, logics of the Lawvere quantile are those which model the Lawvere quantile of extended positive reals (that is, $[0,\infty]$)  \citep{bacci2023propositional}. This structure generalizes residuated lattices, that substructural logics model \citep{galatos2007residuated}. Their main motivation is providing foundations for quantitative reasoning. \citeauthor{bacci2023propositional} formalized a logic of this kind, and showed that the Łukasiewicz logic is also an instance of this quantile \citep{bacci2023propositional, bacci2024polynomial}. They provide a sound deductive system for their logic, and prove completeness for finitely axiomatizable theories. \citeauthor{bacci2025induction} further extended \citeauthor{bacci2024polynomial}'s logic with an induction principle, provided an algebraic interpretation, and showed how it can be applied to encode Markov Processes \citep{bacci2025induction}. There is currently no first-order extension for this logic. As mentioned in the introduction, \citeauthor{capucci2024quantifiers} also presented a logic that takes the Lawvere quantile as its interpretation, while also resembling linear logic \citep{Wadler1993, agliano2025algebraic}. Its monoidal operator is similar to that of product logic \cite{cintula2011handbook, prooffuzzy}, and possesses a family of parametrised operators that approximate lattice operators at the limit. \citeauthor{capucci2024quantifiers}'s logic is under development, yet it promises many relevant symbolic and subsymbolic properties.
+\begin{definition}[Continuity]
+    Let $x \in I$ and $(x_i)_{i > 0}, x_i \in I$ be a sequence such that when $i \longrightarrow +\infty$, then $x_i \longrightarrow x$. $f$ is \textit{continuous} if $f(x_i) \longrightarrow f(x)$.
 
-\textbf{Logics from the \InAI{} community.} Prompted by the growing interest on \InAI{}, QLs have been developed with the specific purpose of being applied as DLs. However, most remain understudied from a proof-theoretic perspective. \emph{Probabilistic Circuits} have been used to embed knowledge during training in NNs \citep{lee2009advances, braun2025tractablerepresentationlearningprobabilistic}. \citeauthor{kimmig2012short} introduce \emph{Probabilistic Soft Logic} \citep{kimmig2012short}, that resembles  Łukasiewicz logic \cite{cintula2011handbook,prooffuzzy}. \citeauthor{fischer2019dl2} introduce the \emph{DL2} language \citep{fischer2019dl2}, that resembles product fuzzy logic \citep{cintula2011handbook, prooffuzzy}. \emph{Signal Temporal Logic} (STL) is a variant of temporal logic with a numerical interpretation \citep{varnai2020robustness}. Not unlike \citeauthor{capucci2024quantifiers}'s logic, STL has a softness parameter that turns its conjunction and disjunction into lattice operators at the limit \citep{varnai2020robustness}. The connectives of this logic, however, are not associative (except at the limit) \citep{affeldt2024taming}. It is worth noting that none of the previous logics possess a known deductive system. Several unified languages for DLs have also been proposed \citep{badreddine2022logic, van2024uller, slusarz2023logic}. \citeauthor{serafini2016logic} introduce \emph{Real Logic}, a first order language with groundings (what we refer to as interpretations) over $[0,1]$, and implement it in deep \emph{Logic Tensor Networks} (LTN) \cite{badreddine2022logic}.   
-They define satisfiability in terms of confidence intervals, and introduced the concepts of \emph{satisfiability error} and \emph{approximate satisfiability}, useful for reasoning on LTNs.  \citeauthor{van2022analyzing} propose some groundings for Real logic \citep{van2022analyzing}. Explicit semantics for finitary quantifiers of Real Logic were later studied by \citeauthor{badreddine2022logic}, who proposed grounding them as the smooth maximum and minimum \citep{badreddine2022logic}. They also introduced a new grounding, nicked \emph{Stable Product Real logic} \citep{badreddine2022logic}, 
-%\jnote{Do you think this stable product logic may be worth exploring from the proof theoretic side?}
-a modified version of product logic \citep{van2022analyzing}. Similar to Real logic, \citeauthor{van2024uller} proposed the \emph{Uller} framework, which gives both a fuzzy and a probably interpretations \citep{van2022analyzing}. \citeauthor{schellhorn2025muller} recently provided categorical semantics for this framework, as well as numerical semantics for first-order Product Real logic \citep{schellhorn2025muller}. \citeauthor{slusarz2023logic} differenciate from previous work by providing a well-typed and sound calculus for their framework, interpreting quantifiers as expected values, nicked \emph{Logic of Differentiable Logics},  \citep{slusarz2023logic}. 
+    Where $a \longrightarrow b$ means that $a$ tend to $b$.
+\end{definition}
+  
+\begin{definition}[Monotonicity]
+    Let $\square \in \{<, \leq, \geq, >\}$. $f$ is \textit{monotonic} iff $x \,\square\, y$ implies $f(x) \,\square\, f(y)$. When $\square \in \{<,>\}$ we say $f$ is \textit{strict monotonic}. When $\square \in \{<,\leq\}$ we say $f$ is \textit{monotonic increasing}, otherwise it is \textit{monotonic decreasing}.
+\end{definition}
 
-\textbf{Subsymbolic study of DLs.} From the subsymbolic side, \citeauthor{van2022analyzing} analyse some gradient properties of fuzzy logic operators, and mention some common problems: \emph{single-passing}, \emph{vanishing gradients}, and \emph{exploding gradients} \cite{van2022analyzing}. They conclude that product logic with Reichenbach implication is the best performing. \citeauthor{badreddine2022logic} extend this analysis to some aggregate operators and propose Stable Product Real Logic as an alternative with better gradient properties \citep{badreddine2022logic}. \citeauthor{varnai2020robustness} propose \emph{geometric properties} desirable for DLs \citep{varnai2020robustness}:  \emph{scale-invariance}, \emph{weak smoothness} and \emph{shadow-lifting} (\cref{Shadow-lifting}), among others;  and study STL \citep{varnai2020robustness} from this lense. However, they also prove that a DL cannot meet shadow-lifting while being idempotent and associative \citep{varnai2020robustness}. Building on this, \citeauthor{affeldt2024taming} analyse wherever some prominent DLs  meet the shadow-lifting property \citep{affeldt2024taming, varnai2020robustness}. We speculate that \citeauthor{capucci2024quantifiers} is able to balance shadow-lifitng and idempotence by adding additional operators that approximate lattice operations \citep{capucci2024quantifiers}. \citeauthor{FLINKOW2025103280} perform an empirical analysis of some DLs as loss functions, and make use of formal verification tools to evaluate their ability to provide guarantees \citep{FLINKOW2025103280}. 
+Besides the informal notion of exploding gradients, some QL specific metrics have been proposed. \citeauthor{varnai2020robustness} evaluate STL under traditional metrics, and propose some novel ones \citep{varnai2020robustness}. They conclude smoothness is desirable to aid gradient-based and acceleration methods \citep{varnai2020robustness}.
 
-\textbf{AI formalization.} We build on the work of \citeauthor{affeldt2024taming}, who formalize some prominent propositional DLs in Rocq \citep{affeldt2024taming} using the syntax of the logic of differentiable logics \cite{slusarz2023logic}. Machine-learning backends have been previously mechanized in Agda \citep{agdaDL}, as part of the formalization of the Vehicle language \citep{vehicle}.  Property-guided training certified via mechanization was also proposed by \citeauthor{chevallier2022constrainedtrainingneuralnetworks} \citep{chevallier2022constrainedtrainingneuralnetworks}. Relevant formalizations of \SuAI{} related concepts include: verification of NNs in Isabelle/HOL \citep{brucker2023verifying} and Imandra \citep{desmartin2022checkinn}, formalisation of piecewise affine activation functions in Rocq \citep{aleksandrov2023formalizing}, providing generalization guarantees in Rocq \citep{bagnall2019certifying}, convergence of a single-layered perceptron in Rocq \citep{murphy2017verified}; and verification of neural archetypes in Rocq \citep{DeMaria2021}. The formalisation presented here does not directly formalise neural networks. On the other hand, many \SiAI{} concepts have been mechanized. Some relevant examples include a formalization of BI in Rocq \citep{10.1145/3497775.3503690}, and a formalization of the deep inference MAV logic in Agda \citep{Atkey2024}. 
+\begin{definition}[Weak smoothness]
+    $g$ is \textit{weakly smooth} if it is continuous everywhere, and its gradient is continuous at points where there is a unique minimal term.
+\end{definition}
+
+They also propose the following property to guarantee that the loss function reflects an increase in any of its parameters \citep{varnai2020robustness}:
+
+\begin{definition}[Shadow-lifting]
+    \label[Definition]{Shadow-lifting}
+   $g$ satisfies \textit{shadow-lifting} if, for any $a \in I, a \neq 0$ and $i \in [1,n]$,
+    \begin{equation*}
+	\left. \dfrac{\partial g(x_1,\dots,x_n)}{\partial x_i}\right\rvert_{x_j = a \text{ where } i \neq j} >0
+	\end{equation*}
+\end{definition}
+
+As noted before, an operator cannot meet shadow-lifting while being associative and idempotent \citep{varnai2020robustness}. We speculate that \citeauthor{capucci2024quantifiers} is able to balance shadow-lifitng and idempotency through the softness modality \citep{capucci2024quantifiers}. Lastly, an operator should behave similarly regardless of the order of magnitude of its inputs \citep{varnai2020robustness}.
+
+\begin{definition}[Scale-invariance]
+    $g$ is said to be \textit{scale-invariant if}, for any $\alpha \geq 0$, 
+    \begin{equation}
+    g(\alpha x_1,\dots,\alpha x_n) = \alpha g(x_1,\dots,x_n)    
+    \end{equation}
+\end{definition}
+
+\citeauthor{van2022analyzing} analyse some gradient properties of fuzzy logic operators, and propose the following two metrics \citep{van2022analyzing}:
+
+\begin{definition}[Vanishing]
+    $f$ is said to be \textit{vanishing} if there are $a,b \in \real, a < b$ such that for all $c \in (a,b), f(c) = 0$. Otherwise, the function is \textit{nonvanishing}. $g$ has a \textit{vanishing gradient} if there is some $i \in [0,n]$ such that $\dfrac{\partial g(x_1,\dots,x_n)}{\partial x_i}$ is vanishing.
+\end{definition}
+
+\begin{definition}[Single-passing]
+    $g$ is said to be \textit{single-passing} if  it has nonzero derivatives on at most one input argument. That is, there exists at most one $i \in [0,n]$ such that $\dfrac{\partial g(x_1,\dots,x_n)}{\partial x_i} \neq 0$. Otherwise, $g$ is \textit{multiple-passing}.
+\end{definition}
+
+Whenever a gradient vanishes, it stops affecting learning; a single-passing operator can be inefficient, since at most one input will be affected \citep{van2022analyzing}. \citeauthor{van2022analyzing} conclude that product logic with Reichenbach implication is the best performing under these two metrics. However, they also remark that, unlike other fuzzy logics, the gradient of the product is not always larger for lower values, which may hinder learning \citep{van2022analyzing}.  \citeauthor{badreddine2022logic} extend this analysis to some aggregate operators and propose \textit{Stable Product Real Logic} as an alternative with better gradient properties \citep{badreddine2022logic}. 
+
+\citeauthor{FLINKOW2025103280} perform an empirical analysis of relevant QLs as loss functions, and make use of formal verification tools to evaluate their ability to provide guarantees \citep{FLINKOW2025103280}. Notably, while their theoretical results argue in favour of shadow-lifting, experiments did not confirm this. Instead, they conclude that strong derivatives have a larger impact.
+
+\begin{comment}
+\begin{definition}[Exploding]
+     A function $f : \real \rightarrow \real$ is said to be \textit{exploding} if there are $a,b \in \real, a < b$ such that for all $c \in (a,b)$ when $x \longrightarrow c$ then $f(x) \longrightarrow \infty$. Otherwise, the function is \textit{nonexploding}. A function $f : \real^n \rightarrow \real$ has an \textit{exploding gradient} if there is some $i \in [0,n]$ such that $\dfrac{\partial f(x_1,\dots,x_n)}{\partial x_i}$ is exploding.
+\end{definition}    
+\end{comment}
+
+
+%\jnote{Exploding gradients are an informal notion, tho several formal definitions have been proposed.}
+%----------------------------------------------
+
+\subsection{Logics and Logical Properties}
+
+We introduce logics that relate to our work. We understand the properties of these logics, that we call \textit{Logical Properties}, as design patterns to be adapted for our use case (for example, by changing the domain over which properties of fuzzy logics are defined). 
+
+%\jnote{table with semantics of different logics}
+
+\textbf{Substructural logics.} Our main lens of study is that of \textit{substructural logics}. These are logics with a Gentzen-style calculi that lack some structural rules from classical or intusionistic logic  \citep{galatos2007residuated}. Complete algebraic semantics for substructural logics are given by \textit{residuated lattices},  i.e. a lattices with a monoidal operator that meet the residuation law \citep{galatos2007residuated}. We will focus on commutative bounded \textit{full lambek algebras} (FL-algebras), an extension of resudiated lattices \citep{galatos2007residuated}. 
+
+\begin{definition}[Bounded Commutative FL-algebra]
+$(A, \phsum{}, \psum{}, \conmul{}, \ediv{}, f, t, \bot)$ is a bounded commutative \textit{residuated lattice} if
+ \begin{enumerate}
+        \item $\phsum{}$, $\psum{}$ are commutative, associative and mutually absorptive, with $\bot$ as unit and null-element, respectively.
+        \item $\conmul{}$ is associative and commutative, with unit element $t$.
+        \item \textit{Residuation law.} $a \conmul{} b \leq c$ iff $a \leq b \ediv{} c$. Where $a \leq b$ is defined as $a = a \phsum{} b$.
+        \item $f$ is an arbitrary element of $A$.
+    \end{enumerate}
+\end{definition}
+
+Valid formulas are those that meet the \textit{defining equation} $t \leq a$. 
+
+
+%Negation can be defined as $\ldual{a} = a \ediv{} f$. Notice that it is not necessarily true that $a \ediv{} b = \ldual{a} \psum{} b$.
+%\jnote{Introduce residuated lattices}
+
+
+\textbf{Resource sensitive logics.}  In \textit{resource sensitive logics} how often a formula is used in a proof matters. This translates to conjunction and disjunction not being \textit{idempotent}, i.e. for $* : A^2 \rightarrow A, x * x = x$. Therefore, the \textit{weakening} and/or \textit{contraction} rules must be restricted in some form. 
+\begin{center}
+    
+\AxiomC{$\sequentPDL{\Gamma_1}{\AssumsEnv'}$}
+    		\RightLabel{\IW-L}
+			\UnaryInfC{$\sequentPDL{\Gamma_1, \Gamma_2}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+			\quad
+			\AxiomC{$\sequentPDL{\Gamma_1, \Gamma_1}{\AssumsEnv'}$}
+    		\RightLabel{\IC-L}
+			\UnaryInfC{$\sequentPDL{\Gamma_1}{\AssumsEnv'}$}
+			\bottomAlignProof
+			\DisplayProof
+
+\end{center}
+
+A substructural example is \textit{linear logic} \citep{galatos2007residuated}. In it, resource aware operators are known as \textit{multiplicatives}, while the rest are know as \textit{additives}. Notably, $\ediv{}$ takes the role of a resource sensitive implication, with the intuitive sense of "you can get $b$ at the cost of $a$". Therefore, $\conmul{}$ corresponds to \textit{multiplicative conjunction}.
+Since $\phsum{}$ and $\psum{}$ are mutually absorptive they are also idempotent \citep{galatos2007residuated}, and correspond to \textit{additive conjunction} and \textit{additive disjunction}. Negation or \textit{duality} is defined as $\ldual{a} = a \ediv{} f$ and we have $\ldual{t} = f$. Since $t$ is the smallest valid element, $f$ and $t$ are known as the \textit{strongest false} and \textit{weakest truth}, while $\bot$ and $\top$ are the \textit{weakest false} and \textit{strongest truth} \citep{galatos2007residuated}. Another substructural example if that of the \textit{logic of bunched implications} (BI) \citep{o1999logic}. On top of the multiplicative implication $\ediv$ of linear logic, it possesses an additive implication $\sepimp$; while its predicate version includes both additive and multiplicative quantifiers. BI's sequent calculus possesses both additive and multiplicative context-forming operations. Therefore, contexts are no longer sequents, but trees with propositions as leaves and internal nodes labelled by "$,$" for multiplicatives or "$;$" for additives. Moving away from substructural logics, some quantitative logics make use of numbers to model resources \citep{meyer1980abelian, shortliffe2012computer}. For example, paraconsistent \textit{Abelian Logic} can be interpreted over the real numbers, with conjunction as addition and implication as subtraction \citep{meyer1980abelian}. 
+
+\textbf{Fuzzy logics.} Fuzzy logics are substructural logics that meet the \textit{prelinearity axiom}, $(a \Rightarrow b) \lor (b \Rightarrow a)$, i.e. the property that reflect the total order of the real line. They were introduced via the idea that truth is a matter of degree, and were some of the first logics to leave the Boolean interpretation \citep{galatos2007residuated}. The full exposition of their significance is beyond the scope of this review (for more information, see \cite{cintula2011handbook, prooffuzzy}). Broadly, they model the interval $[0,1]$ and conjunction is given by a left-continuous \emph{triangular norm} (t-norm) \citep{cintula2011handbook,prooffuzzy}.
+
+\begin{definition}[Triangular Norm]
+A \textit{t-norm} is a function $ * : [0,1] ^2 \rightarrow [0,1]$ such that it is monotonic increasing and 
+\begin{enumerate}
+    \item \textit{Commutativity.} $(x * y) = (x * y)$.
+    \item \textit{Associativity.} $(x * y) * z = x * (y * z)$.
+    \item \textit{Identity.} $(x * 1) = (1 * x) = x$.
+\end{enumerate}
+\end{definition}
+
+ Some relevant fuzzy logics of this kind include Łukasiewicz, Product, G\"{o}del, and Yager \citep{cintula2011handbook,prooffuzzy}. Since they are substructural, complete algebraic semantics for propositional fuzzy logics are given by residuated lattices. However, it is not trivial how to extend these logics into first-order without loosing completeness. Under the standard interpretation of quantifiers as infimum and supremum \citep{rescher1969many, cintula2011handbook}, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics, that is sound and complete w.r.t. models with values in $[0,1]$ \citep{cintula2011handbook}. \citeauthor{LIU19981} studied alternative approaches for fuzzy quantifiers \citep{LIU19981}. They note that for any fuzzy predicate logic, quantifiers can be obtained from a class of aggregation operators, with the additional conditions of being commutative and idempotent.
+
+ \begin{definition}
+     An \textit{aggregation operator} is a continuous, monotonic increasing mapping $h : [0,1]^n \rightarrow [0,1]$ satisfying  $h(0,\dots,0) = 0$, and $h(1,...,1)=1$.
+ \end{definition}
+ 
+ 
+Alternative interpretations of quantifiers include t-quantifiers \citep{LIU19981}, and generalized means \citep{badreddine2022logic, slusarz2023logic}. 
+
+ \begin{definition}[$p$-Means]
+\label{pmean}
+    Given a probability space $\textbf{S} = (S, \sigmal{S}, \mathbb{P})$, let $f : S \rightarrow \PEreal$ be a measurable function. For $p \in (0, \infty)$, the \textit{(generalized weighted) $p$-mean} of $f$ is
+    \begin{equation}
+        %\LMS{f}{p}{S} := \left(\int_{S} f(s)^p\, \mathbb{P}(\de s)(s)\right)^{1/p}
+        \LMS{f}{p}{\textbf{S}} := \left(\int_{\textbf{S}} f^{\,p}\right)^{1/p} = 
+        \left(\int_{S} f(s)^{\,p}\, \mathbb{P}(\de s)\right)^{1/p}
+    \end{equation}
+\end{definition}
+
+ Yet it remains unclear to us how they affect the deductive systems and semantics. 
+ 
+ Some fuzzy logics are also resource sensitive, and therefore lack weakening and/or contraction, required to prove the prelinearity axiom \citep{prooffuzzy}. To deal with this restriction, fuzzy logics generalizes sequents into hypersequents \citep{prooffuzzy, BaazHyp}. 
+
+\begin{definition}[Hypersequent]
+    A \textit{hypersequent} is a non-empty finite multiset of the form:
+    \begin{equation}
+        \Hyp{}_1 \ | \ \dots \ | \ \Hyp{}_n
+    \end{equation}
+    Where $\Hyp{}_1 , \dots, \Hyp{}_n$ are sequents and the "$|$" is read as an "or".
+\end{definition}
+
+Hypersequents allows the introduction of the \textit{communication} rule, which facilitates proving prelinearity:
+
+\begin{center}
+\AxiomC{$\hsequentPDL{\AssumsEnv_1,\AssumsEnv'_1 }
+				{ \AssumsEnv'_3,\AssumsEnv_3}$}
+			\AxiomC{$\hsequentPDL{\AssumsEnv_2,\AssumsEnv'_2}
+				{\AssumsEnv'_4,\AssumsEnv_4}$}
+    		\RightLabel{\rulelabel{COM}}
+			\BinaryInfC{$\csequentPDL{\AssumsEnv_1,\AssumsEnv_2}
+				{ \AssumsEnv_3,\AssumsEnv_4}{\AssumsEnv'_1,\AssumsEnv'_2}
+				{ \AssumsEnv'_3,\AssumsEnv'_4}$}
+			\bottomAlignProof
+			\DisplayProof    
+\end{center}
+
+Notably, \citeauthor{ciabattoni2017bunched} introduced a calculus with both bunches and hypersequents \citep{ciabattoni2017bunched}.
+
+\textbf{Logics from the ML community.} Prompted by the growing interest on NeSy AI, QLs have been developed with the specific purpose of being applied for learning. However, most remain understudied from a proof-theoretic perspective. \citeauthor{kimmig2012short} introduce \emph{Probabilistic Soft Logic} \citep{kimmig2012short}, that resembles  Łukasiewicz logic \cite{cintula2011handbook,prooffuzzy}. \citeauthor{fischer2019dl2} introduce the \emph{DL2} language \citep{fischer2019dl2}, that resembles product fuzzy logic \citep{cintula2011handbook, prooffuzzy}. \emph{Signal Temporal Logic} (STL) is a variant of temporal logic with a real-valued interpretation \citep{varnai2020robustness}. Resembling Yager logics \citep{cintula2011handbook}, STL has a parameter that turns its conjunction and disjunction idempotent and associative at the limit \citep{varnai2020robustness}. It is worth noting that none of the previous logics possess a known deductive system. Several unified languages have also been proposed \citep{badreddine2022logic, van2024uller, slusarz2023logic}. \citeauthor{serafini2016logic} introduced \emph{Real Logic}, a first order language with interpretations over $[0,1]$, and implement it in deep \emph{Logic Tensor Networks} (LTN) \cite{badreddine2022logic}.   
+They define satisfiability in terms of confidence intervals, and introduce the concepts of \emph{satisfiability error} and \emph{approximate satisfiability}, useful for reasoning on LTNs. Explicit semantics for finitary quantifiers of Real Logic were later studied by \citeauthor{badreddine2022logic}, who proposed interpreting them as the smooth maximum and minimum \citep{badreddine2022logic}. They also proposed a new interpretation, called \emph{Stable Product Real logic} \citep{badreddine2022logic}, a modified version of product logic \citep{van2022analyzing} with better learning properties.  \citeauthor{slusarz2023logic} differenciate from previous work by providing a well-typed calculus for their framework, interpreting quantifiers as expected values, called \emph{Logic of Differentiable Logics}  \citep{slusarz2023logic}. Similar to Real logic, \citeauthor{van2024uller} proposed the \emph{Uller} framework, which gives both fuzzy and probability interpretations \citep{van2022analyzing}. \citeauthor{schellhorn2025muller} recently provided categorical semantics for this framework, as well as a infinitary real-valued interpretation for first-order Product Real logic \citep{schellhorn2025muller}. In particular, a family of existential quantifiers for Product Real logic is given by the $p$-mean, and universals are defined dually as
+    \begin{equation}
+        1 - \left(\int_{S} (1 - f(s))^{\,p}\, \mathbb{P}(\de s)\right)^{1/p}.
+    \end{equation}
+with $1 - a$ as negation.
+
+\textbf{Logics of the lawvere quantale.} Logics of the Lawvere quantile are those which model the Lawvere quantile of extended positive reals (that is, $[0,\infty]$)  \citep{bacci2023propositional}. This structure generalizes residuated lattices, that substructural logics model \citep{galatos2007residuated}. Their main motivation is providing foundations for quantitative reasoning. \citeauthor{bacci2023propositional} formalized a logic of this kind, and showed that the Łukasiewicz logic is also an instance of this quantile \citep{bacci2023propositional, bacci2024polynomial}. They provide a sound deductive system for their logic, and prove completeness for finitely axiomatizable theories. \citeauthor{bacci2025induction} further extended \citeauthor{bacci2024polynomial}'s logic with an induction principle, provided an algebraic interpretation, and showed how it can be applied to encode Markov Processes \citep{bacci2025induction}. As mentioned in the introduction, \citeauthor{capucci2024quantifiers} also presented a logic that takes the Lawvere quantile as its interpretation, while also taking elements from linear logic \citep{Wadler1993, agliano2025algebraic} and deep inference \citep{guglielmi2015deep, guglielmi2007system}. \citeauthor{capucci2024quantifiers}'s logic is under development, yet it promises many relevant properties. 
+
+%\jnote{Abelian logic, RM, MYCIN}
+
+
+%%--------------------------------------------
+
+
+%-----------------------------------------------
+
+
+%---------------------------------------------
+
+%\subsection{Logical Properties}
+
+\begin{comment}
+\jnote{\\
+Negation: involutive, non-increasing, Bound-constrains,
+Additive and multplicative? Con and dis : Associativity, commutativity, monotonicity, idemopotency, distributivity, identity, monotonicity, strict monotonicity, continuity, left-continuity\\
+s-implications and r-implication: exchange principle, left antinocity, right istonicity, boundary conditions, normality condition, e-degree ranking (residuation is more general?), left neutrality, law of contraposition, residuum. 
+Other: prelinearity}
+    
+\end{comment}
+
+%\textbf{Numerical Semantics.}
+%\jnote{I have seen some call the models of an algebraic semantic denotational semantic.}
+%\begin{definition}[Numerical Soundness]
+    
+%\end{definition}
+
+%\begin{definition}[Numerical Completeness]
+    
+%\end{definition}
+
+
+
+%%--------------------------------------------
+\subsection{Capucci Semantics}
+\label{CapucciSemantics}
+Given \OL{} borrows its semantics directly from \citeauthor{capucci2024quantifiers}, we introduce them in detail. We diverge from \emph{ibid.} in notation. Our base setting are the positive-extended reals $[0,\infty]$. 
+%As a measure space, $[0,\infty]$ is considered equipped with completion of its Borel $\sigma$-field (i.e. the Lebesgue $\sigma$-field); and then further equipped with the obvious extension of the Lebesgue measure given by setting $\lambda((a,\infty]) = \infty$ for $a < \infty$ and $\lambda(\{\infty\})=0$.
+A family of "soft" additives is given by $p$-sums, resembling Yager logics \citep{cintula2011handbook}.
+
+\begin{definition}[$p$-Sum]
+\label{$p$-Sum}
+    %On $[0,\infty]$, 
+    \emph{$p$-sum} and \emph{harmonic $p$-sum} are, respectively, the following operations:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \psum{p} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $a$ 		& $\infty$\\
+			$b \in (0,\infty)$ & $b$ & $(a^{p}+b^{p})^{1/p}$		& $\infty$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \phsum{p} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $0$\\
+			$b \in (0,\infty)$ & $0$ 		& $(a^{-p}+b^{-p})^{-1/p}$	   & $b$\\
+			$0$ 		   & $0$ 	& $a$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+    Where $p \in (0,\infty].$
+\end{definition}
+
+While true additives are obtained at the limit, resembling \godel{} logic \citep{prooffuzzy}.
+
+\begin{lemma}[Additive Collapse]
+    \label[lemma]{AdditiveCollapse}
+    The following are the limits of $\psum{p}$ and $\phsum{p}$ for $p \longrightarrow \infty$:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \psum{\infty} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $a$ 		& $\infty$\\
+			$b \in (0,\infty)$ & $b$ & $\max{}(a,b)$		& $\infty$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \phsum{\infty} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $0$\\
+			$b \in (0,\infty)$ & $0$ 		& $\min{}(a,b)$	   & $b$\\
+			$\infty$ 		   & $0$ 	& $a$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{lemma}
+
+On the other hand, multiplicatives are given by two forms of multiplication, resembling Product logic \citep{prooffuzzy},
+
+\begin{definition}[Multiplication]
+\label{Multiplication}
+    On $[0,\infty]$, \emph{conjunctive multiplication} and \emph{disjunctive multiplication} are, respectively, the following operations:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \conmul{} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $0$ & $0$ 		& $0$\\
+			$b \in (0,\infty)$ & $0$ & $ab$		& $\infty$\\
+			$\infty$ 		   & $0$ & $\infty$ & $\infty$
+		\end{tabular}
+		\hspace*{10ex}
+		\begin{tabular}{c|ccc}
+			\textnormal{$a \dismul{} b$} & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 		 	   & $0$ 		& $0$ 	   & $\infty$\\
+			$b \in (0,\infty)$ & $0$ 		& $ab$	   & $\infty$\\
+			$\infty$ 		   & $\infty$ 	& $\infty$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{definition}
+
+Notice $\conmul{}$ and $\dismul{}$ differ only when $a$ is $0$ and $b$ is $\infty$, or \textit{vice versa}. Often we write $ab$ instead of $a \conmul{} b$.
+
+Therefore, linear implication and negation are given by division, 
+
+\begin{definition}[Division]
+\label{Division}
+    On $[0,\infty]$, \emph{division} is:
+    \begin{equation*}
+		\begin{tabular}{c|ccc}
+			$a \ediv{} b$ & $0$ & $a \in (0,\infty)$ & $\infty$\\
+			\cline{1-4}
+			$0$ 			   & $\infty$ & $0$ 		& $0$\\
+			$b \in (0,\infty)$ & $\infty$ & $b/a$		& $0$\\
+			$\infty$ 		   & $\infty$ & $\infty$ & $\infty$
+		\end{tabular}
+	\end{equation*}
+\end{definition}
+
+\begin{definition}[Duality Operator]
+\label{dual}
+    Let $a \in [0,\infty]$. Then the \emph{dual} of $a$ is
+    \[  \edual{a} =
+    \begin{cases}
+    1/a  & a \in (0,\infty)  \\
+    \infty & a = 0 \\
+    0 & a = \infty \\
+   \end{cases}
+    \]
+\end{definition}
+
+ Notice $a^{-1} = a \ediv{} 1 = a^{-1} \dismul{} b$, $a \dismul{} b = (a^{-1} \conmul{} b^{-1})^{-1}$, and $a \psum{p} b = (a^{-1} \phsum{p} b^{-1})^{-1}$. We sometimes slightly abuse the notation to write $a/b$ instead of $b \ediv a$ and $1/a$ instead of $\edual{a}$. Notice this resembles the family of Yager logics \cite{cintula2011handbook}, but with negation given by division instead of subtraction.
+
+We obtain a residuated lattice \citep{galatos2007residuated}.
+
+\begin{lemma}
+    \label[lemma]{IsLattice}
+    $([0,\infty], \phsum{\infty}, \psum{\infty}, \conmul{}, \ediv, 1, 1, 0)$ is a bounded commutative \emph{FL-algebra}.
+\end{lemma}
+
+The following properties were proposed by \citeauthor{capucci2024quantifiers} and double-checked by us. In the process, some mistakes were found and corrected. 
+
+\begin{lemma}[Some Properties]    \,
+    \label[lemma]{SomePropertiesOfP}
+    \begin{enumerate}
+        \item \textbf{Additive Distributivity.} $(a \phsum{p} (b \psum{p} c)) \leq  ((a \phsum{p} b) \psum{p} (a \phsum{p} c))$.
+        \item \textbf{Monotonicity.} If $a \leq b$ then $a \psum{p} c \leq b \psum{p} c$ and $a \phsum{p} c \leq b \phsum{p} c$ 
+        \item \textbf{Semi-additivity.} $a \phsum{p} b \leq a \leq a \psum{p} b$,
+        \item \textbf{Colax-distributivity.} $(a \phsum{p}  (b \psum{p} c) \leq (a \phsum{p}  b) \psum{p} (a \phsum{p}  c)$ .
+        \item \textbf{Sub-distributivity.} $(a \dismul{}  b) \phsum{p} (c \dismul{}  d) \leq (a \dismul{}  c) \psum{p} (b \dismul{}  d)  $ .
+        \\\\
+        For $p \leq q$,
+        \item \textbf{Conjunctive p-Monotonicity.} $a \phsum{p} b \leq  a \phsum{q} b$.
+        \item \textbf{Disjunctive p-Monotonicity.} $a \psum{p} b \leq  a \psum{q} b$.
+        \item \textbf{Disjunctive Duoidality.} $(a \psum{q} b) \psum{p} (c \psum{q}  d) \leq (a \psum{p}  c) \psum{q} (b \psum{p}  d)  $,
+        \item \textbf{Conjunctive Duoidality.} $(a \phsum{p}  b) \phsum{q} (c \phsum{p}  d) \leq (a \phsum{q}  c) \phsum{p} (b \phsum{q}  d)  $ .
+    \end{enumerate}
+\end{lemma}
+
+As in \citep{schellhorn2025muller}, a family of existential quantifiers is given by the $p$-mean. However, given we use division instead of subtraction for negation, universal quantifiers are given by the \textit{(generalized weighted) harmonic $p$-mean} of $f$, 
+    \begin{equation}
+        \LMS{f}{-p}{\textbf{S}} := 
+        \left(\LMS{f^{-1}}{p}{\textbf{S}}\right)^{-1} = 
+        \left(\int_{\textbf{S}} f^{\,-p}\right)^{-1/p} =
+        \left(\int_{S} f(s)^{\,-p}\, \mathbb{P}(\de s)\right)^{-1/p}.
+    \end{equation}
+
+
+  When $\textbf{S}$ can be inferred from the context, we write $\LM{f}{p}$. The definition of $p$-means can be extended to $p=0$ and $p=\infty$ by taking limits \cite{capucci2024quantifiers}. First we have
+
+\begin{lemma}
+\label{limitinfty}
+    As $p \longrightarrow +\infty$,
+    \begin{equation}
+        \LM{f}{+p} \longrightarrow \esup{f} =: \LM{f}{+\infty},
+        \qquad
+        \LM{f}{-p} \longrightarrow \einf{f} =: \LM{f}{-\infty}.
+    \end{equation}
+\end{lemma}
+
+Where $\esup{f}$ and $\einf{f}$ correspond to the essential supremum and infimum of $f$. On the other hand, 
+
+\begin{lemma}
+\label{limitzero}
+    As $p \longrightarrow 0$, both $\LM{f}{+p}$ and $\LM{f}{-p}$ converge to a limit, thus defining \textbf{disjunctive} and \textbf{conjunctive geometric means}:
+    \begin{equation}
+        \LM{f}{+p} \longrightarrow: \LM{f}{+0},
+        \qquad
+        \LM{f}{-p} \longrightarrow: \LM{f}{-0}.
+    \end{equation}
+\end{lemma}
+
+For bounded functions, these quantities coincide with the classical (weighted) geometric mean:
+
+\begin{definition}[Geometric Mean]
+    Let $f : S \rightarrow [0,\infty)$ be a measurable function and $(S,\sigmal{S}, \mathbb{P})$ a measure space. The \textbf{geometric mean} of $f$ is
+    \begin{equation}
+        GM[f] = \exp \left(\int_{S} \ln f(s)\, \mathbb{P}(\de s)\right)
+    \end{equation}
+\end{definition}
+
+For unbounded functions, conjunctive and disjunctive geometric means may differ in the same way as $\conmul{}$ and $\dismul{}$, namely in the way they handle $0$ and $\infty$. See \cite{capucci2024quantifiers} for clarifications.
+%%--------------------------------------------
+
+\subsection{Programming Language Support}
+
+As for programming language support for NN formal verification, some implementations have been proposed. MLCERT generates executable code from  learning procedures defined in Rocq, and is compatible with Tensorflow \citep{bagnall2019certifying}. CAISAR \citep{girard2022caisar}, implemented as an OCaml DSL, provides a general specification language with many existing NNs solvers. However, it does not support NeSy learning. Vehicle \citep{vehicle}, a Hskell DSL, possess a higher-order type specification language, and a type driven compilation to correct-by-construction translations of properties into both the language of NNs solvers and loss functions. However, it does not support NeSy learning. There is an on-going effort to certify its NN solver back-end \citep{daggitt2023compiling, desmartin2022checkinn}. 
+
+%\jnote{Vehicle, Caisar, Verona, Uller, LDL, Whatever Vergari is doing.}
+\subsection{Formalization}
+
+We build on the work of \citeauthor{affeldt2024taming}, who formalize some prominent propositional DLs in Rocq \citep{affeldt2024taming} using the syntax of the logic of differentiable logics \cite{slusarz2023logic}. Machine-learning backends have been previously mechanized in Agda \citep{agdaDL}, as part of the formalization of the Vehicle language \citep{vehicle}.  Property-guided training certified via mechanization was also proposed by \citeauthor{chevallier2022constrainedtrainingneuralnetworks} \citep{chevallier2022constrainedtrainingneuralnetworks}. Relevant formalizations of \SuAI{} related concepts include: verification of NNs in Isabelle/HOL \citep{brucker2023verifying} and Imandra \citep{desmartin2022checkinn}, formalisation of piecewise affine activation functions in Rocq \citep{aleksandrov2023formalizing}, providing generalization guarantees in Rocq \citep{bagnall2019certifying}, convergence of a single-layered perceptron in Rocq \citep{murphy2017verified}; verification of neural archetypes in Rocq \citep{DeMaria2021}; and verified generalization guarantees in Rocq \citep{bagnall2019certifying}. Our formalization will not directly formalise NNs. On the other hand, many logical concepts have been mechanized. Some relevant examples include a formalization of Bunched logic in Rocq \citep{10.1145/3497775.3503690}, and a formalization of the deep inference MAV logic in Agda \citep{Atkey2024}. 

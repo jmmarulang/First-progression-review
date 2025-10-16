@@ -3,22 +3,22 @@
 %% ---------------------------------------------------------------- 
 \section{Next Steps} \label{section:Next Steps}
 
-\subsection{Plan Until The Next Progression Review}
-Our plan until the next progression review (September 27, 2026) is summarized on \cref{2Plan}. A more detailed visualization is attached at the end of the document (\cref{Gantt}). We propose six main objectives: 
+Our plan until the next progression review (September 27, 2026) is summarized on \cref{2Plan}. We propose six main objectives: 
 \begin{enumerate}
-    \item \textbf{Subsymbolic properties (SP).} We prove or disprove \OL{} meets the subsymbolic properties stated in \cref{ResearchRequirements}.
+    \item \textbf{Subsymbolic properties (SP).} We prove or disprove \OL{} meets the learning properties.
+    \item \textbf{Propositional algebraic semantics (PA).} We aim to develop sound algebraic semantics for propositional \OL{}.
     \item \textbf{Propositional formalization (PF).} Once we are confident on the properties of propositional \OL{}, we start with the formalization. We list the components of the formalization, in the planned order:
     \begin{enumerate}
-        \item Hypersequent calculus,
-        \item Soundness with respect to the numerical interpretation \mcita{},
-        \item Subsymbolic properties,
+        \item Calculus,
         \item Propositional algebraic semantics,
-        \item Proof of soundness with respect to the propositional algebraic semantics.
+        \item Proof that the real-valued interpretation is a model of the algebraic semantics,
+        \item Soundness with respect to the algebraic semantics,
+        \item Learning properties.
+        
     \end{enumerate}
-    \item \textbf{Propositional algebraic semantics (PA).} We aim to develop sound algebraic semantics for propositional \OL{}.
     
-    \item \textbf{First-order extension (FE).} We build on the quantifier interpretation proposed byn\citeauthor{capucci2024quantifiers} to extend our logic into first-order. This requires modifying our semantics to account for variables and quantifiers, as well as updating our calculus. We then prove soundness for the first-order case with respect to the numerical interpretation.
-    
+    \item \textbf{First-order extension (FE).} We build on the quantifier interpretation proposed by \citeauthor{capucci2024quantifiers} to extend our logic into first-order. This requires modifying our semantics to account for variables and quantifiers, as well as updating our calculus.
+
     \item \textbf{First-order algebraic semantics (PA).} We aim to develop sound algebraic semantics for predicate \OL{}. We expect this to take considerably more effort than the propositional case. 
     
     \item \textbf{First-order formalization (FF).} As in the propositional case, we aim to formalize our results.  We expect this to take considerably more effort than the propositional case.
@@ -30,5 +30,4 @@ Our plan until the next progression review (September 27, 2026) is summarized on
   \caption{Our plan until the second progression review.}
 \end{figure}
 
-%\subsection{Plan For The Phd}
-
+Completeness of \OL{} we reserve for a later stage of the project.

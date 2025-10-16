@@ -1,44 +1,17 @@
 %% ----------------------------------------------------------------
 %% Introduction.tex
 %% ---------------------------------------------------------------- 
-\section{Problem Statement} \label{section:Problem Statement}
+\section{Introduction} \label{Introduction}
 
-\textbf{The two flavours of Artificial Intelligence.}
-Broadly speaking, there exists  two very distinct approaches to \emph{\AILong{}}  (\emph{\AI{}}): One rooted in reasoning and another in learning \citep{platzer2024intersymbolic}.  \SiAI{} (also referred to as good old fashioned AI \citep{haugeland1989artificial}, classical AI \citep{garnelo2019reconciling},  or logic-based AI \citep{thomason2003logic}) relates to algebraic computing, and emphasizes finding analytical solutions by manipulating logical expressions. This approach, by principle, prioritizes interpretability and preserving meaning. Current relevant examples include \emph{SMT/SAT solvers} \citep{barrett2018satisfiability, alyahya2022structure}, \emph{theorem provers} \citep{bartek2025vampire, barras1999coq},  as well as many \emph{programming languages} (PL) \citep{korner2022fifty, perkel2019julia, klabnik2023rust}.
-%\jnote{Not sure about what to reference for programming languages} 
-\SiAI{} has had a broad impact on planning \citep{geffner2013concise}, gameplay \citep{newell1958chess} and system verification \citep{leroy2016compcert, tihanyi2025new}, as well as on the field of mathematics \cite{Blokpoel2024}.  On the other hand, \SuAI{} (also referred to as pattern engines \citep{julia2020there})
-%\jnote{I like the term "universal approximators", based on the universal approximation theorem that states that a neural network can approximate any continuous function to any desired degree of accuracy. I feel it better portrais what subsymbolic AI is, and would like to add it to the list of alternative names. But as far as I know its not been introduced before.}
-relates to numerical computing,  and focuses on approximating solutions by applying statistical and optimization methods. They are often data driven, and do not require an explicit algorithm to operate (beyond the indirect computations performed to approximate the result). The more relevant examples of \SuAI{} are \emph{Deep Learning} \citep{norvig2002modern} and \emph{Reinforcement Learning} \citep{sutton1998reinforcement}, but older methods such as \emph{Kalman Filters} \citep{simon2001kalman} or \emph{Monte Carlo Simulation} \citep{martin2024computing} could arguably also fall under this category.  \SuAI{} has recently grown in quality and proliferated to many applications such as image/language processing \citep{thapa2024application, vaswani2017attention}, and simulation \citep{jumper2021highly}. 
+\textbf{Neurosymbolic AI.} This project aims to contribute to the formal verification of \textit{Neurosymbolic Artificial Intelligence} (NeSy AI), that leverages the respective strengths of symbolic and learning approaches to computing \citep{ d2009neural, medsker2012hybrid, platzer2024intersymbolic}. The latter refers to \textit{Machine Learning} (ML), i.e. the study of  algorithms that learn approximate solutions from data \citep{brewka1996artificial}, characterized by \textit{Neural Networks} (NNs) \citep{badreddine2022logic, petersen2022deep}. The standard learning algorithms minimize a loss functions to optimize the NN's parameters to fit input-output vectors given by data \citep{brewka1996artificial}. 
 
-\textbf{\InAI{}.} In order to leverage their respective strengths, there is a growing interest in studying and developing methods that merge Symbolic and Subsymbolic AI. This broad category, nicked \emph{\InAI{}}  \citep{platzer2024intersymbolic} (also referred to as neuro-symbolic AI \citep{d2009neural}, or hybrid intelligent systems \citep{medsker2012hybrid}), can range from applying logical principles on the architecture of \emph{ \NN{}s} (NN)  \citep{badreddine2022logic, petersen2022deep}, to using \SuAI{} to generate better heuristics for theorem provers \citep{laurent2022learning}. On top of this, \InAI{} has found particular success in cyber-physical systems, where it often plays the role of a controller \citep{platzer2024intersymbolic}.
-
-\textbf{\DL{}.} One of the main challenges of \InAI{} is the grounding of symbolic knowledge into numerical representations. A promising approach is the study of \emph{\QL{}s} (QL), i.e.~logics that model the real numbers. They have been studied for decades, and date back to the ideas of Kleene, G\"{o}del, and Łukasiewicz at the start of the 20th century \citep{cintula2011handbook, prooffuzzy}. Some relevant QLs include \emph{Fuzzy Logics} \citep{cintula2011handbook} and the \emph{Logics of The Lawvere Quantile} \citep{bacci2024polynomial, bacci2023propositional, capucci2024quantifiers, bacci2025induction}. To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
+\textbf{Quantitative logics and learning.} A popular approach for blending reasoning and learning is the real-valued interpretation of specifications written in a first-order language \citep{slusarz2023logic,serafini2016logic, petersen2022deep, choi2020probabilistic}. Therefore, many NeSy systems make implicit or explicit use of \textit{Quantitative Logics} (QLs), i.e. logics that model subsets of the real numbers. To illustrate QLs, let us have a toy syntax with atomic propositions and conjunction, such as
 \begin{equation}
 \begin{split}
     \Phi \ni \phi &:= A \,|\, \phi \land \phi
 \end{split}
 \end{equation}
-where $\phi$ is interpreted through a mapping $\tempty{\cdot} : \Phi \rightarrow D$ such that $ \tempty{\phi} \in D \subseteq \Ereal$. $D$ varies among logics and restricts the interpretation of connectives. For example, the
-G\"{o}del logic \citep{BAAZ200723} has a standard semantics over $[0, 1]$ where the conjunction is interpreted as the minimum function. \emph{\DL{}s} (DL) form a family of methods that apply key insights from QLs to \InAI{}. DLs have been applied on property-driven training \citep{FLINKOW2025103280}, safe-by-construction systems \citep{badreddine2022logic}, and SAT solving \citep{kyrillidis2021continuous, gaglione2022maxsat}. 
-
-\textbf{What makes a good DL.} To function as a bridge between symbolic and subsymbolic AI, a DL would benefit from certain properties. From the \SiAI{} perspective, a DL should be expressive enough to encode properties of interest (e.g. see \citep{vehicle}). Even more, to certify its implementation, a DL should possess a deductive system, as well as some form of soundness and completeness proofs with respect to a semantics \citep{floyd1993assigning, goguen1977initial}. From the \SuAI{} perspective, differentiability of its interpretation is an obvious candidate; continuity or convexity are also widely considered desirable; \citeauthor{varnai2020robustness} suggest characterizing DLs in terms of their \textit{geometric properties} \citep{varnai2020robustness}. Out of these, the most notable is \emph{Shadow-lifting}:
-
-\begin{definition}[Shadow-lifting]
-    \label[Definition]{Shadow-lifting}
-    A logical operator $A : \Phi ^ n \rightarrow \Phi$ satisfies shadow-lifting if, for any $\tempty{\phi} \neq 0$ and $i \in [1,n]$,
-    \begin{equation*}
-	\left. \dfrac{\partial \tempty{A(\phi_1, ..., \phi_n)}}{\partial \tempty{\phi_i}}\right\rvert_{\phi_j = \phi \text{ where } i \neq j} >0
-	\end{equation*}
-	where $ \partial $ denotes partial differentiation.
-\end{definition}
-
-%\jnote{Is this equivalent to saying that the gradient of $A$ is always positive component-wise? It is NOT but its strangely similar. The only difference is that in shadow-lifting, the partial derivative must only be positive if every other component has been replaced by the SAME constant. Which seems an oddly specific condition to me. I feel this definition could be generalized.}
-
-However, it has been shown that a an operator cannot meet shadow-lifting while being associative and idempotent \citep{varnai2020robustness}. \citeauthor{van2022analyzing} also mention three gradient problems to be avoided that commonly arise from logic operators: \emph{single-passing}, \emph{vanishing}, and \emph{exploding gradients} \citep{van2022analyzing}. Moreover, it is not well understood the effects that DLs have on performance \citep{flinkow2025generalised}, as well as on the statistical and probabilistic guarantees of certain systems, such as generalization error boundaries \citep{jakubovitz2019generalization}.
-
-%\jnote{Mention shadow lifting doesnt allow assoc or idemp}
-
-\textbf{The quantifier problem.} Nevertheless, there is one fundamental problem that DLs face: Many properties of interest for machine learning involve quantifiers, yet the majority of QLs are propositional \citep{bacci2024polynomial, bacci2023propositional, bacci2025induction}. A canonical specification of this kind is  \textit{robustness} \citep{casadio2022neural},  i.e. small perturbations to the inputs of a neural network should result in small changes to its output, formally:
+where $\phi$ is interpreted through a mapping $\tempty{\cdot} : \Phi \rightarrow I$ such that $ \tempty{\phi} \in I \subseteq \Ereal$. A specification can be expressed in the syntax, and its mapping integrated into the system, either as a loss function \citep{slusarz2023logic,van2022analyzing} or as a computational graph \cite{serafini2016logic, petersen2022deep, choi2020probabilistic}, to penalize depending on how much the network deviates from the stated property. For example, a canonical specification of this kind is  \textit{robustness} \citep{casadio2022neural},  i.e. small perturbations to the inputs of a NN should result in small changes to its output.
 \begin{definition}[$\epsilon$-$\delta$-Robustness] % no space here
 \label{Robustness}%
     Let $\epsilon, \delta \in \real^+$, $||\cdot||$ be a norm, and $f : \real^n \rightarrow \real^m$ be a measurable function.
@@ -50,51 +23,88 @@ However, it has been shown that a an operator cannot meet shadow-lifting while b
     \end{equation}
 \end{definition}
 
-Expanding some sound and complete propositional QLs to first-order logic often comes at the expense of either completeness or continuity \citep{cintula2011handbook, slusarz2023logic}.  
-%For example, the first-order extension of Gödel logic is the only one, among the most prominent fuzzy logics \mcita{}, that is sound and complete w.r.t. models with values in $[0,1]$ and with universal and existential quantifiers interpreted as infima and suprema \mcita{}.However, connectives of this logic are not continuous and therefore not suitable for gradient-descent algorithms.
+Well known QLs such as \textit{Fuzzy Logics} \citep{cintula2011handbook} as well as novel logics developed by the ML community \citep{serafini2016logic, varnai2020robustness, fischer2019dl2} have been applied to this domain.
 
-\textbf{A novel approach.} Given the provided information, can we develop a first-order DL while maintaining desirable properties?   Recently, a promising approach for first-order QLs was proposed by \citeauthor{capucci2024quantifiers}: interpreting quantifiers as \textit{generalized means}, while introducing a "softness" modality that balances shadow-lifting and idempotence \citep{capucci2024quantifiers}. We build on these ideas to develop a novel well-behaved DL, that we nick \emph{\OurLogic} (\OL). Unlike \citeauthor{capucci2024quantifiers}, who uses a deep-inference inspired framework \citep{guglielmi2007system, guglielmi2015deep}, our approach follows the subtructural logic tradition \citep{galatos2007residuated}, taking elements from both the logic of Bunched Implications (BI) \citep{o1999logic} (an extension of linear logic \citep{Wadler1993, agliano2025algebraic}) and fuzzy logics \citep{cintula2011handbook, prooffuzzy}. We leverage this to give algebraic semantics for our DL, while studying its relation to other substructural logics and \citeauthor{capucci2024quantifiers}'s logic. 
-To provide assurance of the correctness of our results, we aim to mechanise our proofs in Rocq, making use of its Mathematical Components library (\mathcomp{}) \cite{mathcomp}. We seek this formalization to be a stepping stone for the development of programming language support for verification of \InAI{} \citep{vehicle}. 
+%\jnote{What are are they, mention fuzzy and quantale as examples. Mention how they differ: different semantics.}
+%\jnote{Interest on integrating symbolic/background knowledge into learning: property driven training. First-order QLs have been implictly or explicitly used for that. Explain how, give robustness example. Mention how fuzzy logics have been used, and ML logics developed.}
 
-\subsection{Research Requirements}
-\label{ResearchRequirements}
-The preceding introduction highlights two groups of properties desirable for DLs: \emph{Symbolic} and \emph{Subsymbolic} properties. 
+%\textbf{Application to machine learning.}
 
-\textbf{Symbolic properties.} For our logic to be expressive, it should possess negation, conjunction and disjunction operators. Negation should be \emph{involutive}; conjunction and disjunction should be \emph{commutative}, \emph{associative} and \emph{idempotent}; and all operators should \emph{distribute} in the classical manner \citep{galatos2007residuated}. If a logic meets all previous properties we say it is \emph{compositional}. Similarly, we would like our universal quantifiers to be \emph{aggregation operators} \citep{LIU19981}, and existencials to be their duals \citep{LIU19981}. If a logic meets these properties, we say it is \emph{aggregative}.  We also aim for our DL to be \emph{sound} and \emph{complete}. Intuitively, a logic is sound if any sentence that is provable in its deductive system is also true on its semantics \citep{galatos2007residuated}. Conversely, a logic is complete if any sentence that is true on its semantics is also provable in its deductive system \citep{galatos2007residuated}. While soundness provides theoretical guarantees of correctness, completeness is needed to guarantee that the syntax and the semantics of the logic match.
+\textbf{Programming language support.} The growing interest in QLs from the ML community has motivated their use to give programming language support for NeSy learning. In particular, QLs are useful for compiling specifications to the back-ends of NNs verifiers. As an example, Vehicle \citep{vehicle}, provides a higher-order typed specification language, and gives correct-by-construction translations into loss functions. This calls for stronger guarantees about the correctness of such compilers.
 
-\textbf{Subsymbolic properties.} The interpretation of our logic should be \emph{differentiable}, 
-%\jnote{Should we focus on almost everywhere differentiable functions instead? It is more general and the minimum and maximum fall under this category (infimum does not). Its what they use to analyse DL2 in \cite{fischer2019dl2}.}
-and meet the following geometric properties proposed by \citeauthor{varnai2020robustness}: \emph{scale-invariance}, \emph{weak smoothness} and \emph{shadow-lifting} \citep{varnai2020robustness}. \citeauthor{van2022analyzing} mention three gradient problems to be avoided that commonly arise from logic operators: \emph{single-passing}, \emph{vanishing gradients}, and \emph{exploding gradients} \citep{van2022analyzing}. All previous properties are useful for optimization.  
+
+%\jnote{This has motivated the use of QLs to give programming language support for property driven training. Mention vehicle as an example. }
+
+
+\textbf{Learning and logical properties.} We then would benefit from a QL that possesses both properties to facilitate learning, that we call \textit{Learning Properties}, and is well-behaved from a proof-theoretic perspective, that we call \textit{Logical Properties}. It is worth clarifying that a QL must not meet all  properties to be viable for learning or certification. Instead, they should be thought of as \textit{design choices}, giving different classes of logics. A more comprehensive list and formal definitions of these properties are given in \cref{Background}. Some relevant properties include:
+
+\textbf{Learning Properties}
+\begin{itemize}
+%\item \textit{Differentiability}: Functions should be Lebesgue differentiable.
+%\item \textit{Boundness}: Functions should satisfy boundary conditions.
+\item \textit{Scale Invariance}: The behaviour of functions should not change when its inputs are scaled by a common factor.
+%\item \textit{Weak Smoothness}: Functions should be continuous at points where there is a unique minimal term.
+\item \textit{Shadow-lifting}: A function should improve if any of its parameters improves.
+%\item \textit{Single-passing}: Functions should have nonzero derivatives on at most one input argument.
+\item \textit{Non-vanishing gradients}: A function's gradient should not approximate zero at a sub-interval of the domain.
+\end{itemize}
+
+\textbf{Logical Properties}
+\begin{itemize}
+    %\item \textit{Involutivity}: Double negations should cancel out.
+    \item \textit{Compositionality}: Negation should compose with conjunction and disjunction, while conjunction and disjunction should satisfy the usual properties of idempotence, commutativity, and associativity.
+    \item \textit{Prelinearity}: The logic should possess a notion of total order. 
+    \item \textit{Quantifier Aggregation}: Quantifiers should be monotonic, continuous, and satisfy boundary conditions.
+\end{itemize}
+On top of these properties, a logic should possess a calculus and formal semantics, such that it is \textit{Sound} and \textit{Complete}. 
+
+%\jnote{List properties, intuitive definition}
+%\textbf{How to ensure correctness.}
+%\jnote{List properties, intuitive definition}
+\textbf{An empty intersection of properties.} However, there is no first-order QL that possesses both good learning and logical properties. While established logics, such as fuzzy logics, are well understood and possess good logical properties, they have been shown to not be suited for learning \citep{van2022analyzing, affeldt2024taming, FLINKOW2025103280}. For instance, many are not continuous nor differentiable, which hinders performance. On the other hand, logics proposed by the ML community often lack a calculus or formal semantics, are not compositional, or their quantifiers are not aggregators \citep{van2022analyzing, affeldt2024taming}. On top of this, it has been proven that a QL cannot meet shadow-lifting while being associative and idempotent \citep{varnai2020robustness}.
+
+\textbf{A novel approach.} Given the provided information, can we develop a first-order QL with good learning and logical properties?   Recently, a promising approach for first-order QLs was proposed by \citeauthor{capucci2024quantifiers}: 
+Interpreting implication as division, and existential quantifiers as \textit{p-means} \citep{capucci2024quantifiers}. These are a family of norms parametrized by a positive real $p$, that approximates the maximum when $p$ tends to infinity, resembling Yager fuzzy logic \citep{cintula2011handbook}. In this way $p$ can be seen as a "softness" modality that balances shadow-lifting and idempotence \citep{capucci2024quantifiers}. We build on these ideas to develop a novel, well-behaved QL, that we call \emph{\OurLogic} (\OL). Unlike \citeauthor{capucci2024quantifiers}, who uses a deep-inference inspired framework \citep{guglielmi2007system, guglielmi2015deep}, our approach follows the subtructural logic tradition \citep{galatos2007residuated}, taking bunches from the \textit{Logic of Bunched Implications} \citep{o1999logic}  and hypersequents from fuzzy logics \citep{cintula2011handbook, prooffuzzy}. To guarantee the correctness of our results, we formalize using the \textit{Mathematical Components library} (Mathcomp) in the Rocq proof assistant \citep{mathcomp}, in which numerous results from algebra and real analysis have been mechanized. We seek this formalization to aid in the development of programming language support for the verification of NeSy AI \citep{vehicle}. 
 
 \subsection{Research Questions}
 
-Our high-level goal is to develop and study a DL that meets the symbolic and subsymbolic properties. To this aim, we divide our research into six research questions:
+Here we present our main research questions, as well as our approach for answering them. Our high-level goal is to develop, study and formalize a first-order QL with good learning and logical properties. To this aim, we divide our research into nine research questions:
 
 \begin{enumerate}
-    \item \textbf{Sound propositional DL.} Can we develop a sound, compositional, and propositional DL, while maintaining subsymbolic properties? 
+    \item \textbf{Syntax and real-valued semantics.} Can we develop a first-order syntax and real-valued semantics with good learning and logical properties? 
     
-    Our current version of \OL{} could be summarized as a "soft" bunched logic \citep{o1999logic} with hypersequents from fuzzy logic \citep{prooffuzzy}. Like \citeauthor{capucci2024quantifiers}, our DL makes use of a modality to balance shadow-lifting and compositionality. This modality is also applied to bunches. Our DL has been proven sound with respect to its numerical interpretation. We are currently researching how to develop algebraic semantics.
+    We borrow directly from \citeauthor{capucci2024quantifiers} the real-valued semantics of formulas, known to meet most logical properties \citep{capucci2024quantifiers}. On top of this, the interpretation is known to be scale invariant, while shadow-lifting is obtained through the softness modality. It remains unclear under what conditions other properties are met, such as weak smoothness, or non-vanishing gradients. 
+    
+    \item \textbf{Sound propositional calculus.} Can we develop a sound propositional calculus for \OL{}?
+    
+    Our current version of \OL{} could be summarized as a soft, bunched, hypersequent calculus. Unlike \citeauthor{capucci2024quantifiers}, we use the same notion of validity as substructural logics \citep{galatos2007residuated}, and we extend the real-valued interpretation to deal with bunches and hypersequents. \OL{} has been proven sound with respect to its real-valued interpretation. 
 
-    %\jnote{Include formalization intent somewhere in here? How to state it as a research question?}
+    \item \textbf{Algebraic semantics.} Can we develop sound algebraic semantics for \OL{}?
+    
+    Given its relation to substructural logics, \OL{} semantics could be given by a residuated lattice \citep{galatos2007residuated}, extended to deal with the softness modality (similarly to how algebraic semantics for linear logic are extended to deal with exponentials \citep{agliano2025algebraic}).
+    
+    \item \textbf{Complete propositional calculus.} Can we prove propositional \OL{} complete?
+    
+    A first approximation to completeness is to show that a collection of formulas, known to be valid in the semantics, are provable in the calculus. While this does not guarantee completeness, it is an informative, necessary condition. Then, we hope to leverage \OL{}'s relation to substructural logics to prove completeness with respect to its algebraic semantics (and therefore, also with respect to its real-valued intepretation), applying known techniques from substructual logics.
 
-    \item \textbf{Relation to other logics.} How does \OL{} relate to other logics? 
-    
-    Being an extension of linear logic \citep{Wadler1993, agliano2025algebraic}, \OL{} (or at least a subset of it) belongs to the family of substructural logics \citep{galatos2007residuated}, with its monoidal operator resembling that of product logic \citep{cintula2011handbook, prooffuzzy}. It remains unclear where in the substructural family it would be positioned. As for \citeauthor{capucci2024quantifiers}'s logic, they very much resemble each other, and possess the same numerical interpretation. However, each logic possesses a different definition of validity, and therefore of soundness and completeness \citep{galatos2007residuated, capucci2024quantifiers}. We expect this to affect the algebraic semantics as well, beyond just changing its defining equation \citep{galatos2007residuated, agliano2025algebraic}. 
-    
-    \item \textbf{Complete propositional DL.} Can we prove propositional \OL{} complete?
-    
-    A first approximation to completeness is to prove that a collection of axioms that are true in the semantics, are provable (e.g. prelinearity \citep{prooffuzzy}). While this does not guarantee completeness, it is an informative necessary condition. Then, we hope to leverage \OL{}'s relation to substructural logics to prove completeness by applying known techniques from fuzzy logic \citep{cintula2011handbook, galatos2007residuated}. It remains unclear if this is possible. 
-    
-    \item \textbf{Sound predicate DL.} Can \OL{} be extended into a sound aggregative logic, while maintaining subsymbolic properties?
+     \item \textbf{Propositional formalization.} Can we formalize propositional \OL{} and its properties?
 
-    Extending into first-order requires modifying our numerical interpretation, and therefore our semantics. For our current approach to maintain soundness, additional conditions must be imposed on substitution. On the other hand, it remains unclear if subsymbolic properties are maintained. 
+    We make use of Mathcomp, building on previous work by \citeauthor{affeldt2024taming} \citep{affeldt2024taming}. We aim to adapt this formalization for \OL{} and its properties, as well as soundness and completeness. To achieve this, we are currently extending Mathcomp's implementation of the extended real numbers. 
     
-    \item \textbf{Complete predicate DL.} Can we prove our predicate \OL{} complete?
+    \item \textbf{First-order extension.} Can \OL{}'s calculus be extended into first-order, while maintaining soundness, as well as good learning and logical properties?
+
+    Extending our logic into first-order requires modifying our real-value interpretation, and therefore our algebraic semantics. For our current approach to maintain soundness, additional conditions must be imposed on substitution. On the other hand, it remains unclear if learning properties are maintained. 
+    
+    \item \textbf{Complete predicate calculus.} Can we prove our predicate \OL{} complete?
     
     Similar approach to the propositional case. 
-    
-    \item \textbf{Practicality.} Does propositional/predicate \OL{} offer some insight on property-driven training?
 
-    We would like to study the effects \OL{} on the performance and generalisability \citep{jakubovitz2019generalization} of its implementations. This requires both theoretical and experimental evidence. 
+    \item \textbf{Predicate formalization.} Can we formalize first-order \OL{} and its properties?
+
+    Formalization of the first-order case comes with the additional challenge of quantifier semantics, which involve results from real analysis and probability. Most notably, measure spaces, probability spaces, and Lebsegue integrals, as well as the use of results such as Jensen's  and Hölder's inequalities \citep{mitrinovic1970analytic}. Mathcomp is a particularly good fit for this task, due to its extensive mathematical libraries. Many of the aforementioned standard results from measure theory are formalized in the library modules on algebra and analysis. However, some, such as the encoding of extended real numbers, still require further development.
+    
+    \item \textbf{Practicality.} Does \OL{} offer some insight on property-driven training?
+
+    We aim to supplement our theoretical results with experimental evidence. This includes evaluating how easily our results can be translated into actual implementations, as well as the relevance of the learning properties.
     
 \end{enumerate}

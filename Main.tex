@@ -21,6 +21,8 @@
 \usepackage[nameinlink]{cleveref}
 \crefname{Definition}{Definition}{Definitions}
 \crefname{Lemma}{Lemma}{Lemmas}
+\setcitestyle{square}
+
 %%Math
 \usepackage{stmaryrd}
 \usepackage{amsmath}
@@ -34,6 +36,11 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{pdfpages}
+
+%code
+\usepackage{minted}
+\usemintedstyle{tango}
+
  
 %%Alias 
 \defcitealias{Platzer_2024}{Intersymbolic AI}
@@ -59,6 +66,7 @@
 %\volume{n}{m} %Optional Volume Numbering Volume n of m
 \subject    {}
 \keywords   {}
+\supervisor{Ekaterina Komendantskaya\\Enrico Manchioni\\Alessandro Bruni}
 
 \begin{document}
 %% ------------------ FRONT MATTER ORGANISATION -------------------
@@ -69,7 +77,9 @@
 %\frontmatter
 \maketitle
 \begin{abstract}
-The interpretation of logical expressions into loss functions has given rise to so-called differentiable logics. They function as a bridge between symbolic and subsymbolic reasoning, offering a novel approach for hybrid AI systems. Maintaining good proof-theoretic and optimization properties comes at the price of a more intricate semantics for first-order quantifiers. We explore how to balance these properties. On top of this, to ease their integration into machine-learning backends, we explore how to formalize semantics for first-order differentiable logics using the Mathematical Components library in the Rocq proof assistant. We seek to give rigorous semantics for quantifiers, verify their properties with respect to other logical connectives, as well as prove the soundness and completeness of the resulting logics.
+
+Quantitative logics (QLs) model subsets of the real numbers, and have increasingly been applied for neurosymbolic learning. In particular, their real semantics can be used to integrate verification properties during learning. At the same time, QLs have been applied to give programming language support for property-driven training. Yet, current QLs either cannot guarantee the correctness of their compilers, or hinder the performance of the resulting artifacts. In this project, we develop and study \textit{\OurLogic{}}, a logic that is both well-behaved and appropriate for training, using the Mathematical Components library in the Rocq proof assistant. We aim to develop a sound and complete first-order calculus with respect to algebraic semantics. Our approach takes inspiration from both fuzzy logics and the logic of bunched implications.
+
 \end{abstract}
 
 %\tableofcontents

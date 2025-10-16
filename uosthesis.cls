@@ -207,71 +207,74 @@
   \hypersetup{pdfauthor={\authornames}}
   \hypersetup{pdfkeywords={\keywordnames}}
 }
-%%\renewcommand\maketitle{
-%%  \btypeout{Title Page}
-%%  \thispagestyle{empty}
-%%  \begin{titlepage}
-  %%  \let\footnotesize\small
-    %%\let\footnoterule\relax
-    %%\let \footnote \thanks
-    %%\setcounter{footnote}{0}
-    %%\null\vfil
-    %%\vskip 60\p@
-    %%\begin{center}
-     %% \setlength{\parskip}{0pt}
-    %%  {\scshape\LARGE\textbf{\univname}\par}
+
+\renewcommand\maketitle{
+  \btypeout{Title Page}
+  \thispagestyle{empty}
+  \begin{titlepage}
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \let \footnote \thanks
+    \setcounter{footnote}{0}
+    \null\vfil
+    \vskip 60\p@
+    \begin{center}
+        \setlength{\parskip}{0pt}{\scshape\LARGE\textbf{\univname}\par}
       %% TODO: Change all the descriptions to italic like the Thesis one
-    %%  \bigskip
-    %%  {\large \facname \par}
-     %% {\large \deptname \par}
-    %%  \vfill
-    %%  {\huge \bf \@title \par
-%%}
-  %%    \ifthenelse{\equal{\doicode}{}}
- %%     {}
- %%     {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}
- %%     \ifthenelse{\equal{\volno}{}}
- %%     {}
- %%     {\smallskip Volume \volno{} of \volof}
-  %%    \vfill
-   %%   {\LARGE \textit{by} \par}
- %%     \smallskip
-    %%  {\LARGE \textbf\authornames
- %%       \ifthenelse{\equal{\quals}{}}
-  %%      {}
-%%        {\par\Large
- %%       \quals}
-  %%    \par}
-%%        \ifthenelse{\equal{\orcid}{}}
- %%       {}
- %%       {\smallskip
-   %%     ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
-%%
-  %%    \vfill
- %%     {\large \textit{First progression review for the degree of} \par}
- %%     {\large \textit{Doctor of Philosophy} \par}
- %%     \bigskip
- %%     \bigskip
-  %%    \bigskip
-  %%    {\Large \@date \par}
-  %%    \bigskip
-  %%  \end{center}
- %%   \par
- %%   \@thanks
- %%   \vfil\null
-%%  \end{titlepage}
- %% \setcounter{footnote}{0}%
-%%  \global\let\thanks\relax
-%%  \global\let\maketitle\relax
- %% \global\let\@thanks\@empty
-%%  \global\let\@author\@empty
-%%  \global\let\@date\@empty
-%%  \global\let\title\relax
-%%  \global\let\author\relax
- %% \global\let\date\relax
- %% \global\let\and\relax
-%%  \cleardoublepage
-%%}
+      \bigskip
+      {\large \facname \par}
+      {\large \deptname \par}
+      \vfill
+      {\huge \bf \@title \par
+}
+      \ifthenelse{\equal{\doicode}{}}
+      {}
+      {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}
+      \ifthenelse{\equal{\volno}{}}
+      {}
+      {\smallskip Volume \volno{} of \volof}
+      \vfill
+      {\LARGE \textit{by} \par}
+      \smallskip
+      {\LARGE \textbf\authornames
+        \ifthenelse{\equal{\quals}{}}
+        {}
+        {\par\Large
+        \quals}
+        \bigskip
+        \par
+        {\small \textit{Supervised by} \par}
+        \ifthenelse{\equal{\supname}{}}
+        {}
+        {\par\small
+        \supname}
+      \par}
+
+      \vfill
+      {\large \textit{First progression review for the degree of} \par}
+      {\large \textit{Doctor of Philosophy} \par}
+      \bigskip
+      \bigskip
+      \bigskip
+      {\Large \@date \par}
+      \bigskip
+    \end{center}
+    \par
+    \@thanks
+    \vfil\null
+  \end{titlepage}
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+  \cleardoublepage
+}
 
 %%\newenvironment{abstract}
 %%{

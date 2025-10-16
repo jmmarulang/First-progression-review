@@ -192,7 +192,7 @@
 \newcommand{\DL}{Differentiable Logic} 
 \newcommand{\mathcomp }[0]{\emph{MathComp}}
 \newcommand{\OurLogic}[0]{Fuzzball Logic}
-\newcommand{\OL}[0]{FL}
+\newcommand{\OL}[0]{FbL}
 
 % classes of Numbers
 \newcommand{\real}[0]{\mathbb{R}}
@@ -202,7 +202,7 @@
 \newcommand{\PEreal}[0]{[0,\infty]}
 
 %Extended Reals 
-%\newcommand{\dual}[1]{ #1 ^\bot}
+\newcommand{\ldual}[1]{ #1 ^\bot}
 \newcommand{\edual}[1]{ #1 ^{-1}}
 \newcommand{\conmul}[0]{\otimes}
 \newcommand{\psum}[1]{\oplus^{#1}}
@@ -222,7 +222,11 @@
 \newcommand{\unit}{\textbf{1}}
 \newcommand{\tempty}[1]{\llbracket #1 \rrbracket}
 \newcommand{\m}[1]{\llbracket #1 \rrbracket}
-\newcommand{\ldual}[1]{ #1 ^{\bot}}
+\newcommand\sepimp{\mathrel{-\mkern-6mu*}}
+%\newcommand{\ldual}[1]{ #1 ^{\bot}}
+%quantifiers
+\newcommand{\pforall}[4]{\forall^{#1}(#2 \in #3).#4}
+\newcommand{\pexists}[4]{\exists^{#1}(#2 \in #3).#4}
 
 % High-level language
 \newcommand{\FunType}[2]{\ensuremath{#1 \text{ $ \rightarrow $ } #2}}
@@ -408,5 +412,9 @@
 \newcommand*{\hsequentPDL}[2]{\Hyp \ | \ #1  \vdash #2}
 \newcommand*{\ssequentPDL}[1]{\Hyp \ | \ #1 }
 \newcommand*{\tsequentPDL}[1]{\Hyp }
-\newcommand*{\csequentPDL}[4]{\Hyp \ | \ #1  \vdash #2 \ | \ #3  \Longrightarrow #4 }
+\newcommand*{\csequentPDL}[4]{\Hyp \ | \ #1  \vdash #2 \ | \ #3  \vdash #4 }
 \newcommand*{\sequentPDL}[2]{ #1  \vdash #2}
+
+%Machine learning 
+\newcommand{\losssymbol}{\mathcal{L}}
+
